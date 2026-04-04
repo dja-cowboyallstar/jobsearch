@@ -11,11 +11,11 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 1
+      - name: Fresh clone
+        run: |
+          git clone --depth 1 https://github.com/dja-cowboyallstar/jobsearch.git .
+          echo "Checked out SHA:"
+          git log -1 --format=%H
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
