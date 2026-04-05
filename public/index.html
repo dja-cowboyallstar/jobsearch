@@ -55,7 +55,7 @@ body::before{content:"";position:fixed;top:-220px;left:50%;transform:translateX(
 /* Masthead */
 .mh{padding:40px 0 0;margin-bottom:20px}
 .mh-ey{font:500 11px/1 var(--sans);color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
-.mh h1{font:400 clamp(30px,4vw,44px)/1.15 var(--serif);color:var(--text);letter-spacing:-.03em;max-width:660px}
+.mh h1{max-width:660px}
 .mh-sub{font-size:16px;color:var(--text-sec);margin-top:10px;line-height:1.55;max-width:520px}
 .mh-sub b{color:var(--text);font-weight:500}
 .mh-date{font:400 13px/1 var(--sans);color:var(--text-m);margin-top:8px;opacity:.5}
@@ -63,7 +63,7 @@ body::before{content:"";position:fixed;top:-220px;left:50%;transform:translateX(
 @keyframes dateFade{from{opacity:0}to{opacity:1}}
 .mh-rotate{display:inline-block;transition:opacity .5s var(--ease),transform .5s var(--ease);color:var(--accent)}
 .mh-dash{color:var(--accent);margin:0 6px}
-.mh h1{font:400 clamp(30px,4vw,44px)/1.15 var(--serif);color:var(--text);letter-spacing:-.03em;max-width:660px;position:relative}
+.mh h1{max-width:660px;position:relative}
 .mh-rotate-wrap{display:inline-block;position:relative;vertical-align:baseline;min-width:220px}
 .mh-rotate-text{position:absolute;left:0;top:0;white-space:nowrap;animation:heroFade 3s ease-in-out infinite}
 @keyframes heroFade{0%{opacity:0;transform:translateY(4px)}8%{opacity:1;transform:translateY(0)}85%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-4px)}}
@@ -1091,8 +1091,8 @@ function App(){
       tab==="companies"&&h("div",{className:"fu"},
         h("section",{className:"mh"},
           h("div",{className:"mh-ey"},"Sourced from Glassdoor, Fortune, Forbes, LinkedIn, TechCrunch & more"),
-          h("h1",null,"The Lineup"),
-          h("p",{className:"mh-sub"},h("b",null,ST.length)," AI-native or AI-adapted companies with traction - see who\u2019s hiring."),
+          h("h1",{style:{font:"400 clamp(30px,4vw,44px)/1.15 var(--serif)",color:"var(--text)",letterSpacing:"-.03em"}},h("span",{style:{fontWeight:500}},Math.floor(ST.length/50)*50+"+")," companies growing through AI"),
+          h("p",{className:"mh-sub"},"Vetted for funding, growth and traction - see who\u2019s hiring right now."),
         ),
         // Search + compact filter bar
         h("div",{className:"dir-search"},
