@@ -68,23 +68,83 @@ function trimDesc(html) {
 }
 
 function parseQualifications(html) {
-  if (!html) return { must: [], nice: [] };
+  if (!html) return { must: [], nice: [], bene: [] };
   var text = html
     .replace(/<\/li>/gi, '\n').replace(/<li[^>]*>/gi, '• ')
     .replace(/<\/?(ul|ol|p|div|br|h[1-6])[^>]*>/gi, '\n')
+    .replace(/<(strong|b|em)>/gi, '').replace(/<\/(strong|b|em)>/gi, '')
     .replace(/<[^>]+>/g, '')
     .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ').replace(/&#39;/g, "'").replace(/&quot;/g, '"')
     .replace(/\n{3,}/g, '\n\n').trim();
-  var mustH = [/(?:^|\n)\s*(?:#{1,3}\s*)?(?:minimum\s+)?(?:required\s+)?qualifications?\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?requirements?\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?what\s+(?:you['']ll\s+need|we['']re\s+looking\s+for|you\s+(?:should\s+)?(?:have|bring))\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?(?:about\s+)?you(?:r\s+(?:background|experience|skills))?\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?who\s+you\s+are\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?must[- ]haves?\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?key\s+(?:qualifications?|requirements?|skills?)\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?you\s+(?:may\s+be\s+a\s+fit|might\s+thrive)\s+if\s*[:：\n]/i];
-  var niceH = [/(?:^|\n)\s*(?:#{1,3}\s*)?(?:preferred|desired)\s+qualifications?\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?nice\s+to\s+haves?\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?bonus\s+(?:points?|qualifications?|skills?)\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?(?:ideally|it(?:'s|\s+would\s+be)\s+(?:great|nice|helpful))\s+(?:if\s+)?(?:you)?\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?extra\s+credit\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?plus\s+if\s+you\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?(?:preferred|additional)\s+(?:experience|skills?|background)\s*[:：\n]/i];
-  var endM = [/(?:^|\n)\s*(?:#{1,3}\s*)?(?:what\s+we\s+offer|benefits?|compensation|perks?|why\s+(?:join|work))\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?about\s+[A-Z]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?(?:the\s+)?(?:annual\s+)?(?:salary|compensation)\s+(?:range|for)\s*/i,/(?:^|\n)\s*(?:#{1,3}\s*)?(?:equal\s+opportunity|we\s+(?:are\s+)?(?:committed|an?\s+equal))\s*/i,/(?:^|\n)\s*(?:#{1,3}\s*)?(?:not\s+all\s+strong\s+candidates)\s*/i,/(?:^|\n)\s*(?:#{1,3}\s*)?(?:location|visa|how\s+to\s+apply|application|deadline)\s*[:：\n]/i,/(?:^|\n)\s*(?:#{1,3}\s*)?(?:our\s+mission|we\s+believe|at\s+\w+,\s+we)\s*/i];
+  var H = "(?:^|\\n)\\s*(?:#{1,3}\\s*)?";
+  var E = "\\s*[:：\\-—]?\\s*\\n";
+  function rx(s){return new RegExp(H+s+E,"i");}
+  var reqH = [
+    rx("(?:minimum\\s+|required\\s+|basic\\s+|core\\s+)?(?:qualifications?|requirements?)"),
+    rx("(?:required|key|essential|core)\\s+(?:skills?|experience|competenc(?:y|ies))"),
+    rx("what\\s+(?:you['\\u2019]ll\\s+need|we['\\u2019]re\\s+looking\\s+for|you\\s+(?:should\\s+)?(?:have|bring|need))"),
+    rx("what\\s+(?:you\\s+bring|this\\s+(?:job|role)\\s+requires?)"),
+    rx("(?:about\\s+)?you(?:r\\s+(?:background|experience|skills|profile))?"),
+    rx("who\\s+you\\s+are"),
+    rx("must[- ]haves?"),
+    rx("you\\s+(?:may\\s+be\\s+a\\s+fit|might\\s+thrive)\\s+if"),
+    rx("what\\s+(?:we\\s+need|we\\s+expect|you\\s+need)"),
+    rx("(?:preferred|desired)\\s+qualifications?"),
+    rx("to\\s+be\\s+successful"),
+    rx("(?:the\\s+)?ideal\\s+candidate"),
+    rx("skills?\\s+(?:and|&)\\s+(?:experience|qualifications?)"),
+    rx("experience\\s+(?:and|&)\\s+(?:skills?|qualifications?)"),
+    rx("(?:we\\s+)?(?:need|want|expect)\\s+(?:you\\s+to|someone\\s+(?:who|with))"),
+    rx("(?:your|the)\\s+(?:role|position)\\s+requires?"),
+    rx("what\\s+(?:makes\\s+you\\s+(?:a\\s+)?(?:great|good|strong)\\s+(?:fit|candidate|match))"),
+    rx("(?:strong\\s+)?candidates?\\s+(?:will\\s+|should\\s+)?(?:have|possess|demonstrate)"),
+  ];
+  var addH = [
+    rx("nice\\s+to\\s+haves?"),
+    rx("bonus\\s+(?:points?|qualifications?|skills?|experience)"),
+    rx("(?:ideally|it(?:'s|\\s+would\\s+be)\\s+(?:great|nice|helpful))\\s+(?:if\\s+)?(?:you)?"),
+    rx("extra\\s+credit"),
+    rx("plus(?:es)?\\s+(?:if|that)\\s+you"),
+    rx("(?:additional|supplemental|optional)\\s+(?:qualifications?|experience|skills?|background)"),
+    rx("what\\s+(?:would\\s+be|is)\\s+(?:nice|helpful|great)\\s+to\\s+have"),
+    rx("(?:not\\s+required\\s+but|while\\s+not\\s+required)"),
+    rx("(?:we['\\u2019]d\\s+love|it['\\u2019]s?\\s+a\\s+plus)\\s+if"),
+    rx("what\\s+sets\\s+you\\s+apart"),
+    rx("(?:desired|preferred)\\s+(?:but\\s+not\\s+required)"),
+    rx("(?:these\\s+(?:are|would\\s+be)\\s+)?(?:a\\s+)?(?:plus|bonus)"),
+  ];
+  var beneH = [
+    rx("(?:what\\s+we\\s+offer|we\\s+offer)"),
+    rx("benefits?(?:\\s+(?:and|&)\\s+(?:perks?|compensation))?"),
+    rx("(?:perks?|total\\s+rewards?)(?:\\s+(?:and|&)\\s+benefits?)?"),
+    rx("compensation(?:\\s+(?:and|&)\\s+benefits?)?"),
+    rx("why\\s+(?:join|work\\s+(?:at|with|for))\\s+(?:us)?"),
+    rx("what(?:'s|\\s+is)\\s+in\\s+it\\s+for\\s+you"),
+    rx("(?:our|the)\\s+(?:benefits?|perks?|package|offer)"),
+    rx("(?:salary|pay)\\s+(?:range|band|details?)"),
+    rx("(?:the\\s+)?(?:annual\\s+)?compensation\\s+(?:range|for|details?)"),
+  ];
+  var stopH = [
+    rx("about\\s+(?:us|the\\s+company|the\\s+team)"),
+    /(?:^|\n)\s*(?:#{1,3}\s*)?about\s+[A-Z]/i,
+    rx("(?:equal\\s+opportunity|we\\s+(?:are\\s+)?(?:committed|an?\\s+equal))"),
+    rx("(?:not\\s+all\\s+strong\\s+candidates)"),
+    rx("(?:location|visa|how\\s+to\\s+apply|application|deadline)"),
+    rx("(?:our\\s+mission|we\\s+believe)"),
+    rx("(?:your\\s+safety\\s+matters)"),
+    rx("(?:guidance\\s+on\\s+candidates)"),
+    rx("(?:interested\\s+in\\s+building\\s+your\\s+career)"),
+  ];
+  var allH = reqH.concat(addH).concat(beneH).concat(stopH);
   function findSec(hdrs){var best=null;for(var i=0;i<hdrs.length;i++){var m=text.match(hdrs[i]);if(m){var idx=text.indexOf(m[0])+m[0].length;if(!best||idx<best)best=idx;}}return best;}
-  function findEnd(si){var rem=text.substring(si),ear=rem.length,all=mustH.concat(niceH).concat(endM);for(var i=0;i<all.length;i++){var m=rem.match(all[i]);if(m){var p=rem.indexOf(m[0]);if(p>0&&p<ear)ear=p;}}return si+ear;}
-  function extract(sec){var lines=sec.split('\n'),out=[];for(var i=0;i<lines.length;i++){var l=lines[i].replace(/^[\s•·\-–—*▸►→●○◦■□▪▫]+/,'').trim();if(l.length<10||l.length>300)continue;if(/^(anthropic|we believe|the easiest|this research|at \w+,? we|our mission)/i.test(l))continue;if(/^\w[\w\s]{0,20}\s+is\s+(?:a|an|the)\s/i.test(l))continue;if(/^about\s+/i.test(l))continue;out.push(l);}return out.slice(0,12);}
-  var ms=findSec(mustH),ns=findSec(niceH),must=[],nice=[];
-  if(ms!==null){var me=findEnd(ms);if(ns!==null&&ns>ms&&ns<me)me=text.lastIndexOf('\n',ns);must=extract(text.substring(ms,me));}
-  if(ns!==null){nice=extract(text.substring(ns,findEnd(ns)));}
-  return {must:must,nice:nice};
+  function findEnd(si,skip){var rem=text.substring(si),ear=rem.length;for(var i=0;i<allH.length;i++){var dominated=false;if(skip)for(var s=0;s<skip.length;s++){if(allH[i]===skip[s]){dominated=true;break;}}if(dominated)continue;var m=rem.match(allH[i]);if(m){var p=rem.indexOf(m[0]);if(p>0&&p<ear)ear=p;}}return si+ear;}
+  function extract(sec){var lines=sec.split('\n'),out=[];for(var i=0;i<lines.length;i++){var l=lines[i].replace(/^[\s•·\-–—*▸►→●○◦■□▪▫\d.)+]+/,'').trim();if(l.length<10||l.length>300)continue;if(/^(anthropic|we believe|the easiest|this research|at \w+,? we|our mission|your safety|not all strong|guidance on)/i.test(l))continue;if(/^\w[\w\s]{0,20}\s+is\s+(?:a|an|the)\s/i.test(l))continue;if(/^about\s+/i.test(l))continue;out.push(l);}return out.slice(0,15);}
+  var rs=findSec(reqH),as=findSec(addH),bs=findSec(beneH);
+  var must=[],nice=[],bene=[];
+  if(rs!==null){var re=findEnd(rs,reqH);must=extract(text.substring(rs,re));}
+  if(as!==null){var ae=findEnd(as,addH);nice=extract(text.substring(as,ae));}
+  if(bs!==null){var be=findEnd(bs,beneH);bene=extract(text.substring(bs,be));}
+  return {must:must,nice:nice,bene:bene};
 }
 
 async function fetchJson(url, options) {
@@ -106,7 +166,7 @@ async function fetchGreenhouse(name, slug) {
   if (!d || !d.jobs) return [];
   return d.jobs.map(function(j) {
     var q = parseQualifications(j.content);
-    return { job_id: "gh_" + j.id, job_title: j.title, employer_name: name, job_apply_link: j.absolute_url, job_description: trimDesc(j.content), job_posted_at: j.updated_at, _company: name, _loc: j.location ? j.location.name : "", _must: q.must, _nice: q.nice };
+    return { job_id: "gh_" + j.id, job_title: j.title, employer_name: name, job_apply_link: j.absolute_url, job_description: trimDesc(j.content), job_posted_at: j.updated_at, _company: name, _loc: j.location ? j.location.name : "", _must: q.must, _nice: q.nice, _bene: q.bene };
   });
 }
 
@@ -120,7 +180,7 @@ async function fetchAshby(name, slug) {
       maxSal = j.compensation.compensationTierSummary.max;
     }
     var q = parseQualifications(j.descriptionHtml || j.descriptionPlain);
-    return { job_id: "ab_" + j.id, job_title: j.title, employer_name: name, job_apply_link: j.jobUrl || ("https://jobs.ashbyhq.com/" + slug + "/" + j.id), job_description: trimDesc(j.descriptionPlain || j.descriptionHtml), job_employment_type: j.employmentType || null, job_min_salary: minSal, job_max_salary: maxSal, job_posted_at: j.publishedAt || null, _company: name, _loc: j.location || "", _must: q.must, _nice: q.nice };
+    return { job_id: "ab_" + j.id, job_title: j.title, employer_name: name, job_apply_link: j.jobUrl || ("https://jobs.ashbyhq.com/" + slug + "/" + j.id), job_description: trimDesc(j.descriptionPlain || j.descriptionHtml), job_employment_type: j.employmentType || null, job_min_salary: minSal, job_max_salary: maxSal, job_posted_at: j.publishedAt || null, _company: name, _loc: j.location || "", _must: q.must, _nice: q.nice, _bene: q.bene };
   });
 }
 
@@ -129,7 +189,7 @@ async function fetchLever(name, slug) {
   if (!d || !Array.isArray(d)) return [];
   return d.map(function(j) {
     var q = parseQualifications(j.description || j.descriptionPlain);
-    return { job_id: "lv_" + j.id, job_title: j.text, employer_name: name, job_apply_link: j.hostedUrl || j.applyUrl, job_description: trimDesc(j.descriptionPlain || j.description), job_employment_type: j.categories && j.categories.commitment ? j.categories.commitment : null, job_posted_at: j.createdAt ? new Date(j.createdAt).toISOString() : null, _company: name, _loc: j.categories && j.categories.location ? j.categories.location : "", _must: q.must, _nice: q.nice };
+    return { job_id: "lv_" + j.id, job_title: j.text, employer_name: name, job_apply_link: j.hostedUrl || j.applyUrl, job_description: trimDesc(j.descriptionPlain || j.description), job_employment_type: j.categories && j.categories.commitment ? j.categories.commitment : null, job_posted_at: j.createdAt ? new Date(j.createdAt).toISOString() : null, _company: name, _loc: j.categories && j.categories.location ? j.categories.location : "", _must: q.must, _nice: q.nice, _bene: q.bene };
   });
 }
 
@@ -138,7 +198,7 @@ async function fetchRecruitee(name, slug) {
   if (!d || !d.offers) return [];
   return d.offers.map(function(j) {
     var q = parseQualifications(j.description);
-    return { job_id: "rc_" + j.id, job_title: j.title, employer_name: name, job_apply_link: j.careers_url || ("https://" + slug + ".recruitee.com/o/" + j.slug), job_description: trimDesc(j.description), job_employment_type: j.employment_type || null, job_min_salary: j.min_salary || null, job_max_salary: j.max_salary || null, job_posted_at: j.published_at || null, _company: name, _loc: j.location || "", _must: q.must, _nice: q.nice };
+    return { job_id: "rc_" + j.id, job_title: j.title, employer_name: name, job_apply_link: j.careers_url || ("https://" + slug + ".recruitee.com/o/" + j.slug), job_description: trimDesc(j.description), job_employment_type: j.employment_type || null, job_min_salary: j.min_salary || null, job_max_salary: j.max_salary || null, job_posted_at: j.published_at || null, _company: name, _loc: j.location || "", _must: q.must, _nice: q.nice, _bene: q.bene };
   });
 }
 
@@ -157,7 +217,7 @@ async function fetchJSearch(name) {
     return false;
   }).map(function(j) {
     var q = parseQualifications(j.job_description);
-    return { job_id: j.job_id, job_title: j.job_title, employer_name: j.employer_name, employer_logo: j.employer_logo, job_apply_link: j.job_apply_link, job_description: trimDesc(j.job_description), job_employment_type: j.job_employment_type || null, job_min_salary: j.job_min_salary || null, job_max_salary: j.job_max_salary || null, job_posted_at: j.job_posted_at_datetime_utc || null, _company: name, _loc: [j.job_city, j.job_state, j.job_country].filter(Boolean).join(", "), _must: q.must, _nice: q.nice };
+    return { job_id: j.job_id, job_title: j.job_title, employer_name: j.employer_name, employer_logo: j.employer_logo, job_apply_link: j.job_apply_link, job_description: trimDesc(j.job_description), job_employment_type: j.job_employment_type || null, job_min_salary: j.job_min_salary || null, job_max_salary: j.job_max_salary || null, job_posted_at: j.job_posted_at_datetime_utc || null, _company: name, _loc: [j.job_city, j.job_state, j.job_country].filter(Boolean).join(", "), _must: q.must, _nice: q.nice, _bene: q.bene };
   });
 }
 
@@ -234,8 +294,12 @@ async function main() {
     });
   }
   console.log("Coverage: " + Math.round((companiesWithJobs / ALL_COMPANIES.length) * 100) + "%");
-  var jobsWithQuals = allJobs.filter(function(j) { return (j._must && j._must.length > 0) || (j._nice && j._nice.length > 0); }).length;
+  var jobsWithQuals = allJobs.filter(function(j) { return (j._must && j._must.length > 0) || (j._nice && j._nice.length > 0) || (j._bene && j._bene.length > 0); }).length;
+  var jobsWithReq = allJobs.filter(function(j) { return j._must && j._must.length > 0; }).length;
+  var jobsWithAdd = allJobs.filter(function(j) { return j._nice && j._nice.length > 0; }).length;
+  var jobsWithBene = allJobs.filter(function(j) { return j._bene && j._bene.length > 0; }).length;
   console.log("Jobs with parsed qualifications: " + jobsWithQuals + "/" + allJobs.length + " (" + Math.round((jobsWithQuals / Math.max(allJobs.length, 1)) * 100) + "%)");
+  console.log("  Required: " + jobsWithReq + " | Additional: " + jobsWithAdd + " | Benefits: " + jobsWithBene);
   console.log("========================\n");
 
   // Build the output
