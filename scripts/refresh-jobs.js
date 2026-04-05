@@ -77,7 +77,7 @@ function parseQualifications(html) {
     .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ').replace(/&#39;/g, "'").replace(/&quot;/g, '"')
     .replace(/\n{3,}/g, '\n\n').trim();
   var H = "(?:^|\\n)\\s*(?:#{1,3}\\s*)?";
-  var E = "\\s*[:：\\-—]?\\s*\\n";
+  var E = "\\s*[:：\\-—]?\\s*";
   function rx(s){return new RegExp(H+s+E,"i");}
   var reqH = [
     rx("(?:minimum\\s+|required\\s+|basic\\s+|core\\s+)?(?:qualifications?|requirements?)"),
@@ -138,7 +138,7 @@ function parseQualifications(html) {
   var allH = reqH.concat(addH).concat(beneH).concat(stopH);
   function findSec(hdrs){var best=null;for(var i=0;i<hdrs.length;i++){var m=text.match(hdrs[i]);if(m){var idx=text.indexOf(m[0])+m[0].length;if(!best||idx<best)best=idx;}}return best;}
   function findEnd(si,skip){var rem=text.substring(si),ear=rem.length;for(var i=0;i<allH.length;i++){var dominated=false;if(skip)for(var s=0;s<skip.length;s++){if(allH[i]===skip[s]){dominated=true;break;}}if(dominated)continue;var m=rem.match(allH[i]);if(m){var p=rem.indexOf(m[0]);if(p>0&&p<ear)ear=p;}}return si+ear;}
-  function extract(sec){var lines=sec.split('\n'),out=[];for(var i=0;i<lines.length;i++){var l=lines[i].replace(/^[\s•·\-–—*▸►→●○◦■□▪▫\d.)+]+/,'').trim();if(l.length<10||l.length>300)continue;if(/^(anthropic|we believe|the easiest|this research|at \w+,? we|our mission|your safety|not all strong|guidance on)/i.test(l))continue;if(/^\w[\w\s]{0,20}\s+is\s+(?:a|an|the)\s/i.test(l))continue;if(/^about\s+/i.test(l))continue;out.push(l);}return out.slice(0,15);}
+  function extract(sec){var lines=sec.replace(/;\s*/g,'\n').split('\n'),out=[];for(var i=0;i<lines.length;i++){var l=lines[i].replace(/^[\s•·\-–—*▸►→●○◦■□▪▫\d.)+]+/,'').trim();if(l.length<10||l.length>300)continue;if(/^(anthropic|we believe|the easiest|this research|at \w+,? we|our mission|your safety|not all strong|guidance on)/i.test(l))continue;if(/^\w[\w\s]{0,20}\s+is\s+(?:a|an|the)\s/i.test(l))continue;if(/^about\s+/i.test(l))continue;out.push(l);}return out.slice(0,15);}
   var rs=findSec(reqH),as=findSec(addH),bs=findSec(beneH);
   var must=[],nice=[],bene=[];
   if(rs!==null){var re=findEnd(rs,reqH);must=extract(text.substring(rs,re));}
