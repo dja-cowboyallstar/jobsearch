@@ -300,7 +300,38 @@ async function main() {
   var jobsWithBene = allJobs.filter(function(j) { return j._bene && j._bene.length > 0; }).length;
   console.log("Jobs with parsed qualifications: " + jobsWithQuals + "/" + allJobs.length + " (" + Math.round((jobsWithQuals / Math.max(allJobs.length, 1)) * 100) + "%)");
   console.log("  Required: " + jobsWithReq + " | Additional: " + jobsWithAdd + " | Benefits: " + jobsWithBene);
-  console.log("========================\n");
+
+  // Source distribution and per-source parse rates
+  var sources = { gh: {total:0,parsed:0}, ab: {total:0,parsed:0}, lv: {total:0,parsed:0}, rc: {total:0,parsed:0}, js: {total:0,parsed:0} };
+  allJobs.forEach(function(j) {
+    var id = j.job_id || "";
+    var src = id.startsWith("gh_") ? "gh" : id.startsWith("ab_") ? "ab" : id.startsWith("lv_") ? "lv" : id.startsWith("rc_") ? "rc" : "js";
+    sources[src].total++;
+    if ((j._must && j._must.length > 0) || (j._nice && j._nice.length > 0) || (j._bene && j._bene.length > 0)) sources[src].parsed++;
+  });
+  console.log("\n=== SOURCE DISTRIBUTION ===");
+  Object.keys(sources).forEach(function(k) {
+    var s = sources[k];
+    var pct = s.total > 0 ? Math.round(s.parsed / s.total * 100) : 0;
+    console.log("  " + k.toUpperCase() + ": " + s.total + " jobs, " + s.parsed + " parsed (" + pct + "%)");
+  });
+
+  // Sample missed descriptions from ATS sources (not JSearch — those are expected misses)
+  var missedATS = allJobs.filter(function(j) {
+    var id = j.job_id || "";
+    var isATS = id.startsWith("gh_") || id.startsWith("ab_") || id.startsWith("lv_") || id.startsWith("rc_");
+    var hasParsed = (j._must && j._must.length > 0) || (j._nice && j._nice.length > 0) || (j._bene && j._bene.length > 0);
+    return isATS && !hasParsed;
+  });
+  console.log("\n=== MISSED ATS SAMPLES (" + missedATS.length + " total missed from ATS) ===");
+  for (var ms = 0; ms < Math.min(10, missedATS.length); ms++) {
+    var mj = missedATS[ms];
+    var rawDesc = mj.job_description || "";
+    console.log("\n[" + (mj.job_id || "?").substring(0,5) + "] " + (mj._company || mj.employer_name) + " — " + mj.job_title);
+    console.log("  DescLen: " + rawDesc.length + "chars");
+    console.log("  Text: " + rawDesc.substring(0, 400));
+  }
+  console.log("\n========================\n");
 
   // Build the output
   var output = JSON.stringify({
