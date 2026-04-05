@@ -727,6 +727,7 @@ function ForYouTab(props){
 // ── MAIN APP ──
 function App(){
   var _tab=us("companies"),tab=_tab[0],setTab=_tab[1];
+  var IS_PREVIEW=window.location.hostname.indexOf("vercel.app")>-1||window.location.hostname==="localhost";
   var _j=us([]),jobs=_j[0],setJobs=_j[1];
   var _ld=us(true),loading=_ld[0],setLoading=_ld[1];
   var _lc=us(""),loadingCompanyName=_lc[0],setLoadingCompanyName=_lc[1];
@@ -1079,6 +1080,7 @@ function App(){
     // TABS
     h("div",{className:"tabs"},h("div",{className:"tabs-in"},
       h("button",{className:"tab"+(tab==="companies"?" on":""),onClick:function(){setTab("companies")}},"Companies"),
+      IS_PREVIEW&&h("button",{className:"tab"+(tab==="foryou"?" on":""),onClick:function(){setTab("foryou")}},"For You",h("span",{className:"new-pill"},"new")),
       h("span",{className:"tab-sep"}),
       h("button",{className:"tab"+(tab==="learn"?" on":""),onClick:function(){setTab("learn")}},"AI Learning"),
       h("button",{className:"tab"+(tab==="resume"?" on":""),onClick:function(){setTab("resume")}},"Resume Tips"),

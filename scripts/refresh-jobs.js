@@ -234,17 +234,8 @@ async function main() {
     });
   }
   console.log("Coverage: " + Math.round((companiesWithJobs / ALL_COMPANIES.length) * 100) + "%");
-  console.log("DEBUG: about to count quals...");
-  try {
-    var sampleJob = allJobs[0];
-    console.log("DEBUG: sample job keys = " + Object.keys(sampleJob).join(", "));
-    console.log("DEBUG: sample _must = " + JSON.stringify(sampleJob._must || "MISSING"));
-    console.log("DEBUG: sample _nice = " + JSON.stringify(sampleJob._nice || "MISSING"));
-    var jobsWithQuals = allJobs.filter(function(j) { return (j._must && j._must.length > 0) || (j._nice && j._nice.length > 0); }).length;
-    console.log("Jobs with parsed qualifications: " + jobsWithQuals + "/" + allJobs.length + " (" + Math.round((jobsWithQuals / Math.max(allJobs.length, 1)) * 100) + "%)");
-  } catch(e) {
-    console.log("DEBUG: quals count ERROR = " + e.message);
-  }
+  var jobsWithQuals = allJobs.filter(function(j) { return (j._must && j._must.length > 0) || (j._nice && j._nice.length > 0); }).length;
+  console.log("Jobs with parsed qualifications: " + jobsWithQuals + "/" + allJobs.length + " (" + Math.round((jobsWithQuals / Math.max(allJobs.length, 1)) * 100) + "%)");
   console.log("========================\n");
 
   // Build the output
