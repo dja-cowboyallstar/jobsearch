@@ -331,40 +331,6 @@ async function main() {
     console.log("  DescLen: " + rawDesc.length + "chars");
     console.log("  Text: " + rawDesc.substring(0, 400));
   }
-
-  // Location data audit
-  var locCounts = {};
-  var emptyLoc = 0;
-  var remoteLoc = 0;
-  allJobs.forEach(function(j) {
-    var loc = (j._loc || "").trim();
-    if (!loc) { emptyLoc++; return; }
-    if (/remote/i.test(loc)) remoteLoc++;
-    locCounts[loc] = (locCounts[loc] || 0) + 1;
-  });
-  var sortedLocs = Object.keys(locCounts).sort(function(a, b) { return locCounts[b] - locCounts[a]; });
-  console.log("\n=== LOCATION DATA AUDIT ===");
-  console.log("Total jobs: " + allJobs.length);
-  console.log("Empty _loc: " + emptyLoc + " (" + Math.round(emptyLoc / allJobs.length * 100) + "%)");
-  console.log("Contains 'remote': " + remoteLoc + " (" + Math.round(remoteLoc / allJobs.length * 100) + "%)");
-  console.log("Unique _loc values: " + sortedLocs.length);
-  console.log("\nTop 40 _loc values:");
-  for (var li = 0; li < Math.min(40, sortedLocs.length); li++) {
-    console.log("  " + locCounts[sortedLocs[li]] + "x | " + sortedLocs[li]);
-  }
-  // Per-source location samples (5 from each ATS)
-  var srcPrefixes = ["gh_", "ab_", "lv_", "rc_"];
-  var srcNames = ["Greenhouse", "Ashby", "Lever", "Recruitee"];
-  console.log("\nLocation format by ATS (5 samples each):");
-  for (var si = 0; si < srcPrefixes.length; si++) {
-    var srcJobs = allJobs.filter(function(j) { return (j.job_id || "").startsWith(srcPrefixes[si]) && j._loc; });
-    var seen = {};
-    var samples = [];
-    for (var sj = 0; sj < srcJobs.length && samples.length < 5; sj++) {
-      if (!seen[srcJobs[sj]._loc]) { seen[srcJobs[sj]._loc] = true; samples.push(srcJobs[sj]._loc); }
-    }
-    console.log("  " + srcNames[si] + ": " + samples.join(" | "));
-  }
   console.log("\n========================\n");
 
   // Build the output

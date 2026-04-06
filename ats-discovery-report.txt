@@ -1,0 +1,832 @@
+================================================================================
+  ASCENT ATS DISCOVERY REPORT
+  Generated: 2026-04-06T14:21:33.415Z
+  Companies scanned: 304
+================================================================================
+
+  SUMMARY
+--------------------------------------------------------------------------------
+  New ATS mappings found:       46
+  Current mappings confirmed:   170
+  Current mappings WRONG:       6
+  Current mappings unverified:  8
+  No ATS found:                 74
+  No current mapping:           0
+
+  ATS DISTRIBUTION (discovered boards)
+--------------------------------------------------------------------------------
+  greenhouse      104 companies    12972 total jobs
+  ashby            98 companies     6588 total jobs
+  lever            16 companies      779 total jobs
+  recruitee         4 companies       28 total jobs
+
+
+████████████████████████████████████████████████████████████████████████████████
+  ACTION REQUIRED: NEW ATS MAPPINGS TO ADD
+  46 companies can be moved from JSearch to direct ATS
+████████████████████████████████████████████████████████████████████████████████
+
+  Relativity Space
+    ATS: greenhouse (gh)  |  Slug: "relativity"  |  Jobs: 288
+    ATS_MAP entry: "Relativity Space": { ats: "gh", slug: "relativity" }
+    Sample roles: Aerodynamics Engineer II, Avionics Production Expeditor, Avionics Systems Lead Engineer
+
+  Oscar Health
+    ATS: greenhouse (gh)  |  Slug: "oscar"  |  Jobs: 285
+    ATS_MAP entry: "Oscar Health": { ats: "gh", slug: "oscar" }
+    Sample roles: Actuarial Analyst II, Actuarial Analyst II, Actuarial Analyst II
+
+  HubSpot
+    ATS: greenhouse (gh)  |  Slug: "hubspotjobs"  |  Jobs: 247
+    ATS_MAP entry: "HubSpot": { ats: "gh", slug: "hubspotjobs" }
+    Sample roles: Account Executive, Corporate - Benelux, Account Executive, Corporate - Benelux, Account Executive, Corporate - Benelux
+    Also found on: greenhouse/hubspot (0 jobs)
+
+  Wiz
+    ATS: greenhouse (gh)  |  Slug: "wizinc"  |  Jobs: 192
+    ATS_MAP entry: "Wiz": { ats: "gh", slug: "wizinc" }
+    Sample roles: Account Executive Public & Defense Sector, Account Executive, SLED East, Account Executive, SLED East
+    Also found on: ashby/wiz (0 jobs)
+
+  GitLab
+    ATS: greenhouse (gh)  |  Slug: "gitlab"  |  Jobs: 173
+    ATS_MAP entry: "GitLab": { ats: "gh", slug: "gitlab" }
+    Sample roles: Backend Engineer, Analytics Instrumentation (Golang), Backend Engineer, Analytics Instrumentation (Golang)   , Backend Engineer, Knowledge Graph (Rust)
+
+  Box
+    ATS: greenhouse (gh)  |  Slug: "boxinc"  |  Jobs: 154
+    ATS_MAP entry: "Box": { ats: "gh", slug: "boxinc" }
+    Sample roles: Account Executive, Account Executive, Public Sector, Accounting Manager
+
+  VAST Data
+    ATS: greenhouse (gh)  |  Slug: "vast"  |  Jobs: 147
+    ATS_MAP entry: "VAST Data": { ats: "gh", slug: "vast" }
+    Sample roles: Astronaut Operations Integrator, Avionics Manufacturing Engineer II, Avionics Manufacturing Engineer, Wiring Harnesses 
+    Also found on: ashby/vast (0 jobs)
+
+  Harness
+    ATS: greenhouse (gh)  |  Slug: "harnessinc"  |  Jobs: 131
+    ATS_MAP entry: "Harness": { ats: "gh", slug: "harnessinc" }
+    Sample roles: AppSec Sales Engineer , AP Staff Accountant, Commercial Counsel
+
+  Kong
+    ATS: ashby (ab)  |  Slug: "kong"  |  Jobs: 105
+    ATS_MAP entry: "Kong": { ats: "ab", slug: "kong" }
+    Sample roles: Software Engineering Manager, AI Gateway - Shanghai, Software Engineer - Rust - Event Gateway , Staff Solutions Engineer
+
+  Hinge Health
+    ATS: ashby (ab)  |  Slug: "hinge-health"  |  Jobs: 82
+    ATS_MAP entry: "Hinge Health": { ats: "ab", slug: "hinge-health" }
+    Sample roles: Staff Software Engineer, Growth, Product Manager, Conversational AI , Growth Marketing Manager, Direct Mail 
+
+  Perplexity AI
+    ATS: ashby (ab)  |  Slug: "perplexity"  |  Jobs: 75
+    ATS_MAP entry: "Perplexity AI": { ats: "ab", slug: "perplexity" }
+    Sample roles: Engineering Site Lead, Senior iOS Software Engineer , AI Inference Engineer
+
+  Sigma Computing
+    ATS: greenhouse (gh)  |  Slug: "sigmacomputing"  |  Jobs: 75
+    ATS_MAP entry: "Sigma Computing": { ats: "gh", slug: "sigmacomputing" }
+    Sample roles: AI/ML PhD Intern (Summer 2026), Business Development Manager, Business Development Representative
+
+  DevRev
+    ATS: greenhouse (gh)  |  Slug: "devrev"  |  Jobs: 71
+    ATS_MAP entry: "DevRev": { ats: "gh", slug: "devrev" }
+    Sample roles: Account Executive, Account Executive – Field Sales, Account Executive – Field Sales
+
+  Cursor
+    ATS: ashby (ab)  |  Slug: "cursor"  |  Jobs: 69
+    ATS_MAP entry: "Cursor": { ats: "ab", slug: "cursor" }
+    Sample roles: Software Engineer, Growth , GTM Engineer, Growth Programs, Software Engineer, Client Infrastructure
+
+  Cribl
+    ATS: greenhouse (gh)  |  Slug: "cribl"  |  Jobs: 59
+    ATS_MAP entry: "Cribl": { ats: "gh", slug: "cribl" }
+    Sample roles: Channel Sales Manager, Commercial Counsel, Commercial Sales Engineer, US East
+
+  Dataiku
+    ATS: greenhouse (gh)  |  Slug: "dataiku"  |  Jobs: 55
+    ATS_MAP entry: "Dataiku": { ats: "gh", slug: "dataiku" }
+    Sample roles: Accountant, AI Healthcare & Life Sciences Solutions Consultant, Business Development Representative France 
+
+  dbt Labs
+    ATS: greenhouse (gh)  |  Slug: "dbtlabsinc"  |  Jobs: 51
+    ATS_MAP entry: "dbt Labs": { ats: "gh", slug: "dbtlabsinc" }
+    Sample roles: Account Executive, Commercial , Account Executive, Commercial (DACH), Account Executive, Commercial - (France)
+
+  Ironclad
+    ATS: ashby (ab)  |  Slug: "ironcladhq"  |  Jobs: 47
+    ATS_MAP entry: "Ironclad": { ats: "ab", slug: "ironcladhq" }
+    Sample roles: Business Development Representative, Staff Software Engineer, Senior Software Engineer
+
+  Together AI
+    ATS: greenhouse (gh)  |  Slug: "togetherai"  |  Jobs: 45
+    ATS_MAP entry: "Together AI": { ats: "gh", slug: "togetherai" }
+    Sample roles: AI Researcher, Core ML (Turbo), Backend Engineer , Backend Software Engineer — Data Platform & AI Data Products
+
+  Outreach
+    ATS: lever (lv)  |  Slug: "outreach"  |  Jobs: 35
+    ATS_MAP entry: "Outreach": { ats: "lv", slug: "outreach" }
+    Sample roles: Account Executive, EMEA Commercial, Customer Advocacy Manager, Customer Advocacy Specialist
+
+  Peec AI
+    ATS: ashby (ab)  |  Slug: "peec"  |  Jobs: 35
+    ATS_MAP entry: "Peec AI": { ats: "ab", slug: "peec" }
+    Sample roles: Senior Fullstack Engineer, Engineering Manager, Senior Product Engineer
+
+  Tabs
+    ATS: ashby (ab)  |  Slug: "tabs"  |  Jobs: 30
+    ATS_MAP entry: "Tabs": { ats: "ab", slug: "tabs" }
+    Sample roles: Business Development Representative, Senior Technical Talent Acquisition Partner, VP of Finance
+
+  Echo Park Consulting
+    ATS: ashby (ab)  |  Slug: "echo"  |  Jobs: 24
+    ATS_MAP entry: "Echo Park Consulting": { ats: "ab", slug: "echo" }
+    Sample roles: ML Research Engineer, Speech, ML Infrastructure Engineer, Applied AI Scientist
+    Also found on: greenhouse/echoparkconsulting (0 jobs)
+
+  Gecko Robotics
+    ATS: ashby (ab)  |  Slug: "gecko-robotics"  |  Jobs: 24
+    ATS_MAP entry: "Gecko Robotics": { ats: "ab", slug: "gecko-robotics" }
+    Sample roles: Forward Deployed Engineer, Forward Deployed Engineer | Team Lead, Government, Forward Deployed Engineer | Middle East 
+
+  Omni Analytics
+    ATS: ashby (ab)  |  Slug: "omni"  |  Jobs: 22
+    ATS_MAP entry: "Omni Analytics": { ats: "ab", slug: "omni" }
+    Sample roles: Managing Architect (North America), Software Engineer - TypeScript/JavaScript, Solutions Engineer - Pre-Sales (San Francisco, CA)
+
+  Synthflow AI
+    ATS: ashby (ab)  |  Slug: "synthflow"  |  Jobs: 19
+    ATS_MAP entry: "Synthflow AI": { ats: "ab", slug: "synthflow" }
+    Sample roles: Senior Python Software Engineer , Senior Software Engineer - (Go) Real-Time Engine, Enterprise Account Executive
+
+  Character AI
+    ATS: ashby (ab)  |  Slug: "character"  |  Jobs: 18
+    ATS_MAP entry: "Character AI": { ats: "ab", slug: "character" }
+    Sample roles: Machine Learning Infrastructure Engineer, Research Engineer, Post-Training (All Industry Levels), Software Engineer, Safety
+
+  Orb
+    ATS: ashby (ab)  |  Slug: "orb"  |  Jobs: 18
+    ATS_MAP entry: "Orb": { ats: "ab", slug: "orb" }
+    Sample roles: Customer Success Manager - New York City, Customer Success Manager - San Francisco HQ, Mid-Market Account Executive- San Francisco HQ
+
+  Retell AI
+    ATS: ashby (ab)  |  Slug: "retell-ai"  |  Jobs: 16
+    ATS_MAP entry: "Retell AI": { ats: "ab", slug: "retell-ai" }
+    Sample roles: Senior Software Engineer, AI Automations, Senior Product Designer, Senior Software Engineer, Backend
+
+  Clay
+    ATS: recruitee (rc)  |  Slug: "clay"  |  Jobs: 14
+    ATS_MAP entry: "Clay": { ats: "rc", slug: "clay" }
+    Sample roles: Allround Marketeer - Clay Hospitality, HR Stage (Allround), Restaurant Supervisor - Papa's Loft House
+
+  Light
+    ATS: ashby (ab)  |  Slug: "light"  |  Jobs: 7
+    ATS_MAP entry: "Light": { ats: "ab", slug: "light" }
+    Sample roles: Marketing, Software Engineer, Asset Management
+
+  Deepnote
+    ATS: ashby (ab)  |  Slug: "deepnote"  |  Jobs: 6
+    ATS_MAP entry: "Deepnote": { ats: "ab", slug: "deepnote" }
+    Sample roles: Full Stack Engineer, Senior Business Development Executive (B2B SaaS), Account Executive 
+
+  Aisera
+    ATS: greenhouse (gh)  |  Slug: "aiserajobs"  |  Jobs: 5
+    ATS_MAP entry: "Aisera": { ats: "gh", slug: "aiserajobs" }
+    Sample roles: Applied AI/ML Engineer, Consultant- Sr AI Ops Engineer, Senior Software engineer- Coversational AI
+
+  Bolt
+    ATS: lever (lv)  |  Slug: "boltjobs"  |  Jobs: 5
+    ATS_MAP entry: "Bolt": { ats: "lv", slug: "boltjobs" }
+    Sample roles: Business Development Director, Construction Operations Trainer Assessor, IT Technical Sales Learning Mentor
+    Also found on: ashby/bolt (0 jobs)
+
+  Bryant Park Consulting
+    ATS: greenhouse (gh)  |  Slug: "bryantparkconsulting"  |  Jobs: 5
+    ATS_MAP entry: "Bryant Park Consulting": { ats: "gh", slug: "bryantparkconsulting" }
+    Sample roles: Engagement Manager, NetSuite Consulting (Remote), Engagement Manager, NetSuite Consulting (Remote) - Material Handling, Project Coordinator, NetSuite Consulting (Remote)
+
+  Basis
+    ATS: lever (lv)  |  Slug: "basis"  |  Jobs: 4
+    ATS_MAP entry: "Basis": { ats: "lv", slug: "basis" }
+    Sample roles: Manager, Software Engineering, Search Media Buyer, Sr Systems Engineer, DSP
+
+  Runway Financial
+    ATS: ashby (ab)  |  Slug: "runway"  |  Jobs: 4
+    ATS_MAP entry: "Runway Financial": { ats: "ab", slug: "runway" }
+    Sample roles: ⚙️ Senior/Staff Platform Engineer, ⚙️ Senior/Staff Product Engineer, 📈 Forward Deployed Finance Partner
+
+  ICON 3D
+    ATS: recruitee (rc)  |  Slug: "icon"  |  Jobs: 2
+    ATS_MAP entry: "ICON 3D": { ats: "rc", slug: "icon" }
+    Sample roles: Vendsys,Leggio; Nuseed, Impland, Datacom; Lightera; Siedos; Breton, EOX
+    ⚠ WARNING: Jobs found but descriptions may be empty — verify parser compatibility
+    Also found on: greenhouse/icon (0 jobs)
+
+  Coactive AI
+    ATS: greenhouse (gh)  |  Slug: "coactive"  |  Jobs: 1
+    ATS_MAP entry: "Coactive AI": { ats: "gh", slug: "coactive" }
+    Sample roles: Account Executive
+    Also found on: ashby/coactive (1 jobs)
+
+  Flatfile
+    ATS: ashby (ab)  |  Slug: "flatfile"  |  Jobs: 0
+    ATS_MAP entry: "Flatfile": { ats: "ab", slug: "flatfile" }
+    ⚠ WARNING: Jobs found but descriptions may be empty — verify parser compatibility
+    Also found on: lever/flatfile (0 jobs)
+
+  Freshworks
+    ATS: lever (lv)  |  Slug: "freshworks"  |  Jobs: 0
+    ATS_MAP entry: "Freshworks": { ats: "lv", slug: "freshworks" }
+    ⚠ WARNING: Jobs found but descriptions may be empty — verify parser compatibility
+
+  Kore.ai
+    ATS: greenhouse (gh)  |  Slug: "koreaiinc"  |  Jobs: 0
+    ATS_MAP entry: "Kore.ai": { ats: "gh", slug: "koreaiinc" }
+    ⚠ WARNING: Jobs found but descriptions may be empty — verify parser compatibility
+
+  Nominal
+    ATS: lever (lv)  |  Slug: "nominal"  |  Jobs: 0
+    ATS_MAP entry: "Nominal": { ats: "lv", slug: "nominal" }
+    ⚠ WARNING: Jobs found but descriptions may be empty — verify parser compatibility
+
+  Snyk
+    ATS: ashby (ab)  |  Slug: "snyk"  |  Jobs: 0
+    ATS_MAP entry: "Snyk": { ats: "ab", slug: "snyk" }
+    ⚠ WARNING: Jobs found but descriptions may be empty — verify parser compatibility
+
+  Thinking Machines Lab
+    ATS: ashby (ab)  |  Slug: "thinking-machines-lab"  |  Jobs: 0
+    ATS_MAP entry: "Thinking Machines Lab": { ats: "ab", slug: "thinking-machines-lab" }
+    ⚠ WARNING: Jobs found but descriptions may be empty — verify parser compatibility
+
+  Trader Joe's
+    ATS: lever (lv)  |  Slug: "trader"  |  Jobs: 0
+    ATS_MAP entry: "Trader Joe's": { ats: "lv", slug: "trader" }
+    ⚠ WARNING: Jobs found but descriptions may be empty — verify parser compatibility
+
+
+████████████████████████████████████████████████████████████████████████████████
+  ACTION REQUIRED: WRONG ATS MAPPINGS TO FIX
+  6 companies have incorrect current mappings
+████████████████████████████████████████████████████████████████████████████████
+
+  Applied Intuition
+    CURRENT (wrong): gh/"appliedintuition"
+    CORRECT:         ab/"applied" (196 jobs)
+    ATS_MAP fix:     "Applied Intuition": { ats: "ab", slug: "applied" }
+
+  DualEntry
+    CURRENT (wrong): rc/"dualentry"
+    CORRECT:         ab/"dualentry" (40 jobs)
+    ATS_MAP fix:     "DualEntry": { ats: "ab", slug: "dualentry" }
+
+  Moveworks
+    CURRENT (wrong): ab/"moveworks"
+    CORRECT:         gh/"moveworks" (54 jobs)
+    ATS_MAP fix:     "Moveworks": { ats: "gh", slug: "moveworks" }
+
+  Shield AI
+    CURRENT (wrong): lv/"shieldai"
+    CORRECT:         gh/"shield" (1 jobs)
+    ATS_MAP fix:     "Shield AI": { ats: "gh", slug: "shield" }
+
+  Spring Health
+    CURRENT (wrong): ab/"springhealth"
+    CORRECT:         rc/"spring" (7 jobs)
+    ATS_MAP fix:     "Spring Health": { ats: "rc", slug: "spring" }
+
+  Warp
+    CURRENT (wrong): gh/"warp"
+    CORRECT:         ab/"warp" (9 jobs)
+    ATS_MAP fix:     "Warp": { ats: "ab", slug: "warp" }
+
+
+████████████████████████████████████████████████████████████████████████████████
+  WARNING: CURRENT MAPPINGS COULD NOT BE VERIFIED
+  8 companies — their current ATS slug returned no board
+████████████████████████████████████████████████████████████████████████████████
+
+  Anduril
+    Current mapping: gh/"andurilindustries" — NO BOARD FOUND
+    Action: Visit their career page manually. They may have switched ATS or shut down.
+
+  Glean
+    Current mapping: gh/"gleanwork" — NO BOARD FOUND
+    Action: Visit their career page manually. They may have switched ATS or shut down.
+
+  Monte Carlo
+    Current mapping: ab/"montecarlodata" — NO BOARD FOUND
+    Action: Visit their career page manually. They may have switched ATS or shut down.
+
+  Stainless
+    Current mapping: ab/"stainlessapi" — NO BOARD FOUND
+    Action: Visit their career page manually. They may have switched ATS or shut down.
+
+  Sword Health
+    Current mapping: lv/"swordhealth" — NO BOARD FOUND
+    Action: Visit their career page manually. They may have switched ATS or shut down.
+
+  EvenUp
+    Current mapping: ab/"evenup" — NO BOARD FOUND
+    Action: Visit their career page manually. They may have switched ATS or shut down.
+
+  Luma AI
+    Current mapping: ab/"luma-ai" — NO BOARD FOUND
+    Action: Visit their career page manually. They may have switched ATS or shut down.
+
+  Uniphore
+    Current mapping: lv/"uniphore" — NO BOARD FOUND
+    Action: Visit their career page manually. They may have switched ATS or shut down.
+
+
+--------------------------------------------------------------------------------
+  NO ATS DISCOVERED — MANUAL REVIEW NEEDED
+  74 companies — no Greenhouse/Ashby/Lever/Recruitee board found
+--------------------------------------------------------------------------------
+  These companies may use: Workday, iCIMS, SmartRecruiters, Taleo, custom pages,
+  or may be defunct. Each needs a manual career page visit.
+
+  - Accrual
+  - Adept AI
+  - Alto Pharmacy
+  - Arctic Wolf
+  - Bain & Company
+  - Base44
+  - Billd
+  - BlackLine
+  - Board International
+  - Built Technologies
+  - Canva
+  - Codeium
+  - Cognigy
+  - Commonwealth Fusion
+  - Corebridge Financial
+  - Credo AI
+  - CrewAI
+  - CrowdStrike
+  - Cyera
+  - Darwinbox
+  - Devoted Health
+  - Docusign
+  - Domo
+  - Findigs
+  - Flock Safety
+  - Flutterwave
+  - Genspark
+  - Giga
+  - Grammarly
+  - Graphiant
+  - Groq
+  - HashiCorp
+  - Hex
+  - Hippocratic AI
+  - Hugging Face
+  - Island
+  - Jasper
+  - Jedox
+  - Klarna
+  - Luminance
+  - MainFunc
+  - Midjourney
+  - Miro
+  - Modular
+  - Monday.com
+  - Navan
+  - Noom
+  - Northvolt
+  - Nuvei
+  - OneStream
+  - Pega
+  - Planful
+  - Pluralsight
+  - Procore
+  - Pyramid Analytics
+  - Resolve AI
+  - Revolut
+  - Rippling
+  - SambaNova
+  - ScaleOps
+  - Seismic
+  - SentinelOne
+  - ServiceNow
+  - Shopify
+  - Skild AI
+  - Tempus AI
+  - ThoughtSpot
+  - Tome
+  - Tropic
+  - Vena Solutions
+  - Weights & Biases
+  - Wise
+  - Wolters Kluwer
+  - World Wide Technology
+
+
+--------------------------------------------------------------------------------
+  CONFIRMED MAPPINGS (no action needed)
+  170 companies — current ATS_MAP entry verified correct
+--------------------------------------------------------------------------------
+  ✓ 1Password                           ashby/1password (82 jobs)
+  ✓ Abacum                              ashby/abacum (21 jobs)
+  ✓ Abnormal Security                   greenhouse/abnormalsecurity (95 jobs)
+  ✓ Abridge                             ashby/abridge (60 jobs)
+  ✓ Affirm                              greenhouse/affirm (156 jobs)
+  ✓ Airtable                            greenhouse/airtable (58 jobs)
+  ✓ Alchemy                             ashby/alchemy (20 jobs)
+  ✓ Alloy                               greenhouse/alloy (17 jobs)
+  ✓ AlphaSense                          greenhouse/alphasense (188 jobs)
+  ✓ Amplitude                           greenhouse/amplitude (44 jobs)
+  ✓ Anaplan                             greenhouse/anaplan (246 jobs)
+  ✓ Anthropic                           greenhouse/anthropic (428 jobs)
+  ✓ Apollo                              greenhouse/apollo (3 jobs)
+  ✓ AppLovin                            greenhouse/applovin (44 jobs)
+  ✓ Apptronik                           greenhouse/apptronik (51 jobs)
+  ✓ Articulate                          lever/articulate (10 jobs)
+  ✓ Ashby                               ashby/ashby (60 jobs)
+  ✓ Attentive                           greenhouse/attentive (65 jobs)
+  ✓ Benchling                           ashby/benchling (50 jobs)
+  ✓ Braze                               greenhouse/braze (175 jobs)
+  ✓ Brex                                greenhouse/brex (255 jobs)
+  ✓ Calendly                            greenhouse/calendly (21 jobs)
+  ✓ Calm                                greenhouse/calm (3 jobs)
+  ✓ Campfire                            ashby/campfire (23 jobs)
+  ✓ CaptivateIQ                         lever/captivateiq (31 jobs)
+  ✓ Carta                               greenhouse/carta (78 jobs)
+  ✓ Celonis                             greenhouse/celonis (165 jobs)
+  ✓ Cerebras Systems                    greenhouse/cerebrassystems (93 jobs)
+  ✓ Chainguard                          greenhouse/chainguard (58 jobs)
+  ✓ ClickUp                             ashby/clickup (80 jobs)
+  ✓ Coast                               greenhouse/coast (18 jobs)
+  ✓ Cockroach Labs                      greenhouse/cockroachlabs (30 jobs)
+  ✓ Cognition AI                        ashby/cognition (55 jobs)
+  ✓ Cohere                              ashby/cohere (123 jobs)
+  ✓ Common Room                         ashby/commonroom (14 jobs)
+  ✓ Contentful                          greenhouse/contentful (111 jobs)
+  ✓ CoreWeave                           greenhouse/coreweave (263 jobs)
+  ✓ Coupa                               lever/coupa (99 jobs)
+  ✓ Coursera                            greenhouse/coursera (6 jobs)
+  ✓ Crusoe                              ashby/crusoe (331 jobs)
+  ✓ Cube                                ashby/cube (14 jobs)
+  ✓ Databricks                          greenhouse/databricks (852 jobs)
+  ✓ Datadog                             greenhouse/datadog (436 jobs)
+  ✓ Datarails                           greenhouse/datarails (8 jobs)
+  ✓ Decagon                             ashby/decagon (87 jobs)
+  ✓ Deel                                ashby/deel (267 jobs)
+  ✓ DeepL                               ashby/deepl (57 jobs)
+  ✓ Discord                             greenhouse/discord (86 jobs)
+  ✓ Doppler                             ashby/doppler (1 jobs)
+  ✓ DOSS                                ashby/doss (16 jobs)
+  ✓ Drata                               ashby/drata (22 jobs)
+  ✓ Drivetrain                          lever/drivetrain (27 jobs)
+  ✓ Duolingo                            greenhouse/duolingo (91 jobs)
+  ✓ ElevenLabs                          ashby/elevenlabs (105 jobs)
+  ✓ Esusu                               greenhouse/esusu (8 jobs)
+  ✓ Faire                               greenhouse/faire (73 jobs)
+  ✓ Figma                               greenhouse/figma (157 jobs)
+  ✓ Figure AI                           greenhouse/figureai (96 jobs)
+  ✓ Fivetran                            greenhouse/fivetran (159 jobs)
+  ✓ Flexport                            greenhouse/flexport (128 jobs)
+  ✓ FloQast                             lever/floqast (57 jobs)
+  ✓ Form Energy                         ashby/formenergy (79 jobs)
+  ✓ Forter                              greenhouse/forter (45 jobs)
+  ✓ GoCardless                          greenhouse/gocardless (45 jobs)
+  ✓ Gong                                recruitee/gong (5 jobs)
+  ✓ Grafana Labs                        greenhouse/grafanalabs (118 jobs)
+  ✓ Gusto                               greenhouse/gusto (77 jobs)
+  ✓ Halcyon                             greenhouse/halcyon (23 jobs)
+  ✓ Handshake                           ashby/handshake (122 jobs)
+  ✓ Harvey AI                           ashby/harvey (210 jobs)
+  ✓ Hebbia                              greenhouse/hebbia (30 jobs)
+  ✓ Highspot                            lever/highspot (4 jobs)
+  ✓ Hightouch                           greenhouse/hightouch (55 jobs)
+  ✓ Inflection AI                       greenhouse/inflectionai (4 jobs)
+  ✓ Intercom                            greenhouse/intercom (194 jobs)
+  ✓ Kalshi                              ashby/kalshi (31 jobs)
+  ✓ Klaviyo                             greenhouse/klaviyo (235 jobs)
+  ✓ Lambda                              ashby/lambda (24 jobs)
+  ✓ LangChain                           ashby/langchain (92 jobs)
+  ✓ LaunchDarkly                        greenhouse/launchdarkly (38 jobs)
+  ✓ Lattice                             greenhouse/lattice (11 jobs)
+  ✓ Lightdash                           ashby/lightdash (6 jobs)
+  ✓ Linear                              ashby/linear (19 jobs)
+  ✓ Lovable                             ashby/lovable (84 jobs)
+  ✓ Melio                               greenhouse/melio (27 jobs)
+  ✓ Mercor                              ashby/mercor (38 jobs)
+  ✓ Mercury                             greenhouse/mercury (54 jobs)
+  ✓ Mistral AI                          lever/mistral (146 jobs)
+  ✓ Modal                               ashby/modal (25 jobs)
+  ✓ n8n                                 ashby/n8n (43 jobs)
+  ✓ NICE                                greenhouse/nice (372 jobs)
+  ✓ Notion                              ashby/notion (160 jobs)
+  ✓ Numeric                             ashby/numeric (9 jobs)
+  ✓ Nuro                                greenhouse/nuro (94 jobs)
+  ✓ Omnea                               ashby/omnea (39 jobs)
+  ✓ OpenAI                              ashby/openai (655 jobs)
+  ✓ OpenEvidence                        ashby/openevidence (10 jobs)
+  ✓ Oura                                greenhouse/oura (116 jobs)
+  ✓ Pacaso                              greenhouse/pacaso (10 jobs)
+  ✓ Palantir                            lever/palantir (237 jobs)
+  ✓ Parloa                              greenhouse/parloa (55 jobs)
+  ✓ Pearl Health                        ashby/pearlhealth (13 jobs)
+  ✓ Physical Intelligence               ashby/physicalintelligence (20 jobs)
+  ✓ Pigment                             lever/pigment (77 jobs)
+  ✓ Pika                                ashby/pika (6 jobs)
+  ✓ Pinecone                            ashby/pinecone (8 jobs)
+  ✓ Plaid                               ashby/plaid (102 jobs)
+  ✓ PostHog                             ashby/posthog (15 jobs)
+  ✓ Profound                            ashby/profound (70 jobs)
+  ✓ Ramp                                ashby/ramp (129 jobs)
+  ✓ Redwood Materials                   greenhouse/redwoodmaterials (55 jobs)
+  ✓ Remote                              greenhouse/remote (2 jobs)
+  ✓ Render                              ashby/render (16 jobs)
+  ✓ Replit                              ashby/replit (80 jobs)
+  ✓ Retool                              ashby/retool (0 jobs)
+  ✓ Rillet                              ashby/rillet (35 jobs)
+  ✓ Riskified                           greenhouse/riskified (29 jobs)
+  ✓ Ro                                  lever/ro (47 jobs)
+  ✓ Roblox                              greenhouse/roblox (301 jobs)
+  ✓ Runway                              ashby/runway (4 jobs)
+  ✓ Samsara                             greenhouse/samsara (390 jobs)
+  ✓ Saronic                             ashby/saronic (260 jobs)
+  ✓ Scale AI                            greenhouse/scaleai (167 jobs)
+  ✓ Serval                              ashby/serval (27 jobs)
+  ✓ Sierra AI                           ashby/sierra (141 jobs)
+  ✓ Simular                             ashby/simular (12 jobs)
+  ✓ Sisense                             greenhouse/sisense (3 jobs)
+  ✓ Snorkel AI                          greenhouse/snorkelai (40 jobs)
+  ✓ Snowflake                           ashby/snowflake (415 jobs)
+  ✓ SpaceX                              greenhouse/spacex (1547 jobs)
+  ✓ Speak                               ashby/speak (49 jobs)
+  ✓ Stability AI                        greenhouse/stabilityai (14 jobs)
+  ✓ Statsig                             ashby/statsig (7 jobs)
+  ✓ Steadily                            ashby/steadily (36 jobs)
+  ✓ Stripe                              greenhouse/stripe (496 jobs)
+  ✓ Suno                                ashby/suno (37 jobs)
+  ✓ Supabase                            ashby/supabase (39 jobs)
+  ✓ Swap                                ashby/swap (54 jobs)
+  ✓ Synthesia                           ashby/synthesia (69 jobs)
+  ✓ Tanium                              greenhouse/tanium (97 jobs)
+  ✓ Thinking Machines                   greenhouse/thinkingmachines (30 jobs)
+  ✓ Thrive Market                       greenhouse/thrivemarket (17 jobs)
+  ✓ Tines                               greenhouse/tines (32 jobs)
+  ✓ Torq                                greenhouse/torq (49 jobs)
+  ✓ Truveta                             greenhouse/truveta (27 jobs)
+  ✓ Typeform                            greenhouse/typeform (20 jobs)
+  ✓ Unify                               ashby/unify (20 jobs)
+  ✓ Unstructured                        ashby/unstructured (13 jobs)
+  ✓ Vanta                               ashby/vanta (163 jobs)
+  ✓ Vannevar Labs                       greenhouse/vannevarlabs (22 jobs)
+  ✓ Vercel                              greenhouse/vercel (76 jobs)
+  ✓ Verkada                             greenhouse/verkada (299 jobs)
+  ✓ Waymo                               greenhouse/waymo (400 jobs)
+  ✓ Wealthsimple                        ashby/wealthsimple (37 jobs)
+  ✓ Weaviate                            ashby/weaviate (5 jobs)
+  ✓ Webflow                             greenhouse/webflow (51 jobs)
+  ✓ Whatnot                             ashby/whatnot (210 jobs)
+  ✓ Whoop                               ashby/whoop (139 jobs)
+  ✓ Wrike                               greenhouse/wrike (45 jobs)
+  ✓ Writer                              ashby/writer (43 jobs)
+  ✓ xAI                                 greenhouse/xai (256 jobs)
+  ✓ Zip                                 ashby/zip (119 jobs)
+  ✓ Zuora                               greenhouse/zuora (50 jobs)
+  ✓ Fireworks AI                        greenhouse/fireworksai (29 jobs)
+  ✓ Baseten                             ashby/baseten (52 jobs)
+  ✓ EliseAI                             ashby/eliseai (114 jobs)
+  ✓ Ambience Healthcare                 ashby/ambiencehealthcare (23 jobs)
+  ✓ Sesame                              ashby/sesame (26 jobs)
+  ✓ You.com                             greenhouse/youcom (11 jobs)
+  ✓ Eudia                               greenhouse/eudia (10 jobs)
+
+
+================================================================================
+  GENERATED ATS_MAP ENTRIES (paste into refresh-jobs.js)
+================================================================================
+
+  "1Password": { ats: "ab", slug: "1password" },
+  "Abacum": { ats: "ab", slug: "abacum" },
+  "Abnormal Security": { ats: "gh", slug: "abnormalsecurity" },
+  "Abridge": { ats: "ab", slug: "abridge" },
+  "Affirm": { ats: "gh", slug: "affirm" },
+  "Airtable": { ats: "gh", slug: "airtable" },
+  "Aisera": { ats: "gh", slug: "aiserajobs" }, // NEW
+  "Alchemy": { ats: "ab", slug: "alchemy" },
+  "Alloy": { ats: "gh", slug: "alloy" },
+  "AlphaSense": { ats: "gh", slug: "alphasense" },
+  "Ambience Healthcare": { ats: "ab", slug: "ambiencehealthcare" },
+  "Amplitude": { ats: "gh", slug: "amplitude" },
+  "Anaplan": { ats: "gh", slug: "anaplan" },
+  "Anthropic": { ats: "gh", slug: "anthropic" },
+  "Apollo": { ats: "gh", slug: "apollo" },
+  "Applied Intuition": { ats: "ab", slug: "applied" }, // FIXED
+  "AppLovin": { ats: "gh", slug: "applovin" },
+  "Apptronik": { ats: "gh", slug: "apptronik" },
+  "Articulate": { ats: "lv", slug: "articulate" },
+  "Ashby": { ats: "ab", slug: "ashby" },
+  "Attentive": { ats: "gh", slug: "attentive" },
+  "Baseten": { ats: "ab", slug: "baseten" },
+  "Basis": { ats: "lv", slug: "basis" }, // NEW
+  "Benchling": { ats: "ab", slug: "benchling" },
+  "Bolt": { ats: "lv", slug: "boltjobs" }, // NEW
+  "Box": { ats: "gh", slug: "boxinc" }, // NEW
+  "Braze": { ats: "gh", slug: "braze" },
+  "Brex": { ats: "gh", slug: "brex" },
+  "Bryant Park Consulting": { ats: "gh", slug: "bryantparkconsulting" }, // NEW
+  "Calendly": { ats: "gh", slug: "calendly" },
+  "Calm": { ats: "gh", slug: "calm" },
+  "Campfire": { ats: "ab", slug: "campfire" },
+  "CaptivateIQ": { ats: "lv", slug: "captivateiq" },
+  "Carta": { ats: "gh", slug: "carta" },
+  "Celonis": { ats: "gh", slug: "celonis" },
+  "Cerebras Systems": { ats: "gh", slug: "cerebrassystems" },
+  "Chainguard": { ats: "gh", slug: "chainguard" },
+  "Character AI": { ats: "ab", slug: "character" }, // NEW
+  "Clay": { ats: "rc", slug: "clay" }, // NEW
+  "ClickUp": { ats: "ab", slug: "clickup" },
+  "Coactive AI": { ats: "gh", slug: "coactive" }, // NEW
+  "Coast": { ats: "gh", slug: "coast" },
+  "Cockroach Labs": { ats: "gh", slug: "cockroachlabs" },
+  "Cognition AI": { ats: "ab", slug: "cognition" },
+  "Cohere": { ats: "ab", slug: "cohere" },
+  "Common Room": { ats: "ab", slug: "commonroom" },
+  "Contentful": { ats: "gh", slug: "contentful" },
+  "CoreWeave": { ats: "gh", slug: "coreweave" },
+  "Coupa": { ats: "lv", slug: "coupa" },
+  "Coursera": { ats: "gh", slug: "coursera" },
+  "Cribl": { ats: "gh", slug: "cribl" }, // NEW
+  "Crusoe": { ats: "ab", slug: "crusoe" },
+  "Cube": { ats: "ab", slug: "cube" },
+  "Cursor": { ats: "ab", slug: "cursor" }, // NEW
+  "Databricks": { ats: "gh", slug: "databricks" },
+  "Datadog": { ats: "gh", slug: "datadog" },
+  "Dataiku": { ats: "gh", slug: "dataiku" }, // NEW
+  "Datarails": { ats: "gh", slug: "datarails" },
+  "dbt Labs": { ats: "gh", slug: "dbtlabsinc" }, // NEW
+  "Decagon": { ats: "ab", slug: "decagon" },
+  "Deel": { ats: "ab", slug: "deel" },
+  "DeepL": { ats: "ab", slug: "deepl" },
+  "Deepnote": { ats: "ab", slug: "deepnote" }, // NEW
+  "DevRev": { ats: "gh", slug: "devrev" }, // NEW
+  "Discord": { ats: "gh", slug: "discord" },
+  "Doppler": { ats: "ab", slug: "doppler" },
+  "DOSS": { ats: "ab", slug: "doss" },
+  "Drata": { ats: "ab", slug: "drata" },
+  "Drivetrain": { ats: "lv", slug: "drivetrain" },
+  "DualEntry": { ats: "ab", slug: "dualentry" }, // FIXED
+  "Duolingo": { ats: "gh", slug: "duolingo" },
+  "Echo Park Consulting": { ats: "ab", slug: "echo" }, // NEW
+  "ElevenLabs": { ats: "ab", slug: "elevenlabs" },
+  "EliseAI": { ats: "ab", slug: "eliseai" },
+  "Esusu": { ats: "gh", slug: "esusu" },
+  "Eudia": { ats: "gh", slug: "eudia" },
+  "Faire": { ats: "gh", slug: "faire" },
+  "Figma": { ats: "gh", slug: "figma" },
+  "Figure AI": { ats: "gh", slug: "figureai" },
+  "Fireworks AI": { ats: "gh", slug: "fireworksai" },
+  "Fivetran": { ats: "gh", slug: "fivetran" },
+  "Flatfile": { ats: "ab", slug: "flatfile" }, // NEW
+  "Flexport": { ats: "gh", slug: "flexport" },
+  "FloQast": { ats: "lv", slug: "floqast" },
+  "Form Energy": { ats: "ab", slug: "formenergy" },
+  "Forter": { ats: "gh", slug: "forter" },
+  "Freshworks": { ats: "lv", slug: "freshworks" }, // NEW
+  "Gecko Robotics": { ats: "ab", slug: "gecko-robotics" }, // NEW
+  "GitLab": { ats: "gh", slug: "gitlab" }, // NEW
+  "GoCardless": { ats: "gh", slug: "gocardless" },
+  "Gong": { ats: "rc", slug: "gong" },
+  "Grafana Labs": { ats: "gh", slug: "grafanalabs" },
+  "Gusto": { ats: "gh", slug: "gusto" },
+  "Halcyon": { ats: "gh", slug: "halcyon" },
+  "Handshake": { ats: "ab", slug: "handshake" },
+  "Harness": { ats: "gh", slug: "harnessinc" }, // NEW
+  "Harvey AI": { ats: "ab", slug: "harvey" },
+  "Hebbia": { ats: "gh", slug: "hebbia" },
+  "Highspot": { ats: "lv", slug: "highspot" },
+  "Hightouch": { ats: "gh", slug: "hightouch" },
+  "Hinge Health": { ats: "ab", slug: "hinge-health" }, // NEW
+  "HubSpot": { ats: "gh", slug: "hubspotjobs" }, // NEW
+  "ICON 3D": { ats: "rc", slug: "icon" }, // NEW
+  "Inflection AI": { ats: "gh", slug: "inflectionai" },
+  "Intercom": { ats: "gh", slug: "intercom" },
+  "Ironclad": { ats: "ab", slug: "ironcladhq" }, // NEW
+  "Kalshi": { ats: "ab", slug: "kalshi" },
+  "Klaviyo": { ats: "gh", slug: "klaviyo" },
+  "Kong": { ats: "ab", slug: "kong" }, // NEW
+  "Kore.ai": { ats: "gh", slug: "koreaiinc" }, // NEW
+  "Lambda": { ats: "ab", slug: "lambda" },
+  "LangChain": { ats: "ab", slug: "langchain" },
+  "Lattice": { ats: "gh", slug: "lattice" },
+  "LaunchDarkly": { ats: "gh", slug: "launchdarkly" },
+  "Light": { ats: "ab", slug: "light" }, // NEW
+  "Lightdash": { ats: "ab", slug: "lightdash" },
+  "Linear": { ats: "ab", slug: "linear" },
+  "Lovable": { ats: "ab", slug: "lovable" },
+  "Melio": { ats: "gh", slug: "melio" },
+  "Mercor": { ats: "ab", slug: "mercor" },
+  "Mercury": { ats: "gh", slug: "mercury" },
+  "Mistral AI": { ats: "lv", slug: "mistral" },
+  "Modal": { ats: "ab", slug: "modal" },
+  "Moveworks": { ats: "gh", slug: "moveworks" }, // FIXED
+  "n8n": { ats: "ab", slug: "n8n" },
+  "NICE": { ats: "gh", slug: "nice" },
+  "Nominal": { ats: "lv", slug: "nominal" }, // NEW
+  "Notion": { ats: "ab", slug: "notion" },
+  "Numeric": { ats: "ab", slug: "numeric" },
+  "Nuro": { ats: "gh", slug: "nuro" },
+  "Omnea": { ats: "ab", slug: "omnea" },
+  "Omni Analytics": { ats: "ab", slug: "omni" }, // NEW
+  "OpenAI": { ats: "ab", slug: "openai" },
+  "OpenEvidence": { ats: "ab", slug: "openevidence" },
+  "Orb": { ats: "ab", slug: "orb" }, // NEW
+  "Oscar Health": { ats: "gh", slug: "oscar" }, // NEW
+  "Oura": { ats: "gh", slug: "oura" },
+  "Outreach": { ats: "lv", slug: "outreach" }, // NEW
+  "Pacaso": { ats: "gh", slug: "pacaso" },
+  "Palantir": { ats: "lv", slug: "palantir" },
+  "Parloa": { ats: "gh", slug: "parloa" },
+  "Pearl Health": { ats: "ab", slug: "pearlhealth" },
+  "Peec AI": { ats: "ab", slug: "peec" }, // NEW
+  "Perplexity AI": { ats: "ab", slug: "perplexity" }, // NEW
+  "Physical Intelligence": { ats: "ab", slug: "physicalintelligence" },
+  "Pigment": { ats: "lv", slug: "pigment" },
+  "Pika": { ats: "ab", slug: "pika" },
+  "Pinecone": { ats: "ab", slug: "pinecone" },
+  "Plaid": { ats: "ab", slug: "plaid" },
+  "PostHog": { ats: "ab", slug: "posthog" },
+  "Profound": { ats: "ab", slug: "profound" },
+  "Ramp": { ats: "ab", slug: "ramp" },
+  "Redwood Materials": { ats: "gh", slug: "redwoodmaterials" },
+  "Relativity Space": { ats: "gh", slug: "relativity" }, // NEW
+  "Remote": { ats: "gh", slug: "remote" },
+  "Render": { ats: "ab", slug: "render" },
+  "Replit": { ats: "ab", slug: "replit" },
+  "Retell AI": { ats: "ab", slug: "retell-ai" }, // NEW
+  "Retool": { ats: "ab", slug: "retool" },
+  "Rillet": { ats: "ab", slug: "rillet" },
+  "Riskified": { ats: "gh", slug: "riskified" },
+  "Ro": { ats: "lv", slug: "ro" },
+  "Roblox": { ats: "gh", slug: "roblox" },
+  "Runway": { ats: "ab", slug: "runway" },
+  "Runway Financial": { ats: "ab", slug: "runway" }, // NEW
+  "Samsara": { ats: "gh", slug: "samsara" },
+  "Saronic": { ats: "ab", slug: "saronic" },
+  "Scale AI": { ats: "gh", slug: "scaleai" },
+  "Serval": { ats: "ab", slug: "serval" },
+  "Sesame": { ats: "ab", slug: "sesame" },
+  "Shield AI": { ats: "gh", slug: "shield" }, // FIXED
+  "Sierra AI": { ats: "ab", slug: "sierra" },
+  "Sigma Computing": { ats: "gh", slug: "sigmacomputing" }, // NEW
+  "Simular": { ats: "ab", slug: "simular" },
+  "Sisense": { ats: "gh", slug: "sisense" },
+  "Snorkel AI": { ats: "gh", slug: "snorkelai" },
+  "Snowflake": { ats: "ab", slug: "snowflake" },
+  "Snyk": { ats: "ab", slug: "snyk" }, // NEW
+  "SpaceX": { ats: "gh", slug: "spacex" },
+  "Speak": { ats: "ab", slug: "speak" },
+  "Spring Health": { ats: "rc", slug: "spring" }, // FIXED
+  "Stability AI": { ats: "gh", slug: "stabilityai" },
+  "Statsig": { ats: "ab", slug: "statsig" },
+  "Steadily": { ats: "ab", slug: "steadily" },
+  "Stripe": { ats: "gh", slug: "stripe" },
+  "Suno": { ats: "ab", slug: "suno" },
+  "Supabase": { ats: "ab", slug: "supabase" },
+  "Swap": { ats: "ab", slug: "swap" },
+  "Synthesia": { ats: "ab", slug: "synthesia" },
+  "Synthflow AI": { ats: "ab", slug: "synthflow" }, // NEW
+  "Tabs": { ats: "ab", slug: "tabs" }, // NEW
+  "Tanium": { ats: "gh", slug: "tanium" },
+  "Thinking Machines": { ats: "gh", slug: "thinkingmachines" },
+  "Thinking Machines Lab": { ats: "ab", slug: "thinking-machines-lab" }, // NEW
+  "Thrive Market": { ats: "gh", slug: "thrivemarket" },
+  "Tines": { ats: "gh", slug: "tines" },
+  "Together AI": { ats: "gh", slug: "togetherai" }, // NEW
+  "Torq": { ats: "gh", slug: "torq" },
+  "Trader Joe's": { ats: "lv", slug: "trader" }, // NEW
+  "Truveta": { ats: "gh", slug: "truveta" },
+  "Typeform": { ats: "gh", slug: "typeform" },
+  "Unify": { ats: "ab", slug: "unify" },
+  "Unstructured": { ats: "ab", slug: "unstructured" },
+  "Vannevar Labs": { ats: "gh", slug: "vannevarlabs" },
+  "Vanta": { ats: "ab", slug: "vanta" },
+  "VAST Data": { ats: "gh", slug: "vast" }, // NEW
+  "Vercel": { ats: "gh", slug: "vercel" },
+  "Verkada": { ats: "gh", slug: "verkada" },
+  "Warp": { ats: "ab", slug: "warp" }, // FIXED
+  "Waymo": { ats: "gh", slug: "waymo" },
+  "Wealthsimple": { ats: "ab", slug: "wealthsimple" },
+  "Weaviate": { ats: "ab", slug: "weaviate" },
+  "Webflow": { ats: "gh", slug: "webflow" },
+  "Whatnot": { ats: "ab", slug: "whatnot" },
+  "Whoop": { ats: "ab", slug: "whoop" },
+  "Wiz": { ats: "gh", slug: "wizinc" }, // NEW
+  "Wrike": { ats: "gh", slug: "wrike" },
+  "Writer": { ats: "ab", slug: "writer" },
+  "xAI": { ats: "gh", slug: "xai" },
+  "You.com": { ats: "gh", slug: "youcom" },
+  "Zip": { ats: "ab", slug: "zip" },
+  "Zuora": { ats: "gh", slug: "zuora" },
+
+
+================================================================================
+  END OF REPORT
+================================================================================
