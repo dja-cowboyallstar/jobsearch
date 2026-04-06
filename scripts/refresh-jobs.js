@@ -272,7 +272,143 @@ async function main() {
 
   console.log("Fetch complete: " + allJobs.length + " jobs");
 
-  // ── VALIDATION ──
+  // ── LOCATION NORMALIZER ──
+  var CITY_ALIASES = {
+    // San Francisco Bay Area
+    "san francisco":"San Francisco Bay Area","sf":"San Francisco Bay Area",
+    "san francisco bay area":"San Francisco Bay Area",
+    "menlo park":"San Francisco Bay Area","palo alto":"San Francisco Bay Area",
+    "sunnyvale":"San Francisco Bay Area","san mateo":"San Francisco Bay Area",
+    "mountain view":"San Francisco Bay Area","cupertino":"San Francisco Bay Area",
+    "redwood city":"San Francisco Bay Area","south san francisco":"San Francisco Bay Area",
+    "san jose":"San Francisco Bay Area","santa clara":"San Francisco Bay Area",
+    "burlingame":"San Francisco Bay Area","foster city":"San Francisco Bay Area",
+    "milpitas":"San Francisco Bay Area","fremont":"San Francisco Bay Area",
+    // New York
+    "new york":"New York","new york city":"New York","nyc":"New York","manhattan":"New York",
+    "brooklyn":"New York","jersey city":"New York",
+    // Seattle
+    "seattle":"Seattle","redmond":"Seattle","bellevue":"Seattle","kirkland":"Seattle",
+    // Austin
+    "austin":"Austin","bastrop":"Austin","starbase":"Austin",
+    // Los Angeles
+    "los angeles":"Los Angeles","la":"Los Angeles","hawthorne":"Los Angeles",
+    "santa monica":"Los Angeles","culver city":"Los Angeles","playa vista":"Los Angeles",
+    "el segundo":"Los Angeles","marina del rey":"Los Angeles","pasadena":"Los Angeles",
+    // Boston
+    "boston":"Boston","cambridge":"Boston","somerville":"Boston",
+    // Washington DC
+    "washington":"Washington DC","washington dc":"Washington DC","arlington":"Washington DC",
+    "mclean":"Washington DC","reston":"Washington DC","bethesda":"Washington DC",
+    // Chicago
+    "chicago":"Chicago",
+    // Denver
+    "denver":"Denver","boulder":"Denver",
+    // Dallas
+    "dallas":"Dallas","plano":"Dallas","irving":"Dallas","fort worth":"Dallas",
+    // Costa Mesa / Orange County
+    "costa mesa":"Costa Mesa","irvine":"Costa Mesa",
+    // London
+    "london":"London",
+    // Paris
+    "paris":"Paris",
+    // Berlin
+    "berlin":"Berlin",
+    // Dublin
+    "dublin":"Dublin",
+    // Amsterdam
+    "amsterdam":"Amsterdam",
+    // Toronto
+    "toronto":"Toronto","waterloo":"Toronto",
+    // Tokyo
+    "tokyo":"Tokyo",
+    // Singapore
+    "singapore":"Singapore",
+    // Tel Aviv
+    "tel aviv":"Tel Aviv",
+    // Munich
+    "munich":"Munich","münchen":"Munich",
+    // Bangalore
+    "bangalore":"Bangalore","bengaluru":"Bangalore",
+    // Sydney
+    "sydney":"Sydney",
+    // Other
+    "remote":"Remote"
+  };
+  var REMOTE_REGIONS = {
+    "us":"US","usa":"US","united states":"US","u.s.":"US","north america":"US",
+    "eu":"EU","europe":"EU","emea":"EU",
+    "latam":"LATAM","latin america":"LATAM","south america":"LATAM",
+    "apac":"APAC","asia":"APAC","asia pacific":"APAC",
+    "global":"Global","worldwide":"Global","anywhere":"Global",
+    "uk":"EU","canada":"US","india":"APAC","japan":"APAC"
+  };
+  function normalizeLocation(loc) {
+    if (!loc) return { _city: null, _remote: false, _remote_region: null };
+    var raw = loc.trim();
+    var isRemote = /\bremote\b/i.test(raw);
+    var remoteRegion = null;
+    if (isRemote) {
+      // Extract region from patterns like "Remote - US", "Remote (EU)", "Remote, LATAM"
+      var regionMatch = raw.match(/remote\s*[\-\(\,\|\/]\s*([A-Za-z\s\.]+)/i);
+      if (regionMatch) {
+        var rk = regionMatch[1].trim().toLowerCase().replace(/[\)\]]/g, "");
+        remoteRegion = REMOTE_REGIONS[rk] || null;
+      }
+      if (!remoteRegion && /\bremote\b/i.test(raw) && raw.replace(/remote/i, "").trim().length < 3) {
+        remoteRegion = "Global";
+      }
+    }
+    // Strip common suffixes and prefixes for city extraction
+    var clean = raw
+      .replace(/\s*\(HQ\)/gi, "")
+      .replace(/\s*-\s*US$/i, "")
+      .replace(/^US-[A-Z]{2}-/i, "")
+      .replace(/,?\s*United States$/i, "")
+      .replace(/,?\s*USA$/i, "")
+      .replace(/,?\s*US$/i, "")
+      .replace(/,?\s*United Kingdom$/i, "")
+      .replace(/,?\s*UK$/i, "")
+      .replace(/,?\s*Germany$/i, "")
+      .replace(/,?\s*France$/i, "")
+      .replace(/,?\s*Ireland$/i, "")
+      .replace(/,?\s*Japan$/i, "")
+      .replace(/,?\s*Canada$/i, "")
+      .replace(/,?\s*Australia$/i, "")
+      .replace(/,?\s*India$/i, "")
+      .replace(/,?\s*Israel$/i, "")
+      .replace(/,?\s*Netherlands$/i, "")
+      .replace(/,?\s*Spain$/i, "")
+      .replace(/,?\s*Poland$/i, "")
+      .replace(/,?\s*Switzerland$/i, "")
+      .replace(/,?\s*[A-Z]{2}$/g, "") // trailing state codes like ", CA"
+      .replace(/,?\s*(?:California|Texas|Washington|Massachusetts|New York|Virginia|Colorado|Illinois|Georgia|Oregon|Maryland|Connecticut|North Carolina|Pennsylvania|District of Columbia|Florida)$/i, "")
+      .trim();
+    // Try to match the cleaned city
+    var cityKey = clean.toLowerCase().replace(/[^a-z\s]/g, "").trim();
+    var city = CITY_ALIASES[cityKey] || null;
+    // If no match, try first token before comma
+    if (!city && clean.indexOf(",") > -1) {
+      var firstPart = clean.split(",")[0].trim().toLowerCase().replace(/[^a-z\s]/g, "").trim();
+      city = CITY_ALIASES[firstPart] || null;
+    }
+    // If still no match but we have a multi-location string (semicolons), try first location
+    if (!city && raw.indexOf(";") > -1) {
+      var firstLoc = raw.split(";")[0].trim();
+      var fl = firstLoc.toLowerCase().replace(/[^a-z\s]/g, "").trim();
+      city = CITY_ALIASES[fl] || null;
+    }
+    // For pure "Remote" strings, city stays null
+    if (isRemote && !city) city = null;
+    return { _city: city, _remote: isRemote, _remote_region: remoteRegion };
+  }
+  // Apply normalizer to all jobs
+  allJobs.forEach(function(j) {
+    var norm = normalizeLocation(j._loc);
+    j._city = norm._city;
+    j._remote = norm._remote;
+    j._remote_region = norm._remote_region;
+  });
   var jobsByCompany = {};
   allJobs.forEach(function(j) {
     var co = j._company || j.employer_name || "Unknown";
@@ -364,6 +500,47 @@ async function main() {
       if (!seen[srcJobs[sj]._loc]) { seen[srcJobs[sj]._loc] = true; samples.push(srcJobs[sj]._loc); }
     }
     console.log("  " + srcNames[si] + ": " + samples.join(" | "));
+  }
+  // Normalized city distribution
+  var cityCounts = {};
+  var unmappedCount = 0;
+  var remoteCount = 0;
+  var remoteRegionCounts = {};
+  allJobs.forEach(function(j) {
+    if (j._remote) remoteCount++;
+    if (j._remote_region) remoteRegionCounts[j._remote_region] = (remoteRegionCounts[j._remote_region] || 0) + 1;
+    if (j._city) {
+      cityCounts[j._city] = (cityCounts[j._city] || 0) + 1;
+    } else if (!j._remote) {
+      unmappedCount++;
+    }
+  });
+  var sortedCities = Object.keys(cityCounts).sort(function(a, b) { return cityCounts[b] - cityCounts[a]; });
+  console.log("\n=== NORMALIZED LOCATION RESULTS ===");
+  console.log("Mapped to city: " + allJobs.filter(function(j){return j._city}).length + " (" + Math.round(allJobs.filter(function(j){return j._city}).length / allJobs.length * 100) + "%)");
+  console.log("Remote (any): " + remoteCount + " (" + Math.round(remoteCount / allJobs.length * 100) + "%)");
+  console.log("Unmapped (not remote, no city): " + unmappedCount + " (" + Math.round(unmappedCount / allJobs.length * 100) + "%)");
+  console.log("\nNormalized cities (" + sortedCities.length + "):");
+  for (var ci = 0; ci < sortedCities.length; ci++) {
+    console.log("  " + cityCounts[sortedCities[ci]] + "x | " + sortedCities[ci]);
+  }
+  console.log("\nRemote regions:");
+  Object.keys(remoteRegionCounts).sort(function(a,b){return remoteRegionCounts[b]-remoteRegionCounts[a]}).forEach(function(r) {
+    console.log("  " + remoteRegionCounts[r] + "x | Remote (" + r + ")");
+  });
+  // Sample unmapped locations
+  if (unmappedCount > 0) {
+    var unmapped = allJobs.filter(function(j) { return !j._city && !j._remote && j._loc; });
+    console.log("\nUnmapped samples (first 15):");
+    var unmSeen = {};
+    var unmCount = 0;
+    for (var ui = 0; ui < unmapped.length && unmCount < 15; ui++) {
+      if (!unmSeen[unmapped[ui]._loc]) {
+        unmSeen[unmapped[ui]._loc] = true;
+        console.log("  " + unmapped[ui]._loc);
+        unmCount++;
+      }
+    }
   }
   console.log("\n========================\n");
 
