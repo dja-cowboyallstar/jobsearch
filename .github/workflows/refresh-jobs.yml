@@ -1,29 +1,39 @@
 name: Refresh Job Data
-
 on:
   schedule:
     # Runs every day at 6:00 AM UTC (1:00 AM Central)
     - cron: '0 6 * * *'
   workflow_dispatch:
     # Allows manual trigger from GitHub Actions UI
-
 jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
       - name: Install dependencies
         run: npm install @vercel/blob
-
+      - name: Diagnostic - verify code version
+        run: |
+          echo "=== DIAGNOSTIC ==="
+          echo "Git SHA:"
+          git rev-parse HEAD
+          echo "ATS_MAP first entry:"
+          grep -o '"[^"]*":{ats:"[^"]*",slug:"[^"]*"}' scripts/refresh-jobs.js | head -1
+          echo "ATS_MAP entry count:"
+          grep -o '"[^"]*":{ats:"[^"]*",slug:"[^"]*"}' scripts/refresh-jobs.js | wc -l
+          echo "Has WORKDAY_MAP:"
+          grep -c "WORKDAY_MAP" scripts/refresh-jobs.js
+          echo "Has var decoded:"
+          grep -c "var decoded" scripts/refresh-jobs.js
+          echo "Has fetchJSearch in router:"
+          grep -c "jobs = await fetchJSearch" scripts/refresh-jobs.js
+          echo "=== END DIAGNOSTIC ==="
       - name: Fetch and upload job data
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
