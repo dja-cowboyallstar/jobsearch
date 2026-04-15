@@ -1,0 +1,319 @@
+================================================================================
+  ASCENT ATS CLASSIFICATION REPORT
+  Generated: 2026-04-11T18:47:30.767Z
+  Companies classified: 120
+================================================================================
+
+  STATUS SUMMARY
+--------------------------------------------------------------------------------
+  Verified (API confirmed):       32
+  Detected, not verified:         9
+  Detected, no slug extracted:    38
+  JS-rendered, no match:          1
+  No ATS match:                   19
+  No career URL found:            21
+  Fetch failed:                   0
+
+  PLATFORM DISTRIBUTION
+--------------------------------------------------------------------------------
+  iCIMS                 38 companies       0 jobs  [✗ needs fetcher]
+  Ashby                 17 companies     481 jobs  [✓ supported]
+  Greenhouse            12 companies     370 jobs  [✓ supported]
+  Workday                7 companies    1565 jobs  [✗ needs fetcher]
+  Lever                  3 companies      93 jobs  [✓ supported]
+  BambooHR               2 companies       0 jobs  [✗ needs fetcher]
+
+
+████████████████████████████████████████████████████████████████████████████████
+  READY TO ADD: VERIFIED ATS MAPPINGS (supported platforms)
+  23 companies — API confirmed, can be added to ATS_MAP now
+████████████████████████████████████████████████████████████████████████████████
+
+  Harness
+    Platform: Greenhouse (gh)  |  Slug: "harnessinc"  |  Jobs: 133
+    ATS_MAP: "Harness": { ats: "gh", slug: "harnessinc" }
+    Sample: AppSec Sales Engineer , AP Staff Accountant, Commercial Counsel
+    Career page: https://www.harness.io/company/careers
+
+  Cursor
+    Platform: Ashby (ab)  |  Slug: "cursor"  |  Jobs: 79
+    ATS_MAP: "Cursor": { ats: "ab", slug: "cursor" }
+    Sample: Software Engineer, Growth , Software Engineer, Services Platform, Software Engineer, Infrastructure
+    Career page: https://cursor.com/careers
+
+  Hinge Health
+    Platform: Ashby (ab)  |  Slug: "hinge-health"  |  Jobs: 78
+    ATS_MAP: "Hinge Health": { ats: "ab", slug: "hinge-health" }
+    Sample: Staff Software Engineer, Growth, Product Manager, Conversational AI , Growth Marketing Manager, Direct Mail 
+    Career page: https://jobs.ashbyhq.com/hinge-health
+
+  Clay
+    Platform: Ashby (ab)  |  Slug: "claylabs"  |  Jobs: 68
+    ATS_MAP: "Clay": { ats: "ab", slug: "claylabs" }
+    Sample: Enterprise Growth Strategist (Customer Success), Commercial Counsel, Strategic Finance 
+    Career page: https://www.clay.com/careers
+
+  DevRev
+    Platform: Greenhouse (gh)  |  Slug: "devrev"  |  Jobs: 64
+    ATS_MAP: "DevRev": { ats: "gh", slug: "devrev" }
+    Sample: Account Executive, Account Executive – Field Sales, Account Executive – Field Sales
+    Career page: https://devrev.ai/careers
+
+  Codeium
+    Platform: Ashby (ab)  |  Slug: "cognition"  |  Jobs: 59
+    ATS_MAP: "Codeium": { ats: "ab", slug: "cognition" }
+    Sample: Special Projects Engineer, General Application, Research, Post-Training
+    Career page: https://jobs.ashbyhq.com/cognition
+
+  Dataiku
+    Platform: Greenhouse (gh)  |  Slug: "dataiku"  |  Jobs: 55
+    ATS_MAP: "Dataiku": { ats: "gh", slug: "dataiku" }
+    Sample: Accountant, AI Healthcare & Life Sciences Solutions Consultant, Business Development Representative, Italy
+    Career page: https://www.dataiku.com/company/careers/
+
+  Together AI
+    Platform: Greenhouse (gh)  |  Slug: "togetherai"  |  Jobs: 51
+    ATS_MAP: "Together AI": { ats: "gh", slug: "togetherai" }
+    Sample: AI Researcher, Core ML (Turbo), Backend Engineer , Backend Software Engineer — Data Platform & AI Data Products
+    Career page: https://www.together.ai/careers
+
+  dbt Labs
+    Platform: Greenhouse (gh)  |  Slug: "dbtlabsinc"  |  Jobs: 51
+    ATS_MAP: "dbt Labs": { ats: "gh", slug: "dbtlabsinc" }
+    Sample: Account Executive, Commercial , Account Executive, Commercial (DACH), Account Executive, Commercial - (France)
+    Career page: https://www.getdbt.com/about-us/careers
+
+  Commonwealth Fusion
+    Platform: Lever (lv)  |  Slug: "cfsenergy"  |  Jobs: 47
+    ATS_MAP: "Commonwealth Fusion": { ats: "lv", slug: "cfsenergy" }
+    Sample: Assembly Process Engineer - Contract, Computational Materials Scientist, Diagnostician
+    Career page: https://www.cfs.energy/careers/
+
+  Ironclad
+    Platform: Ashby (ab)  |  Slug: "ironcladhq"  |  Jobs: 47
+    ATS_MAP: "Ironclad": { ats: "ab", slug: "ironcladhq" }
+    Sample: Business Development Representative, Staff Software Engineer, Senior Software Engineer
+    Career page: https://ironcladapp.com/careers
+
+  Peec AI
+    Platform: Ashby (ab)  |  Slug: "peec"  |  Jobs: 34
+    ATS_MAP: "Peec AI": { ats: "ab", slug: "peec" }
+    Sample: Senior Fullstack Engineer, Engineering Manager, Senior Product Engineer
+    Career page: https://peec.ai/careers
+
+  Outreach
+    Platform: Lever (lv)  |  Slug: "outreach"  |  Jobs: 32
+    ATS_MAP: "Outreach": { ats: "lv", slug: "outreach" }
+    Sample: Account Executive, EMEA Commercial, Customer Advocacy Manager, Customer Success Manager
+    Career page: https://www.outreach.ai/company/working-at-outreach
+
+  Gecko Robotics
+    Platform: Ashby (ab)  |  Slug: "gecko-robotics"  |  Jobs: 26
+    ATS_MAP: "Gecko Robotics": { ats: "ab", slug: "gecko-robotics" }
+    Sample: Forward Deployed Engineer, Forward Deployed Engineer | Team Lead, Government, Forward Deployed Engineer | Middle East 
+    Career page: https://www.geckorobotics.com/careers
+
+  Omni Analytics
+    Platform: Ashby (ab)  |  Slug: "omni"  |  Jobs: 20
+    ATS_MAP: "Omni Analytics": { ats: "ab", slug: "omni" }
+    Sample: Managing Architect (North America), Software Engineer - TypeScript/JavaScript, Solutions Engineer - Pre-Sales (San Francisco, CA)
+    Career page: https://jobs.ashbyhq.com/omni
+
+  Orb
+    Platform: Ashby (ab)  |  Slug: "orb"  |  Jobs: 18
+    ATS_MAP: "Orb": { ats: "ab", slug: "orb" }
+    Sample: Customer Success Manager - New York City, Customer Success Manager - San Francisco HQ, Mid-Market Account Executive- San Francisco HQ
+    Career page: https://www.withorb.com/careers
+
+  Synthflow AI
+    Platform: Ashby (ab)  |  Slug: "synthflow"  |  Jobs: 18
+    ATS_MAP: "Synthflow AI": { ats: "ab", slug: "synthflow" }
+    Sample: Senior Python Software Engineer , Senior Software Engineer - (Go) Real-Time Engine, Enterprise Account Executive
+    Career page: https://jobs.ashbyhq.com/synthflow
+
+  Retell AI
+    Platform: Ashby (ab)  |  Slug: "retell-ai"  |  Jobs: 17
+    ATS_MAP: "Retell AI": { ats: "ab", slug: "retell-ai" }
+    Sample: Senior Software Engineer, AI Automations, Senior Product Designer, Senior Software Engineer, Backend
+    Career page: https://www.retellai.com/careers
+
+  Character AI
+    Platform: Ashby (ab)  |  Slug: "character"  |  Jobs: 17
+    ATS_MAP: "Character AI": { ats: "ab", slug: "character" }
+    Sample: Machine Learning Infrastructure Engineer, Research Engineer, Post-Training (All Industry Levels), Software Engineer, Safety
+    Career page: https://policies.character.ai/careers
+
+  Findigs
+    Platform: Lever (lv)  |  Slug: "findigs"  |  Jobs: 14
+    ATS_MAP: "Findigs": { ats: "lv", slug: "findigs" }
+    Sample: Customer Success Associate, Director, Revenue Operations, Enterprise Account Executive
+    Career page: https://www.findigs.com/careers
+
+  Built Technologies
+    Platform: Greenhouse (gh)  |  Slug: "getbuilt"  |  Jobs: 11
+    ATS_MAP: "Built Technologies": { ats: "gh", slug: "getbuilt" }
+    Sample: Director of Product & Design, SaaS Products, Enterprise Account Executive, Lender, Enterprise Account Executive - OGC 
+    Career page: https://getbuilt.com/careers/
+
+  Aisera
+    Platform: Greenhouse (gh)  |  Slug: "aiserajobs"  |  Jobs: 5
+    ATS_MAP: "Aisera": { ats: "gh", slug: "aiserajobs" }
+    Sample: Applied AI/ML Engineer, Consultant- Sr AI Ops Engineer, Senior Software engineer- Coversational AI
+    Career page: https://aisera.com/careers/
+
+  Coactive AI
+    Platform: Ashby (ab)  |  Slug: "coactive"  |  Jobs: 0
+    ATS_MAP: "Coactive AI": { ats: "ab", slug: "coactive" }
+    Career page: https://www.coactive.ai/careers
+
+
+████████████████████████████████████████████████████████████████████████████████
+  WORKDAY COMPANIES: VERIFIED (fetcher needed)
+  7 companies — Workday CXS API confirmed working
+████████████████████████████████████████████████████████████████████████████████
+
+  CrowdStrike
+    Tenant: "crowdstrike"  |  DC: wd5  |  Site: "crowdstrikecareers"  |  Jobs: 663
+    API: https://crowdstrike.wd5.myworkdayjobs.com/wday/cxs/crowdstrike/crowdstrikecareers/jobs
+    Sample: Sr. Engineer - Dev Experience Sensor, Sr. Product Manager, Endpoint Protection Products (Hybrid), Corporate Account Manager, Hyderabad (Remote)
+    Career page: https://www.crowdstrike.com/en-us/careers/
+
+  Wolters Kluwer
+    Tenant: "wk"  |  DC: wd3  |  Site: "external"  |  Jobs: 578
+    API: https://wk.wd3.myworkdayjobs.com/wday/cxs/wk/external/jobs
+    Sample: Senior Software Test Automation Engineer - Javascript + (Selenium/Playwright/Tosca), Product Software Engineer - .Net Fullstack - Pune, Senior Enterprise Software Engineer - SharePoint Developer
+    Career page: https://careers.wolterskluwer.com/
+
+  Tempus AI
+    Tenant: "tempus"  |  DC: wd5  |  Site: "tempus_careers"  |  Jobs: 103
+    API: https://tempus.wd5.myworkdayjobs.com/wday/cxs/tempus/tempus_careers/jobs
+    Sample: Real World Evidence Summer Associate, Biostatistics Summer Associate, MRD Clinical Account Executive, North Florida
+    Career page: https://www.tempus.com/about-us/careers/
+
+  Arctic Wolf
+    Tenant: "arcticwolf"  |  DC: wd1  |  Site: "external"  |  Jobs: 88
+    API: https://arcticwolf.wd1.myworkdayjobs.com/wday/cxs/arcticwolf/external/jobs
+    Sample: Senior Developer, Staff Developer-Backend, Developer-App Platform-Infra
+    Career page: https://arcticwolf.com/company/careers/
+
+  Devoted Health
+    Tenant: "devoted"  |  DC: wd1  |  Site: "devoted"  |  Jobs: 48
+    API: https://devoted.wd1.myworkdayjobs.com/wday/cxs/devoted/devoted/jobs
+    Sample: Manager, Clinical Associates, Sales Director, Provider Network Manager
+    Career page: https://www.devoted.com/careers/
+
+  Alto Pharmacy
+    Tenant: "alto"  |  DC: wd1  |  Site: "fuzehealthcareersite"  |  Jobs: 46
+    API: https://alto.wd1.myworkdayjobs.com/wday/cxs/alto/fuzehealthcareersite/jobs
+    Sample: Manager, Product Analytics - FuzeRx, Verification Pharmacist - FuzeRx, Fulfillment Coordinator- Fuze Rx
+    Career page: https://www.alto.com/careers
+
+  Pluralsight
+    Tenant: "pluralsight"  |  DC: wd1  |  Site: "careers"  |  Jobs: 39
+    API: https://pluralsight.wd1.myworkdayjobs.com/wday/cxs/pluralsight/careers/jobs
+    Sample: Strategic Account Executive, Contract Talent Acquisition Specialist, Accessibility Specialist
+    Career page: https://www.pluralsight.com/careers
+
+
+--------------------------------------------------------------------------------
+  UNSUPPORTED PLATFORMS DETECTED
+  40 companies — on platforms we don't have fetchers for
+--------------------------------------------------------------------------------
+  Billd                               BambooHR           slug: billd  (https://billd.com/careers/)
+  Graphiant                           BambooHR           slug: graphiant  (https://www.graphiant.com/careers)
+  Groq                                iCIMS              slug: not extracted  (https://groq.com/careers-at-groq)
+  SambaNova                           iCIMS              slug: not extracted  (https://sambanova.ai/company/careers)
+  Navan                               iCIMS              slug: not extracted  (https://navan.com/careers)
+  Rippling                            iCIMS              slug: not extracted  (https://www.rippling.com/careers)
+  Wiz                                 iCIMS              slug: not extracted  (https://www.wiz.io/careers)
+  Island                              iCIMS              slug: not extracted  (https://www.island.io/careers)
+  Snyk                                iCIMS              slug: not extracted  (https://snyk.io/careers/)
+  Cyera                               iCIMS              slug: not extracted  (https://www.cyera.com/careers)
+  Flock Safety                        iCIMS              slug: not extracted  (https://www.flocksafety.com/careers)
+  Canva                               iCIMS              slug: not extracted  (https://www.lifeatcanva.com/en/)
+  Monday.com                          iCIMS              slug: not extracted  (https://www.monday.com/careers)
+  HubSpot                             iCIMS              slug: not extracted  (https://www.hubspot.com/careers)
+  Docusign                            iCIMS              slug: www  (https://careers.docusign.com/)
+  Cribl                               iCIMS              slug: not extracted  (https://cribl.io/careers/)
+  World Wide Technology               iCIMS              slug: not extracted  (https://www.wwt.com/corporate/who-we-are/careers)
+  VAST Data                           iCIMS              slug: not extracted  (https://www.vastdata.com/careers)
+  Weights & Biases                    iCIMS              slug: not extracted  (https://wandb.ai/site/careers/)
+  Freshworks                          iCIMS              slug: not extracted  (https://www.freshworks.com/company/careers/)
+  Miro                                iCIMS              slug: not extracted  (https://miro.com/careers/)
+  Nuvei                               iCIMS              slug: not extracted  (https://www.nuvei.com/careers)
+  Bain & Company                      iCIMS              slug: not extracted  (https://www.bain.com/careers)
+  Bolt                                iCIMS              slug: not extracted  (https://www.bolt.com/careers)
+  Seismic                             iCIMS              slug: not extracted  (https://www.seismic.com/careers/)
+  Hex                                 iCIMS              slug: not extracted  (https://hex.tech/careers/)
+  Flatfile                            iCIMS              slug: not extracted  (https://flatfile.com/careers)
+  Base44                              iCIMS              slug: not extracted  (https://careers.wix.com/)
+  Kore.ai                             iCIMS              slug: not extracted  (https://www.kore.ai/careers)
+  Wise                                iCIMS              slug: not extracted  (https://wise.jobs/)
+  Pega                                iCIMS              slug: not extracted  (https://www.pega.com/about/careers)
+  Darwinbox                           iCIMS              slug: not extracted  (https://www.darwinbox.com/en-us/careers)
+  Board International                 iCIMS              slug: not extracted  (https://www.board.com/careers)
+  Jedox                               iCIMS              slug: not extracted  (https://www.jedox.com/en/about/careers/)
+  Runway Financial                    iCIMS              slug: not extracted  (https://runway.com/careers)
+  Vena Solutions                      iCIMS              slug: not extracted  (https://vena.pinpointhq.com/)
+  BlackLine                           iCIMS              slug: www  (https://careers.blackline.com/careers-home/)
+  ThoughtSpot                         iCIMS              slug: not extracted  (https://www.thoughtspot.com/careers)
+  Domo                                iCIMS              slug: not extracted  (https://www.domo.com/company/careers)
+  Modular                             iCIMS              slug: not extracted  (https://www.modular.com/company/careers)
+
+
+--------------------------------------------------------------------------------
+  UNRESOLVED — NO ATS DETECTED
+  41 companies — manual review or Firecrawl needed
+--------------------------------------------------------------------------------
+  Accrual                             No ATS fingerprint detected in HTML. https://www.accrual.com/
+  Adept AI                            no URL                         —
+  Basis                               no URL                         —
+  Box                                 no URL                         —
+  Bryant Park Consulting              no URL                         —
+  Cognigy                             No ATS fingerprint detected in HTML. https://www.cognigy.com/careers
+  Corebridge Financial                no URL                         —
+  CrewAI                              no URL                         —
+  Deepnote                            no URL                         —
+  Echo Park Consulting                No ATS fingerprint detected in HTML. https://www.echoparkconsulting.com/join-us
+  Flutterwave                         No ATS fingerprint detected in HTML. https://www.flutterwave.com/us/careers
+  Genspark                            no URL                         —
+  Giga                                no URL                         —
+  GitLab                              No ATS fingerprint detected in HTML. https://gitlab.com/jobs
+  HashiCorp                           no URL                         —
+  Hippocratic AI                      no URL                         —
+  Hugging Face                        JS-rendered                    https://apply.workable.com/huggingface
+  ICON 3D                             No ATS fingerprint detected in HTML. https://www.iconbuild.com/404
+  Klarna                              No ATS fingerprint detected in HTML. https://www.klarna.com/careers/
+  Kong                                No ATS fingerprint detected in HTML. https://konghq.com/
+  Light                               no URL                         —
+  Luminance                           No ATS fingerprint detected in HTML. https://www.luminance.com/careers/
+  MainFunc                            no URL                         —
+  Midjourney                          no URL                         —
+  Nominal                             No ATS fingerprint detected in HTML. https://nominal.io/careers
+  Northvolt                           No ATS fingerprint detected in HTML. https://northvolt.com/careers
+  OneStream                           No ATS fingerprint detected in HTML. https://www.onestream.com/careers/
+  Oscar Health                        No ATS fingerprint detected in HTML. https://www.hioscar.com/careers
+  Perplexity AI                       no URL                         —
+  Procore                             No ATS fingerprint detected in HTML. https://careers.procore.com/
+  Pyramid Analytics                   No ATS fingerprint detected in HTML. https://www.pyramidanalytics.com/company/careers/
+  Relativity Space                    No ATS fingerprint detected in HTML. https://www.relativityspace.com/careers
+  Revolut                             no URL                         —
+  ScaleOps                            No ATS fingerprint detected in HTML. https://scaleops.com/careers/
+  SentinelOne                         No ATS fingerprint detected in HTML. https://www.sentinelone.com/careers/
+  ServiceNow                          no URL                         —
+  Skild AI                            no URL                         —
+  Tabs                                No ATS fingerprint detected in HTML. https://www.tabs.com/careers
+  Thinking Machines Lab               no URL                         —
+  Tome                                no URL                         —
+  Trader Joe's                        no URL                         —
+
+
+--------------------------------------------------------------------------------
+  CAREER URL REGISTRY UPDATES
+--------------------------------------------------------------------------------
+  99 career URLs discovered/confirmed. Saved to careers-urls.json.
+
+
+================================================================================
+  END OF REPORT
+================================================================================

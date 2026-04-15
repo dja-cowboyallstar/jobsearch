@@ -7,6 +7,7 @@
     "dev": "vercel dev"
   },
   "dependencies": {
+    "@mendable/firecrawl-js": "^4.18.2",
     "@vercel/blob": "^0.27.0"
   }
 }

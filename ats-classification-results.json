@@ -1,0 +1,2524 @@
+[
+  {
+    "company": "Hugging Face",
+    "careersUrl": "https://apply.workable.com/huggingface",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 5744,
+    "jsRendered": true,
+    "status": "js_rendered_no_match",
+    "error": "Page appears JS-rendered (<10KB). ATS may be loaded client-side."
+  },
+  {
+    "company": "Together AI",
+    "careersUrl": "https://www.together.ai/careers",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "togetherai",
+    "validation": {
+      "valid": true,
+      "jobCount": 51,
+      "sampleTitles": [
+        "AI Researcher, Core ML (Turbo)",
+        "Backend Engineer ",
+        "Backend Software Engineer — Data Platform & AI Data Products"
+      ]
+    },
+    "htmlLength": 335986,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "togetherai"
+      }
+    ]
+  },
+  {
+    "company": "Groq",
+    "careersUrl": "https://groq.com/careers-at-groq",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 925185,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "SambaNova",
+    "careersUrl": "https://sambanova.ai/company/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 104531,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "ScaleOps",
+    "careersUrl": "https://scaleops.com/careers/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 246942,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Perplexity AI",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Jasper",
+    "careersUrl": "https://www.jasper.ai/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "jasper",
+    "validation": {
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    "htmlLength": 371070,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "jasper"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Cursor",
+    "careersUrl": "https://cursor.com/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "cursor",
+    "validation": {
+      "valid": true,
+      "jobCount": 79,
+      "sampleTitles": [
+        "Software Engineer, Growth ",
+        "Software Engineer, Services Platform",
+        "Software Engineer, Infrastructure"
+      ]
+    },
+    "htmlLength": 810905,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "cursor"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Genspark",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Credo AI",
+    "careersUrl": "https://www.credo.ai/jobs",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "credo",
+    "validation": {
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    "htmlLength": 63707,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "credo"
+      }
+    ]
+  },
+  {
+    "company": "Navan",
+    "careersUrl": "https://navan.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 370573,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Rippling",
+    "careersUrl": "https://www.rippling.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 1287765,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Billd",
+    "careersUrl": "https://billd.com/careers/",
+    "platform": "BambooHR",
+    "platformCode": "bb",
+    "supported": false,
+    "slug": "billd",
+    "validation": {
+      "valid": true,
+      "jobCount": null,
+      "error": null
+    },
+    "htmlLength": 616506,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "BambooHR",
+        "code": "bb",
+        "supported": false,
+        "slug": "billd"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Klarna",
+    "careersUrl": "https://www.klarna.com/careers/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 126528,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Revolut",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Wiz",
+    "careersUrl": "https://www.wiz.io/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 273982,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Island",
+    "careersUrl": "https://www.island.io/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 255857,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Snyk",
+    "careersUrl": "https://snyk.io/careers/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 281178,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Cyera",
+    "careersUrl": "https://www.cyera.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 380510,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Flock Safety",
+    "careersUrl": "https://www.flocksafety.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 151335,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Tempus AI",
+    "careersUrl": "https://www.tempus.com/about-us/careers/",
+    "platform": "Workday",
+    "platformCode": "wd",
+    "supported": false,
+    "slug": {
+      "tenant": "tempus",
+      "dataCenter": "wd5",
+      "site": "tempus_careers",
+      "apiUrl": "https://tempus.wd5.myworkdayjobs.com/wday/cxs/tempus/tempus_careers/jobs"
+    },
+    "validation": {
+      "valid": true,
+      "jobCount": 103,
+      "sampleTitles": [
+        "Real World Evidence Summer Associate",
+        "Biostatistics Summer Associate",
+        "MRD Clinical Account Executive, North Florida"
+      ]
+    },
+    "htmlLength": 86843,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Workday",
+        "code": "wd",
+        "supported": false,
+        "slug": {
+          "tenant": "tempus",
+          "dataCenter": "wd5",
+          "site": "tempus_careers",
+          "apiUrl": "https://tempus.wd5.myworkdayjobs.com/wday/cxs/tempus/tempus_careers/jobs"
+        }
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Hippocratic AI",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Canva",
+    "careersUrl": "https://www.lifeatcanva.com/en/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 127919,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Monday.com",
+    "careersUrl": "https://www.monday.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 2365562,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Clay",
+    "careersUrl": "https://www.clay.com/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "claylabs",
+    "validation": {
+      "valid": true,
+      "jobCount": 68,
+      "sampleTitles": [
+        "Enterprise Growth Strategist (Customer Success)",
+        "Commercial Counsel",
+        "Strategic Finance "
+      ]
+    },
+    "htmlLength": 314632,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "claylabs"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "ServiceNow",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "HubSpot",
+    "careersUrl": "https://www.hubspot.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 574884,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Docusign",
+    "careersUrl": "https://careers.docusign.com/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": "www",
+    "validation": {
+      "valid": false,
+      "error": "iCIMS validation not implemented — no public API"
+    },
+    "htmlLength": 527957,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": "www"
+      }
+    ]
+  },
+  {
+    "company": "dbt Labs",
+    "careersUrl": "https://www.getdbt.com/about-us/careers",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "dbtlabsinc",
+    "validation": {
+      "valid": true,
+      "jobCount": 51,
+      "sampleTitles": [
+        "Account Executive, Commercial ",
+        "Account Executive, Commercial (DACH)",
+        "Account Executive, Commercial - (France)"
+      ]
+    },
+    "htmlLength": 1573301,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "dbtlabsinc"
+      }
+    ]
+  },
+  {
+    "company": "Dataiku",
+    "careersUrl": "https://www.dataiku.com/company/careers/",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "dataiku",
+    "validation": {
+      "valid": true,
+      "jobCount": 55,
+      "sampleTitles": [
+        "Accountant",
+        "AI Healthcare & Life Sciences Solutions Consultant",
+        "Business Development Representative, Italy"
+      ]
+    },
+    "htmlLength": 260041,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "dataiku"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Cribl",
+    "careersUrl": "https://cribl.io/careers/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 607435,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Gecko Robotics",
+    "careersUrl": "https://www.geckorobotics.com/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "gecko-robotics",
+    "validation": {
+      "valid": true,
+      "jobCount": 26,
+      "sampleTitles": [
+        "Forward Deployed Engineer",
+        "Forward Deployed Engineer | Team Lead, Government",
+        "Forward Deployed Engineer | Middle East "
+      ]
+    },
+    "htmlLength": 56099,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "gecko-robotics"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Commonwealth Fusion",
+    "careersUrl": "https://www.cfs.energy/careers/",
+    "platform": "Lever",
+    "platformCode": "lv",
+    "supported": true,
+    "slug": "cfsenergy",
+    "validation": {
+      "valid": true,
+      "jobCount": 47,
+      "sampleTitles": [
+        "Assembly Process Engineer - Contract",
+        "Computational Materials Scientist",
+        "Diagnostician"
+      ]
+    },
+    "htmlLength": 127910,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Lever",
+        "code": "lv",
+        "supported": true,
+        "slug": "cfsenergy"
+      }
+    ]
+  },
+  {
+    "company": "Northvolt",
+    "careersUrl": "https://northvolt.com/careers",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 327751,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Ironclad",
+    "careersUrl": "https://ironcladapp.com/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "ironcladhq",
+    "validation": {
+      "valid": true,
+      "jobCount": 47,
+      "sampleTitles": [
+        "Business Development Representative",
+        "Staff Software Engineer",
+        "Senior Software Engineer"
+      ]
+    },
+    "htmlLength": 409865,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "ironcladhq"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "ICON 3D",
+    "careersUrl": "https://www.iconbuild.com/404",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 49691,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "World Wide Technology",
+    "careersUrl": "https://www.wwt.com/corporate/who-we-are/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 2330752,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Shopify",
+    "careersUrl": "https://www.shopify.com/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 500901,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": null
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "CrowdStrike",
+    "careersUrl": "https://www.crowdstrike.com/en-us/careers/",
+    "platform": "Workday",
+    "platformCode": "wd",
+    "supported": false,
+    "slug": {
+      "tenant": "crowdstrike",
+      "dataCenter": "wd5",
+      "site": "crowdstrikecareers",
+      "apiUrl": "https://crowdstrike.wd5.myworkdayjobs.com/wday/cxs/crowdstrike/crowdstrikecareers/jobs"
+    },
+    "validation": {
+      "valid": true,
+      "jobCount": 663,
+      "sampleTitles": [
+        "Sr. Engineer - Dev Experience Sensor",
+        "Sr. Product Manager, Endpoint Protection Products (Hybrid)",
+        "Corporate Account Manager, Hyderabad (Remote)"
+      ]
+    },
+    "htmlLength": 108425,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Workday",
+        "code": "wd",
+        "supported": false,
+        "slug": {
+          "tenant": "crowdstrike",
+          "dataCenter": "wd5",
+          "site": "crowdstrikecareers",
+          "apiUrl": "https://crowdstrike.wd5.myworkdayjobs.com/wday/cxs/crowdstrike/crowdstrikecareers/jobs"
+        }
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Retell AI",
+    "careersUrl": "https://www.retellai.com/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "retell-ai",
+    "validation": {
+      "valid": true,
+      "jobCount": 17,
+      "sampleTitles": [
+        "Senior Software Engineer, AI Automations",
+        "Senior Product Designer",
+        "Senior Software Engineer, Backend"
+      ]
+    },
+    "htmlLength": 298969,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "retell-ai"
+      }
+    ]
+  },
+  {
+    "company": "Resolve AI",
+    "careersUrl": "https://resolve.ai/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "resolve",
+    "validation": {
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    "htmlLength": 226684,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "resolve"
+      }
+    ]
+  },
+  {
+    "company": "CrewAI",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Peec AI",
+    "careersUrl": "https://peec.ai/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "peec",
+    "validation": {
+      "valid": true,
+      "jobCount": 34,
+      "sampleTitles": [
+        "Senior Fullstack Engineer",
+        "Engineering Manager",
+        "Senior Product Engineer"
+      ]
+    },
+    "htmlLength": 545436,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "peec"
+      }
+    ]
+  },
+  {
+    "company": "VAST Data",
+    "careersUrl": "https://www.vastdata.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 282072,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Thinking Machines Lab",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Luminance",
+    "careersUrl": "https://www.luminance.com/careers/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 51308,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Coactive AI",
+    "careersUrl": "https://www.coactive.ai/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "coactive",
+    "validation": {
+      "valid": true,
+      "jobCount": 0,
+      "sampleTitles": []
+    },
+    "htmlLength": 154535,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "coactive"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Weights & Biases",
+    "careersUrl": "https://wandb.ai/site/careers/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 1047048,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Adept AI",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Freshworks",
+    "careersUrl": "https://www.freshworks.com/company/careers/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 396966,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      },
+      {
+        "platform": "SmartRecruiters",
+        "code": "sr",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "HashiCorp",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "GitLab",
+    "careersUrl": "https://gitlab.com/jobs",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 28107,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Miro",
+    "careersUrl": "https://miro.com/careers/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 116773,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Grammarly",
+    "careersUrl": "https://superhuman.com/company/careers",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "grammarly",
+    "validation": {
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    "htmlLength": 890879,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "grammarly"
+      }
+    ]
+  },
+  {
+    "company": "Relativity Space",
+    "careersUrl": "https://www.relativityspace.com/careers",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 166639,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Corebridge Financial",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Nuvei",
+    "careersUrl": "https://www.nuvei.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 428635,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Bain & Company",
+    "careersUrl": "https://www.bain.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 165017,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Trader Joe's",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Box",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Procore",
+    "careersUrl": "https://careers.procore.com/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 112202,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Built Technologies",
+    "careersUrl": "https://getbuilt.com/careers/",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "getbuilt",
+    "validation": {
+      "valid": true,
+      "jobCount": 11,
+      "sampleTitles": [
+        "Director of Product & Design, SaaS Products",
+        "Enterprise Account Executive, Lender",
+        "Enterprise Account Executive - OGC "
+      ]
+    },
+    "htmlLength": 887162,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "getbuilt"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Hinge Health",
+    "careersUrl": "https://jobs.ashbyhq.com/hinge-health",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "hinge-health",
+    "validation": {
+      "valid": true,
+      "jobCount": 78,
+      "sampleTitles": [
+        "Staff Software Engineer, Growth",
+        "Product Manager, Conversational AI ",
+        "Growth Marketing Manager, Direct Mail "
+      ]
+    },
+    "htmlLength": 99964,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "hinge-health"
+      }
+    ]
+  },
+  {
+    "company": "Alto Pharmacy",
+    "careersUrl": "https://www.alto.com/careers",
+    "platform": "Workday",
+    "platformCode": "wd",
+    "supported": false,
+    "slug": {
+      "tenant": "alto",
+      "dataCenter": "wd1",
+      "site": "fuzehealthcareersite",
+      "apiUrl": "https://alto.wd1.myworkdayjobs.com/wday/cxs/alto/fuzehealthcareersite/jobs"
+    },
+    "validation": {
+      "valid": true,
+      "jobCount": 46,
+      "sampleTitles": [
+        "Manager, Product Analytics - FuzeRx",
+        "Verification Pharmacist - FuzeRx",
+        "Fulfillment Coordinator- Fuze Rx"
+      ]
+    },
+    "htmlLength": 297170,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Workday",
+        "code": "wd",
+        "supported": false,
+        "slug": {
+          "tenant": "alto",
+          "dataCenter": "wd1",
+          "site": "fuzehealthcareersite",
+          "apiUrl": "https://alto.wd1.myworkdayjobs.com/wday/cxs/alto/fuzehealthcareersite/jobs"
+        }
+      }
+    ]
+  },
+  {
+    "company": "Findigs",
+    "careersUrl": "https://www.findigs.com/careers",
+    "platform": "Lever",
+    "platformCode": "lv",
+    "supported": true,
+    "slug": "findigs",
+    "validation": {
+      "valid": true,
+      "jobCount": 14,
+      "sampleTitles": [
+        "Customer Success Associate",
+        "Director, Revenue Operations",
+        "Enterprise Account Executive"
+      ]
+    },
+    "htmlLength": 79964,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Lever",
+        "code": "lv",
+        "supported": true,
+        "slug": "findigs"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Bolt",
+    "careersUrl": "https://www.bolt.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 86823,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Character AI",
+    "careersUrl": "https://policies.character.ai/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "character",
+    "validation": {
+      "valid": true,
+      "jobCount": 17,
+      "sampleTitles": [
+        "Machine Learning Infrastructure Engineer",
+        "Research Engineer, Post-Training (All Industry Levels)",
+        "Software Engineer, Safety"
+      ]
+    },
+    "htmlLength": 66113,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "character"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Midjourney",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Kong",
+    "careersUrl": "https://konghq.com/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 440241,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Harness",
+    "careersUrl": "https://www.harness.io/company/careers",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "harnessinc",
+    "validation": {
+      "valid": true,
+      "jobCount": 133,
+      "sampleTitles": [
+        "AppSec Sales Engineer ",
+        "AP Staff Accountant",
+        "Commercial Counsel"
+      ]
+    },
+    "htmlLength": 158514,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "harnessinc"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "SentinelOne",
+    "careersUrl": "https://www.sentinelone.com/careers/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 365145,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Arctic Wolf",
+    "careersUrl": "https://arcticwolf.com/company/careers/",
+    "platform": "Workday",
+    "platformCode": "wd",
+    "supported": false,
+    "slug": {
+      "tenant": "arcticwolf",
+      "dataCenter": "wd1",
+      "site": "external",
+      "apiUrl": "https://arcticwolf.wd1.myworkdayjobs.com/wday/cxs/arcticwolf/external/jobs"
+    },
+    "validation": {
+      "valid": true,
+      "jobCount": 88,
+      "sampleTitles": [
+        "Senior Developer",
+        "Staff Developer-Backend",
+        "Developer-App Platform-Infra"
+      ]
+    },
+    "htmlLength": 740874,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Workday",
+        "code": "wd",
+        "supported": false,
+        "slug": {
+          "tenant": "arcticwolf",
+          "dataCenter": "wd1",
+          "site": "external",
+          "apiUrl": "https://arcticwolf.wd1.myworkdayjobs.com/wday/cxs/arcticwolf/external/jobs"
+        }
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Noom",
+    "careersUrl": "https://www.noom.com/careers/job-listings/",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "embed",
+    "validation": {
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    "htmlLength": 298403,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "embed"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Devoted Health",
+    "careersUrl": "https://www.devoted.com/careers/",
+    "platform": "Workday",
+    "platformCode": "wd",
+    "supported": false,
+    "slug": {
+      "tenant": "devoted",
+      "dataCenter": "wd1",
+      "site": "devoted",
+      "apiUrl": "https://devoted.wd1.myworkdayjobs.com/wday/cxs/devoted/devoted/jobs"
+    },
+    "validation": {
+      "valid": true,
+      "jobCount": 48,
+      "sampleTitles": [
+        "Manager, Clinical Associates",
+        "Sales Director",
+        "Provider Network Manager"
+      ]
+    },
+    "htmlLength": 21506,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Workday",
+        "code": "wd",
+        "supported": false,
+        "slug": {
+          "tenant": "devoted",
+          "dataCenter": "wd1",
+          "site": "devoted",
+          "apiUrl": "https://devoted.wd1.myworkdayjobs.com/wday/cxs/devoted/devoted/jobs"
+        }
+      }
+    ]
+  },
+  {
+    "company": "Oscar Health",
+    "careersUrl": "https://www.hioscar.com/careers",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 156738,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Outreach",
+    "careersUrl": "https://www.outreach.ai/company/working-at-outreach",
+    "platform": "Lever",
+    "platformCode": "lv",
+    "supported": true,
+    "slug": "outreach",
+    "validation": {
+      "valid": true,
+      "jobCount": 32,
+      "sampleTitles": [
+        "Account Executive, EMEA Commercial",
+        "Customer Advocacy Manager",
+        "Customer Success Manager"
+      ]
+    },
+    "htmlLength": 161237,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Lever",
+        "code": "lv",
+        "supported": true,
+        "slug": "outreach"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Seismic",
+    "careersUrl": "https://www.seismic.com/careers/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 207462,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Flutterwave",
+    "careersUrl": "https://www.flutterwave.com/us/careers",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 871027,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Hex",
+    "careersUrl": "https://hex.tech/careers/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 385210,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Tome",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Orb",
+    "careersUrl": "https://www.withorb.com/careers",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "orb",
+    "validation": {
+      "valid": true,
+      "jobCount": 18,
+      "sampleTitles": [
+        "Customer Success Manager - New York City",
+        "Customer Success Manager - San Francisco HQ",
+        "Mid-Market Account Executive- San Francisco HQ"
+      ]
+    },
+    "htmlLength": 1334647,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "orb"
+      }
+    ]
+  },
+  {
+    "company": "Codeium",
+    "careersUrl": "https://jobs.ashbyhq.com/cognition",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "cognition",
+    "validation": {
+      "valid": true,
+      "jobCount": 59,
+      "sampleTitles": [
+        "Special Projects Engineer",
+        "General Application",
+        "Research, Post-Training"
+      ]
+    },
+    "htmlLength": 87580,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "cognition"
+      }
+    ]
+  },
+  {
+    "company": "Graphiant",
+    "careersUrl": "https://www.graphiant.com/careers",
+    "platform": "BambooHR",
+    "platformCode": "bb",
+    "supported": false,
+    "slug": "graphiant",
+    "validation": {
+      "valid": true,
+      "jobCount": null,
+      "error": null
+    },
+    "htmlLength": 66084,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "BambooHR",
+        "code": "bb",
+        "supported": false,
+        "slug": "graphiant"
+      }
+    ]
+  },
+  {
+    "company": "Pluralsight",
+    "careersUrl": "https://www.pluralsight.com/careers",
+    "platform": "Workday",
+    "platformCode": "wd",
+    "supported": false,
+    "slug": {
+      "tenant": "pluralsight",
+      "dataCenter": "wd1",
+      "site": "careers",
+      "apiUrl": "https://pluralsight.wd1.myworkdayjobs.com/wday/cxs/pluralsight/careers/jobs"
+    },
+    "validation": {
+      "valid": true,
+      "jobCount": 39,
+      "sampleTitles": [
+        "Strategic Account Executive",
+        "Contract Talent Acquisition Specialist",
+        "Accessibility Specialist"
+      ]
+    },
+    "htmlLength": 483475,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Workday",
+        "code": "wd",
+        "supported": false,
+        "slug": {
+          "tenant": "pluralsight",
+          "dataCenter": "wd1",
+          "site": "careers",
+          "apiUrl": "https://pluralsight.wd1.myworkdayjobs.com/wday/cxs/pluralsight/careers/jobs"
+        }
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Tropic",
+    "careersUrl": "https://www.tropicapp.io/about/careers",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "v1",
+    "validation": {
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    "htmlLength": 134177,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "v1"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Flatfile",
+    "careersUrl": "https://flatfile.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 1083356,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Light",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Tabs",
+    "careersUrl": "https://www.tabs.com/careers",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 262430,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Base44",
+    "careersUrl": "https://careers.wix.com/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 466954,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Skild AI",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Kore.ai",
+    "careersUrl": "https://www.kore.ai/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 332596,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      },
+      {
+        "platform": "Rippling",
+        "code": "rp",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Wise",
+    "careersUrl": "https://wise.jobs/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 319577,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Aisera",
+    "careersUrl": "https://aisera.com/careers/",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "aiserajobs",
+    "validation": {
+      "valid": true,
+      "jobCount": 5,
+      "sampleTitles": [
+        "Applied AI/ML Engineer",
+        "Consultant- Sr AI Ops Engineer",
+        "Senior Software engineer- Coversational AI"
+      ]
+    },
+    "htmlLength": 209205,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "aiserajobs"
+      }
+    ]
+  },
+  {
+    "company": "Cognigy",
+    "careersUrl": "https://www.cognigy.com/careers",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 395805,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Pega",
+    "careersUrl": "https://www.pega.com/about/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 385610,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "MainFunc",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Darwinbox",
+    "careersUrl": "https://www.darwinbox.com/en-us/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 427271,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "DevRev",
+    "careersUrl": "https://devrev.ai/careers",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "devrev",
+    "validation": {
+      "valid": true,
+      "jobCount": 64,
+      "sampleTitles": [
+        "Account Executive",
+        "Account Executive – Field Sales",
+        "Account Executive – Field Sales"
+      ]
+    },
+    "htmlLength": 655278,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "devrev"
+      }
+    ]
+  },
+  {
+    "company": "Basis",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Giga",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Synthflow AI",
+    "careersUrl": "https://jobs.ashbyhq.com/synthflow",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "synthflow",
+    "validation": {
+      "valid": true,
+      "jobCount": 18,
+      "sampleTitles": [
+        "Senior Python Software Engineer ",
+        "Senior Software Engineer - (Go) Real-Time Engine",
+        "Enterprise Account Executive"
+      ]
+    },
+    "htmlLength": 39556,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "synthflow"
+      }
+    ]
+  },
+  {
+    "company": "OneStream",
+    "careersUrl": "https://www.onestream.com/careers/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 191872,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Wolters Kluwer",
+    "careersUrl": "https://careers.wolterskluwer.com/",
+    "platform": "Workday",
+    "platformCode": "wd",
+    "supported": false,
+    "slug": {
+      "tenant": "wk",
+      "dataCenter": "wd3",
+      "site": "external",
+      "apiUrl": "https://wk.wd3.myworkdayjobs.com/wday/cxs/wk/external/jobs"
+    },
+    "validation": {
+      "valid": true,
+      "jobCount": 578,
+      "sampleTitles": [
+        "Senior Software Test Automation Engineer - Javascript + (Selenium/Playwright/Tosca)",
+        "Product Software Engineer - .Net Fullstack - Pune",
+        "Senior Enterprise Software Engineer - SharePoint Developer"
+      ]
+    },
+    "htmlLength": 144149,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Workday",
+        "code": "wd",
+        "supported": false,
+        "slug": {
+          "tenant": "wk",
+          "dataCenter": "wd3",
+          "site": "external",
+          "apiUrl": "https://wk.wd3.myworkdayjobs.com/wday/cxs/wk/external/jobs"
+        }
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Board International",
+    "careersUrl": "https://www.board.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 107584,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Jedox",
+    "careersUrl": "https://www.jedox.com/en/about/careers/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 1378492,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Runway Financial",
+    "careersUrl": "https://runway.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 109014,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Vena Solutions",
+    "careersUrl": "https://vena.pinpointhq.com/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 102884,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Planful",
+    "careersUrl": "https://planful.com/jobs/",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 1356432,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": null
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Nominal",
+    "careersUrl": "https://nominal.io/careers",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 363509,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "BlackLine",
+    "careersUrl": "https://careers.blackline.com/careers-home/",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": "www",
+    "validation": {
+      "valid": false,
+      "error": "iCIMS validation not implemented — no public API"
+    },
+    "htmlLength": 448474,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": "www"
+      }
+    ]
+  },
+  {
+    "company": "Accrual",
+    "careersUrl": "https://www.accrual.com/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 136436,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "ThoughtSpot",
+    "careersUrl": "https://www.thoughtspot.com/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 486322,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Domo",
+    "careersUrl": "https://www.domo.com/company/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 332564,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Sigma Computing",
+    "careersUrl": "https://www.sigmacomputing.com/company/careers",
+    "platform": "Greenhouse",
+    "platformCode": "gh",
+    "supported": true,
+    "slug": "v1",
+    "validation": {
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    "htmlLength": 204534,
+    "jsRendered": false,
+    "status": "detected_not_verified",
+    "allDetected": [
+      {
+        "platform": "Greenhouse",
+        "code": "gh",
+        "supported": true,
+        "slug": "v1"
+      },
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  },
+  {
+    "company": "Deepnote",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Pyramid Analytics",
+    "careersUrl": "https://www.pyramidanalytics.com/company/careers/",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 118035,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Omni Analytics",
+    "careersUrl": "https://jobs.ashbyhq.com/omni",
+    "platform": "Ashby",
+    "platformCode": "ab",
+    "supported": true,
+    "slug": "omni",
+    "validation": {
+      "valid": true,
+      "jobCount": 20,
+      "sampleTitles": [
+        "Managing Architect (North America)",
+        "Software Engineer - TypeScript/JavaScript",
+        "Solutions Engineer - Pre-Sales (San Francisco, CA)"
+      ]
+    },
+    "htmlLength": 39239,
+    "jsRendered": false,
+    "status": "verified",
+    "allDetected": [
+      {
+        "platform": "Ashby",
+        "code": "ab",
+        "supported": true,
+        "slug": "omni"
+      }
+    ]
+  },
+  {
+    "company": "Bryant Park Consulting",
+    "careersUrl": null,
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 0,
+    "jsRendered": false,
+    "status": "no_careers_url",
+    "error": "Could not discover career page URL. Add manually to careers-urls.json."
+  },
+  {
+    "company": "Echo Park Consulting",
+    "careersUrl": "https://www.echoparkconsulting.com/join-us",
+    "platform": null,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 571615,
+    "jsRendered": false,
+    "status": "no_match",
+    "error": "No ATS fingerprint detected in HTML."
+  },
+  {
+    "company": "Modular",
+    "careersUrl": "https://www.modular.com/company/careers",
+    "platform": "iCIMS",
+    "platformCode": "ic",
+    "supported": false,
+    "slug": null,
+    "validation": null,
+    "htmlLength": 249564,
+    "jsRendered": false,
+    "status": "detected_no_slug",
+    "allDetected": [
+      {
+        "platform": "iCIMS",
+        "code": "ic",
+        "supported": false,
+        "slug": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,193 @@
+================================================================================
+  ASCENT UNIFIED ATS PIPELINE REPORT
+  Generated: 2026-04-11T19:24:09.282Z
+  Companies processed: 83
+  ATS_MAP: 221 → 228 entries
+================================================================================
+
+  SUMMARY
+--------------------------------------------------------------------------------
+  Mapped (supported ATS):       8
+  Mapped (Workday, needs fetcher): 7
+  Mapped (0 jobs):              3
+  Unsupported platform:         6
+  No ATS detected:              47
+  No career page found:         12
+  False positives blocked:      0
+
+  PLATFORM DISTRIBUTION
+--------------------------------------------------------------------------------
+  Unknown              59 companies
+  Workday              7 companies
+  Ashby                5 companies
+  Lever                4 companies
+  Workable             2 companies
+  BambooHR             2 companies
+  iCIMS                2 companies
+  Recruitee            1 companies
+  Greenhouse           1 companies
+
+
+████████████████████████████████████████████████████████████████████████████████
+  WRITTEN TO ATS_MAP: 8 new mappings
+████████████████████████████████████████████████████████████████████████████████
+
+  Clay
+    Ashby (ab)  |  "claylabs"  |  68 jobs  |  via fingerprint
+    Sample: Enterprise Growth Strategist (Customer Success), Commercial Counsel, Strategic Finance 
+
+  Codeium
+    Ashby (ab)  |  "cognition"  |  59 jobs  |  via fingerprint
+    Sample: Special Projects Engineer, General Application, Research, Post-Training
+
+  Commonwealth Fusion
+    Lever (lv)  |  "cfsenergy"  |  47 jobs  |  via fingerprint
+    Sample: Assembly Process Engineer - Contract, Computational Materials Scientist, Diagnostician
+
+  Findigs
+    Lever (lv)  |  "findigs"  |  14 jobs  |  via fingerprint
+    Sample: Customer Success Associate, Director, Revenue Operations, Enterprise Account Executive
+
+  Built Technologies
+    Greenhouse (gh)  |  "getbuilt"  |  11 jobs  |  via fingerprint
+    Sample: Director of Product & Design, SaaS Products, Enterprise Account Executive, Lender, Enterprise Account Executive - OGC 
+
+  Basis
+    Lever (lv)  |  "basis"  |  4 jobs  |  via fingerprint
+    Sample: Business Outcomes Partner - Media Strategy, Manager, Software Engineering, Sr Systems Engineer, DSP
+
+  Runway Financial
+    Ashby (ab)  |  "runway"  |  4 jobs  |  via brute_force_all
+    Sample: ⚙️ Senior/Staff Platform Engineer, ⚙️ Senior/Staff Product Engineer, 📈 Forward Deployed Finance Partner
+
+  ICON 3D
+    Recruitee (rc)  |  "icon"  |  2 jobs  |  via brute_force_all
+    Sample: Vendsys,Leggio; Nuseed, Impland, Inobram, Lightera; Siedos; Breton, EOX
+
+
+████████████████████████████████████████████████████████████████████████████████
+  WORKDAY: 7 companies (needs fetchWorkday)
+████████████████████████████████████████████████████████████████████████████████
+
+  CrowdStrike  |  663 jobs
+    Tenant: crowdstrike  |  DC: wd5  |  Site: crowdstrikecareers
+    API: https://crowdstrike.wd5.myworkdayjobs.com/wday/cxs/crowdstrike/crowdstrikecareers/jobs
+    Sample: Sr. Engineer - Dev Experience Sensor, Sr. Product Manager, Endpoint Protection Products (Hybrid), Corporate Account Manager, Hyderabad (Remote)
+
+  Wolters Kluwer  |  578 jobs
+    Tenant: wk  |  DC: wd3  |  Site: external
+    API: https://wk.wd3.myworkdayjobs.com/wday/cxs/wk/external/jobs
+    Sample: Senior Software Test Automation Engineer - Javascript + (Selenium/Playwright/Tosca), Product Software Engineer - .Net Fullstack - Pune, Senior Enterprise Software Engineer - SharePoint Developer
+
+  Tempus AI  |  103 jobs
+    Tenant: tempus  |  DC: wd5  |  Site: tempus_careers
+    API: https://tempus.wd5.myworkdayjobs.com/wday/cxs/tempus/tempus_careers/jobs
+    Sample: Real World Evidence Summer Associate, Biostatistics Summer Associate, MRD Clinical Account Executive, North Florida
+
+  Arctic Wolf  |  88 jobs
+    Tenant: arcticwolf  |  DC: wd1  |  Site: external
+    API: https://arcticwolf.wd1.myworkdayjobs.com/wday/cxs/arcticwolf/external/jobs
+    Sample: Senior Developer, Staff Developer-Backend, Developer-App Platform-Infra
+
+  Devoted Health  |  48 jobs
+    Tenant: devoted  |  DC: wd1  |  Site: devoted
+    API: https://devoted.wd1.myworkdayjobs.com/wday/cxs/devoted/devoted/jobs
+    Sample: Manager, Clinical Associates, Sales Director, Provider Network Manager
+
+  Alto Pharmacy  |  46 jobs
+    Tenant: alto  |  DC: wd1  |  Site: fuzehealthcareersite
+    API: https://alto.wd1.myworkdayjobs.com/wday/cxs/alto/fuzehealthcareersite/jobs
+    Sample: Manager, Product Analytics - FuzeRx, Verification Pharmacist - FuzeRx, Fulfillment Coordinator- Fuze Rx
+
+  Pluralsight  |  39 jobs
+    Tenant: pluralsight  |  DC: wd1  |  Site: careers
+    API: https://pluralsight.wd1.myworkdayjobs.com/wday/cxs/pluralsight/careers/jobs
+    Sample: Strategic Account Executive, Contract Talent Acquisition Specialist, Accessibility Specialist
+
+
+--------------------------------------------------------------------------------
+  MAPPED BUT 0 JOBS: 3 companies
+--------------------------------------------------------------------------------
+  VAST Data                           Ashby/vast
+  Bolt                                Ashby/bolt
+  Nominal                             Lever/nominal
+
+
+--------------------------------------------------------------------------------
+  UNSUPPORTED PLATFORM: 6 companies
+--------------------------------------------------------------------------------
+  Billd                               BambooHR           https://billd.com/careers/
+  Graphiant                           BambooHR           https://www.graphiant.com/careers
+  Docusign                            iCIMS              https://careers.docusign.com/
+  BlackLine                           iCIMS              https://careers.blackline.com/careers-home/
+  Hugging Face                        Workable           https://apply.workable.com/huggingface
+  Nuvei                               Workable           https://www.nuvei.com/careers
+
+
+--------------------------------------------------------------------------------
+  UNRESOLVED: 59 companies
+--------------------------------------------------------------------------------
+  Accrual                             No ATS detected in HTML and no slug matched any su
+  Adept AI                            no career page
+  Bain & Company                      No ATS detected in HTML and no slug matched any su
+  Base44                              No ATS detected in HTML and no slug matched any su
+  Board International                 No ATS detected in HTML and no slug matched any su
+  Canva                               No ATS detected in HTML and no slug matched any su
+  Cognigy                             No ATS detected in HTML and no slug matched any su
+  Corebridge Financial                no career page
+  Credo AI                            No ATS detected in HTML and no slug matched any su
+  CrewAI                              no career page
+  Cyera                               No ATS detected in HTML and no slug matched any su
+  Darwinbox                           No ATS detected in HTML and no slug matched any su
+  Domo                                No ATS detected in HTML and no slug matched any su
+  Echo Park Consulting                No ATS detected in HTML and no slug matched any su
+  Flock Safety                        No ATS detected in HTML and no slug matched any su
+  Flutterwave                         No ATS detected in HTML and no slug matched any su
+  Genspark                            no career page
+  Giga                                no career page
+  Grammarly                           No ATS detected in HTML and no slug matched any su
+  Groq                                No ATS detected in HTML and no slug matched any su
+  HashiCorp                           no career page
+  Hex                                 No ATS detected in HTML and no slug matched any su
+  Hippocratic AI                      no career page
+  Island                              No ATS detected in HTML and no slug matched any su
+  Jasper                              No ATS detected in HTML and no slug matched any su
+  Jedox                               No ATS detected in HTML and no slug matched any su
+  Klarna                              No ATS detected in HTML and no slug matched any su
+  Luminance                           No ATS detected in HTML and no slug matched any su
+  MainFunc                            no career page
+  Midjourney                          no career page
+  Miro                                No ATS detected in HTML and no slug matched any su
+  Modular                             No ATS detected in HTML and no slug matched any su
+  Monday.com                          No ATS detected in HTML and no slug matched any su
+  Navan                               No ATS detected in HTML and no slug matched any su
+  Noom                                No ATS detected in HTML and no slug matched any su
+  Northvolt                           No ATS detected in HTML and no slug matched any su
+  OneStream                           No ATS detected in HTML and no slug matched any su
+  Pega                                No ATS detected in HTML and no slug matched any su
+  Planful                             No ATS detected in HTML and no slug matched any su
+  Procore                             No ATS detected in HTML and no slug matched any su
+  Pyramid Analytics                   No ATS detected in HTML and no slug matched any su
+  Resolve AI                          No ATS detected in HTML and no slug matched any su
+  Revolut                             No ATS detected in HTML and no slug matched any su
+  Rippling                            No ATS detected in HTML and no slug matched any su
+  SambaNova                           No ATS detected in HTML and no slug matched any su
+  ScaleOps                            No ATS detected in HTML and no slug matched any su
+  Seismic                             No ATS detected in HTML and no slug matched any su
+  SentinelOne                         No ATS detected in HTML and no slug matched any su
+  ServiceNow                          no career page
+  Shopify                             No ATS detected in HTML and no slug matched any su
+  Skild AI                            no career page
+  ThoughtSpot                         No ATS detected in HTML and no slug matched any su
+  Tome                                no career page
+  Trader Joe's                        JS-rendered page (<10KB). ATS loaded client-side —
+  Tropic                              No ATS detected in HTML and no slug matched any su
+  Vena Solutions                      No ATS detected in HTML and no slug matched any su
+  Weights & Biases                    No ATS detected in HTML and no slug matched any su
+  Wise                                No ATS detected in HTML and no slug matched any su
+  World Wide Technology               No ATS detected in HTML and no slug matched any su
+
+
+================================================================================
+  END OF REPORT
+================================================================================
