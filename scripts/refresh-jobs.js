@@ -327,7 +327,7 @@ async function main() {
     // Amsterdam
     "amsterdam":"Amsterdam",
     // Toronto
-    "toronto":"Toronto","waterloo":"Toronto","ottawa":"Toronto",
+    "toronto":"Toronto","waterloo":"Toronto","ottawa":"Toronto","ontario":"Toronto",
     // Tokyo
     "tokyo":"Tokyo",
     // Singapore
@@ -341,7 +341,7 @@ async function main() {
     // Sydney
     "sydney":"Sydney","canberra":"Sydney",
     // Seoul
-    "seoul":"Seoul",
+    "seoul":"Seoul","korea":"Seoul",
     // Atlanta
     "atlanta":"Atlanta",
     // Delhi / India NCR
@@ -351,9 +351,13 @@ async function main() {
     // Madrid
     "madrid":"Madrid",
     // Zurich
-    "zurich":"Zurich","zürich":"Zurich",
+    "zurich":"Zurich","zürich":"Zurich","zrich":"Zurich",
     // Stockholm
     "stockholm":"Stockholm",
+    // Warsaw
+    "warsaw":"Warsaw","warszawa":"Warsaw",
+    // Montreal
+    "montreal":"Montreal","calgary":"Montreal",
     // Other
     "remote":"Remote"
   };
@@ -408,6 +412,7 @@ async function main() {
       .replace(/,?\s*Poland$/i, "")
       .replace(/,?\s*Switzerland$/i, "")
       .replace(/,?\s*[A-Z]{2}$/g, "") // trailing state codes like ", CA"
+      .replace(/,?\s*(?:CAN|GBR|DEU|FRA|JPN|AUS|IND|ISR|NLD|ESP|POL|CHE|KOR|SGP|BRA|MEX|ARE)$/g, "") // 3-char country codes
       .replace(/,?\s*(?:California|Texas|Massachusetts|Virginia|Colorado|Illinois|Georgia|Oregon|Maryland|Connecticut|North Carolina|Pennsylvania|District of Columbia|Florida|Minnesota|Missouri|Michigan|Ohio|Indiana|Arizona|Tennessee|Wisconsin|South Carolina|Kentucky|Alabama|Louisiana|Iowa|Oklahoma|Utah|Nevada|Kansas|Arkansas|Nebraska|Mississippi|New Mexico|New Hampshire|Idaho|Hawaii|Maine|Rhode Island|Montana|Wyoming|North Dakota|South Dakota|Delaware|Vermont|West Virginia|Alaska)$/i, "")
       .trim();
     // Try to match the cleaned city

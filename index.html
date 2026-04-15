@@ -80,6 +80,21 @@ body::before{content:"";position:fixed;top:-220px;left:50%;transform:translateX(
 .dir-fb-pill.on{background:rgba(139,139,245,0.12);color:var(--accent);border-color:rgba(139,139,245,0.25)}
 .dir-fb-pill.green{background:rgba(52,211,153,0.1);color:var(--green);border-color:rgba(52,211,153,0.25)}
 .dir-fb-clear{font:500 11px/1 var(--sans);color:var(--accent);cursor:pointer;margin-left:auto;opacity:.8;transition:opacity .2s;padding:5px 8px}.dir-fb-clear:hover{opacity:1}
+.dir-fb-label.off{color:var(--text-m);opacity:.5}
+.dir-fb-muted{font:400 12px/1 var(--sans);color:var(--text-m);font-style:italic}
+.dir-loc-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;font:500 11px/1 var(--sans);background:rgba(139,139,245,0.12);color:var(--accent-text);border-radius:4px;border:1px solid rgba(139,139,245,0.25);cursor:pointer;transition:opacity .15s}.dir-loc-chip:hover{opacity:.7}
+.dir-loc-dd-wrap{position:relative}
+.dir-loc-trigger{display:inline-flex;align-items:center;gap:4px}
+.dir-loc-caret{display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid currentColor;margin-left:2px}
+.dir-loc-panel{position:absolute;top:calc(100% + 6px);left:0;width:260px;background:var(--bg);border:1px solid var(--border-hover);border-radius:10px;padding:6px;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.dir-loc-search{width:100%;padding:7px 10px;font:400 12px/1 var(--sans);background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);outline:none;margin-bottom:4px}.dir-loc-search:focus{border-color:var(--border-hover)}
+.dir-loc-list{max-height:240px;overflow-y:auto;scrollbar-width:thin}
+.dir-loc-grp{font:600 10px/1 var(--sans);color:var(--text-m);text-transform:uppercase;letter-spacing:.08em;padding:8px 10px 4px}
+.dir-loc-item{padding:5px 10px;font:400 12px/1.3 var(--sans);color:var(--text-sec);border-radius:5px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .1s}.dir-loc-item:hover{background:var(--surface)}
+.dir-loc-item.on{color:var(--accent-text)}
+.dir-loc-check{width:14px;height:14px;border-radius:3px;border:1px solid var(--border-hover);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.dir-loc-check.on{background:rgba(139,139,245,0.2);border-color:rgba(139,139,245,0.4)}
+.dir-loc-check.on::after{content:"";width:6px;height:6px;background:var(--accent);border-radius:1px}
 
 /* Search */
 .sr{display:flex;gap:12px;margin-bottom:24px;align-items:stretch}
@@ -949,17 +964,21 @@ function App(){
   var _dex=us(null),expandedCompany=_dex[0],setExpandedCompany=_dex[1];
   var _dFn=us([]),directoryFunctionFilter=_dFn[0],setDirectoryFunctionFilter=_dFn[1]; // Function filter (array, multi-select)
   var _dWt=us([]),directoryWorkTypeFilter=_dWt[0],setDirectoryWorkTypeFilter=_dWt[1]; // Work Type filter (array, multi-select)
-  var _dRg=us("all"),directoryRegionFilter=_dRg[0],setDirectoryRegionFilter=_dRg[1]; // Region filter
+  var _dRg=us([]),directoryLocationFilter=_dRg[0],setDirectoryLocationFilter=_dRg[1];
+  var _locOpen=us(false),locationDropdownOpen=_locOpen[0],setLocationDropdownOpen=_locOpen[1];
+  var _locS=us(""),locationSearch=_locS[0],setLocationSearch=_locS[1];
+  ue(function(){if(!locationDropdownOpen)return;function close(){setLocationDropdownOpen(false)}document.addEventListener("click",close);return function(){document.removeEventListener("click",close)}},[locationDropdownOpen]);
 
   // Region mapping — every HQ value mapped to its region
-  var REGION_MAP={
-    "Alphen aan den Rijn, Netherlands":"Europe","Amsterdam, Netherlands":"Europe","Barcelona, Spain":"Europe","Berlin, Germany":"Europe","Cologne, Germany":"Europe","Dublin, Ireland":"Europe","Dusseldorf, Germany":"Europe","Freiburg, Germany":"Europe","London, UK":"Europe","Munich, Germany":"Europe","Oulu, Finland":"Europe","Paris, France":"Europe","Stockholm, Sweden":"Europe","Chiasso, Switzerland":"Europe",
-    "Tel Aviv, Israel":"Middle East",
-    "Hyderabad, India":"Asia Pacific","Sydney, Australia":"Asia Pacific",
-    "Ottawa, Canada":"North America","Montreal, Canada":"North America","Toronto, Canada":"North America"
-  };
-  function getRegion(hq){if(!hq)return"North America";return REGION_MAP[hq]||"North America";}
-  var REGION_LIST=["North America","Europe","Asia Pacific","Middle East"];
+  var CITY_GROUPS=[
+    {label:"US West",cities:["San Francisco Bay Area","Los Angeles","Seattle","Denver","Costa Mesa"]},
+    {label:"US Central & South",cities:["Austin","Dallas","Chicago","Atlanta"]},
+    {label:"US East",cities:["New York","Boston","Washington DC"]},
+    {label:"Europe",cities:["London","Paris","Berlin","Dublin","Amsterdam","Munich","Stockholm","Madrid","Warsaw","Zurich"]},
+    {label:"Asia Pacific",cities:["Tokyo","Singapore","Bangalore","Delhi","Seoul","Sydney"]},
+    {label:"Americas",cities:["Toronto","Montreal","São Paulo"]}
+  ];
+  var locationIsDisabled=directoryWorkTypeFilter.length>0&&directoryWorkTypeFilter.indexOf("Remote")>-1&&directoryWorkTypeFilter.indexOf("Hybrid")===-1&&directoryWorkTypeFilter.indexOf("On-site")===-1;
 
   // Rotating hero text
   var _heroIdx=us(0),heroIndex=_heroIdx[0],setHeroIndex=_heroIdx[1];
@@ -997,9 +1016,13 @@ function App(){
       }
     }
 
-    // Region filter
-    if(directoryRegionFilter!=="all"){
-      r=r.filter(function(c){return getRegion(c.hq)===directoryRegionFilter});
+    // Location filter: show companies that have jobs in selected cities
+    if(directoryLocationFilter.length>0){
+      r=r.filter(function(c){
+        var coJobs=cardJobs[c.n]||jobs.filter(function(j){return j._co&&j._co.n===c.n});
+        if(coJobs.length===0)return false;
+        return coJobs.some(function(j){return directoryLocationFilter.indexOf(j._city)>-1});
+      });
     }
 
     // Recognition filters
@@ -1026,7 +1049,7 @@ function App(){
 
     r.sort(function(a,b){return a.n.localeCompare(b.n)});
     return r;
-  },[directorySearch,directoryAwardFilter,directoryFunctionFilter,directoryWorkTypeFilter,directoryRegionFilter,jobs,cardJobs]);
+  },[directorySearch,directoryAwardFilter,directoryFunctionFilter,directoryWorkTypeFilter,directoryLocationFilter,jobs,cardJobs]);
 
   // Get matching jobs for a company filtered by current search + function + work type
   function getFilteredJobs(companyName){
@@ -1045,8 +1068,8 @@ function App(){
     });
   }
 
-  var dirHasFilters=directoryFunctionFilter.length>0||directoryWorkTypeFilter.length>0||directoryAwardFilter!=="all"||directoryRegionFilter!=="all"||directorySearch.trim();
-  function clearDirFilters(){setDirectoryFunctionFilter([]);setDirectoryWorkTypeFilter([]);setDirectoryAwardFilter("all");setDirectoryRegionFilter("all");setDirectorySearch("");setDirectorySearchInput("")}
+  var dirHasFilters=directoryFunctionFilter.length>0||directoryWorkTypeFilter.length>0||directoryAwardFilter!=="all"||directoryLocationFilter.length>0||directorySearch.trim();
+  function clearDirFilters(){setDirectoryFunctionFilter([]);setDirectoryWorkTypeFilter([]);setDirectoryAwardFilter("all");setDirectoryLocationFilter([]);setLocationSearch("");setDirectorySearch("");setDirectorySearchInput("")}
 
   // Careers URL overrides for companies where /careers doesn't work
   var CAREERS_URL={
@@ -1091,7 +1114,7 @@ function App(){
       tab==="companies"&&h("div",{className:"fu"},
         h("section",{className:"mh"},
           h("div",{className:"mh-ey"},"Sourced from Glassdoor, Fortune, Forbes, LinkedIn, TechCrunch & more"),
-          h("h1",{style:{font:"400 clamp(30px,4vw,44px)/1.15 var(--serif)",color:"var(--text)",letterSpacing:"-.03em"}},h("span",{style:{fontWeight:500}},Math.floor(ST.length/50)*50+"+")," companies growing through AI"),
+          h("h1",{style:{font:"400 clamp(30px,4vw,44px)/1.15 var(--serif)",color:"var(--text)",letterSpacing:"-.03em"}},"The ",h("span",{style:{fontWeight:500}},Math.floor(ST.length/50)*50+"+")," AI companies that made the cut"),
           h("p",{className:"mh-sub"},"Vetted for funding, growth and traction - see who\u2019s hiring right now."),
         ),
         // Search + compact filter bar
@@ -1117,11 +1140,32 @@ function App(){
               })
             ),
             h("span",{className:"dir-fb-div"}),
-            h("span",{className:"dir-fb-label"},"Region"),
-            h("div",{className:"dir-fb-pills"},
-              REGION_LIST.map(function(rg){
-                return h("span",{key:rg,className:"dir-fb-pill"+(directoryRegionFilter===rg?" on":""),onClick:function(){setDirectoryRegionFilter(directoryRegionFilter===rg?"all":rg)}},rg)
-              })
+            h("span",{className:"dir-fb-label"+(locationIsDisabled?" off":"")},"Location"),
+            locationIsDisabled?h("span",{className:"dir-fb-muted"},"Showing remote roles across all regions"):
+            h("div",{className:"dir-fb-pills",style:{alignItems:"center"}},
+              directoryLocationFilter.map(function(loc){
+                return h("span",{key:loc,className:"dir-loc-chip",onClick:function(){setDirectoryLocationFilter(directoryLocationFilter.filter(function(l){return l!==loc}))}},loc," \u00D7")
+              }),
+              h("div",{className:"dir-loc-dd-wrap"},
+                h("span",{className:"dir-fb-pill dir-loc-trigger",onClick:function(e){e.stopPropagation();setLocationDropdownOpen(!locationDropdownOpen);setLocationSearch("")}},directoryLocationFilter.length>0?"+ Add":"Select location",h("span",{className:"dir-loc-caret"})),
+                locationDropdownOpen&&h("div",{className:"dir-loc-panel",onClick:function(e){e.stopPropagation()}},
+                  h("input",{className:"dir-loc-search",type:"text",placeholder:"Search cities\u2026",value:locationSearch,onChange:function(e){setLocationSearch(e.target.value)},autoFocus:true}),
+                  h("div",{className:"dir-loc-list"},
+                    CITY_GROUPS.map(function(g){
+                      var filtered=g.cities.filter(function(c){return !locationSearch||c.toLowerCase().indexOf(locationSearch.toLowerCase())>-1});
+                      if(filtered.length===0)return null;
+                      return h("div",{key:g.label},
+                        h("div",{className:"dir-loc-grp"},g.label),
+                        filtered.map(function(c){
+                          var isOn=directoryLocationFilter.indexOf(c)>-1;
+                          return h("div",{key:c,className:"dir-loc-item"+(isOn?" on":""),onClick:function(){setDirectoryLocationFilter(isOn?directoryLocationFilter.filter(function(l){return l!==c}):directoryLocationFilter.concat([c]))}},
+                            h("span",{className:"dir-loc-check"+(isOn?" on":"")}),c)
+                        })
+                      )
+                    })
+                  )
+                )
+              )
             ),
             h("span",{className:"dir-fb-div"}),
             h("span",{className:"dir-fb-label"},"Verified"),
@@ -1132,7 +1176,7 @@ function App(){
             dirHasFilters&&h("span",{className:"dir-fb-clear",onClick:clearDirFilters},"\u2715 Clear all")
           )
         ),
-        h("p",{className:"dir-count","aria-live":"polite"},h("b",null,dirFiltered.length)," companies",directorySearch&&h("span",null," matching \u201C",directorySearch,"\u201D"),directoryFunctionFilter.length>0&&h("span",null," \u00b7 ",directoryFunctionFilter.join(", ")),directoryWorkTypeFilter.length>0&&h("span",null," \u00b7 ",directoryWorkTypeFilter.join(", ")),directoryRegionFilter!=="all"&&h("span",null," \u00b7 ",directoryRegionFilter)),
+        h("p",{className:"dir-count","aria-live":"polite"},h("b",null,dirFiltered.length)," companies",directorySearch&&h("span",null," matching \u201C",directorySearch,"\u201D"),directoryFunctionFilter.length>0&&h("span",null," \u00b7 ",directoryFunctionFilter.join(", ")),directoryWorkTypeFilter.length>0&&h("span",null," \u00b7 ",directoryWorkTypeFilter.join(", ")),directoryLocationFilter.length>0&&h("span",null," \u00b7 ",directoryLocationFilter.join(", "))),
         h("div",{className:"dir-grid"},dirFiltered.flatMap(function(c){
           var isExp=expandedCompany===c.n;
           var items=[];
