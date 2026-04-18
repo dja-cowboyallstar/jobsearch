@@ -1,8 +1,48 @@
 // /api/company-jobs.js — Fetch jobs for a single company
-// Uses ATS-primary logic: check Ashby/Greenhouse/Lever/Recruitee first, JSearch fallback
+// Uses ATS registry from Vercel Blob (shared with refresh-jobs.js)
 // GET /api/company-jobs?company=1Password
 
-var ATS_MAP = {"1Password":{ats:"ab",slug:"1password"},"Abnormal Security":{ats:"gh",slug:"abnormalsecurity"},"Abridge":{ats:"ab",slug:"abridge"},"Affirm":{ats:"gh",slug:"affirm"},"Airtable":{ats:"gh",slug:"airtable"},"Alchemy":{ats:"ab",slug:"alchemy"},"Alloy":{ats:"gh",slug:"alloy"},"AlphaSense":{ats:"gh",slug:"alphasense"},"Amplitude":{ats:"gh",slug:"amplitude"},"Anaplan":{ats:"gh",slug:"anaplan"},"Anduril":{ats:"gh",slug:"andurilindustries"},"Anthropic":{ats:"gh",slug:"anthropic"},"Apollo":{ats:"gh",slug:"apollo"},"AppLovin":{ats:"gh",slug:"applovin"},"Applied Intuition":{ats:"gh",slug:"appliedintuition"},"Apptronik":{ats:"gh",slug:"apptronik"},"Articulate":{ats:"lv",slug:"articulate"},"Ashby":{ats:"ab",slug:"ashby"},"Attentive":{ats:"gh",slug:"attentive"},"Benchling":{ats:"ab",slug:"benchling"},"Braze":{ats:"gh",slug:"braze"},"Brex":{ats:"gh",slug:"brex"},"Calendly":{ats:"gh",slug:"calendly"},"Calm":{ats:"gh",slug:"calm"},"Campfire":{ats:"ab",slug:"campfire"},"CaptivateIQ":{ats:"lv",slug:"captivateiq"},"Carta":{ats:"gh",slug:"carta"},"Celonis":{ats:"gh",slug:"celonis"},"Cerebras Systems":{ats:"gh",slug:"cerebrassystems"},"Chainguard":{ats:"gh",slug:"chainguard"},"ClickUp":{ats:"ab",slug:"clickup"},"Coast":{ats:"gh",slug:"coast"},"Cockroach Labs":{ats:"gh",slug:"cockroachlabs"},"Cognition AI":{ats:"ab",slug:"cognition"},"Cohere":{ats:"ab",slug:"cohere"},"Common Room":{ats:"ab",slug:"commonroom"},"Contentful":{ats:"gh",slug:"contentful"},"CoreWeave":{ats:"gh",slug:"coreweave"},"Coupa":{ats:"lv",slug:"coupa"},"Coursera":{ats:"gh",slug:"coursera"},"Crusoe":{ats:"ab",slug:"crusoe"},"Cube":{ats:"ab",slug:"cube"},"DOSS":{ats:"ab",slug:"doss"},"Databricks":{ats:"gh",slug:"databricks"},"Datadog":{ats:"gh",slug:"datadog"},"Datarails":{ats:"gh",slug:"datarails"},"Decagon":{ats:"ab",slug:"decagon"},"Deel":{ats:"ab",slug:"deel"},"DeepL":{ats:"ab",slug:"deepl"},"Deepnote":{ats:"ab",slug:"deepnote"},"Discord":{ats:"gh",slug:"discord"},"Doppler":{ats:"ab",slug:"doppler"},"Drata":{ats:"ab",slug:"drata"},"Drivetrain":{ats:"lv",slug:"drivetrain"},"DualEntry":{ats:"rc",slug:"dualentry"},"Duolingo":{ats:"gh",slug:"duolingo"},"ElevenLabs":{ats:"ab",slug:"elevenlabs"},"Esusu":{ats:"gh",slug:"esusu"},"Faire":{ats:"gh",slug:"faire"},"Figma":{ats:"gh",slug:"figma"},"Figure AI":{ats:"gh",slug:"figureai"},"Fivetran":{ats:"gh",slug:"fivetran"},"Flexport":{ats:"gh",slug:"flexport"},"FloQast":{ats:"lv",slug:"floqast"},"Form Energy":{ats:"ab",slug:"formenergy"},"Forter":{ats:"gh",slug:"forter"},"Glean":{ats:"gh",slug:"gleanwork"},"GoCardless":{ats:"gh",slug:"gocardless"},"Gong":{ats:"rc",slug:"gong"},"Grafana Labs":{ats:"gh",slug:"grafanalabs"},"Gusto":{ats:"gh",slug:"gusto"},"Halcyon":{ats:"gh",slug:"halcyon"},"Handshake":{ats:"ab",slug:"handshake"},"Harvey AI":{ats:"ab",slug:"harvey"},"Hebbia":{ats:"gh",slug:"hebbia"},"Highspot":{ats:"lv",slug:"highspot"},"Hightouch":{ats:"gh",slug:"hightouch"},"Inflection AI":{ats:"gh",slug:"inflectionai"},"Intercom":{ats:"gh",slug:"intercom"},"Kalshi":{ats:"ab",slug:"kalshi"},"Klaviyo":{ats:"gh",slug:"klaviyo"},"Kong":{ats:"ab",slug:"kong"},"Lambda":{ats:"ab",slug:"lambda"},"LangChain":{ats:"ab",slug:"langchain"},"Lattice":{ats:"gh",slug:"lattice"},"LaunchDarkly":{ats:"gh",slug:"launchdarkly"},"Light":{ats:"ab",slug:"light"},"Lightdash":{ats:"ab",slug:"lightdash"},"Linear":{ats:"ab",slug:"linear"},"Lovable":{ats:"ab",slug:"lovable"},"Melio":{ats:"gh",slug:"melio"},"Mercor":{ats:"ab",slug:"mercor"},"Mercury":{ats:"gh",slug:"mercury"},"Mistral AI":{ats:"lv",slug:"mistral"},"Modal":{ats:"ab",slug:"modal"},"Monte Carlo":{ats:"ab",slug:"montecarlodata"},"NICE":{ats:"gh",slug:"nice"},"Notion":{ats:"ab",slug:"notion"},"Numeric":{ats:"ab",slug:"numeric"},"Nuro":{ats:"gh",slug:"nuro"},"Omnea":{ats:"ab",slug:"omnea"},"OpenAI":{ats:"ab",slug:"openai"},"OpenEvidence":{ats:"ab",slug:"openevidence"},"Oura":{ats:"gh",slug:"oura"},"Pacaso":{ats:"gh",slug:"pacaso"},"Palantir":{ats:"lv",slug:"palantir"},"Parloa":{ats:"gh",slug:"parloa"},"Pearl Health":{ats:"ab",slug:"pearlhealth"},"Physical Intelligence":{ats:"ab",slug:"physicalintelligence"},"Pigment":{ats:"lv",slug:"pigment"},"Pika":{ats:"ab",slug:"pika"},"Pinecone":{ats:"ab",slug:"pinecone"},"Plaid":{ats:"ab",slug:"plaid"},"PostHog":{ats:"ab",slug:"posthog"},"Profound":{ats:"ab",slug:"profound"},"Ramp":{ats:"ab",slug:"ramp"},"Redwood Materials":{ats:"gh",slug:"redwoodmaterials"},"Remote":{ats:"gh",slug:"remote"},"Render":{ats:"ab",slug:"render"},"Replit":{ats:"ab",slug:"replit"},"Retool":{ats:"ab",slug:"retool"},"Rillet":{ats:"ab",slug:"rillet"},"Riskified":{ats:"gh",slug:"riskified"},"Ro":{ats:"lv",slug:"ro"},"Roblox":{ats:"gh",slug:"roblox"},"Runway":{ats:"ab",slug:"runway"},"Samsara":{ats:"gh",slug:"samsara"},"Saronic":{ats:"ab",slug:"saronic"},"Scale AI":{ats:"gh",slug:"scaleai"},"Serval":{ats:"ab",slug:"serval"},"Shield AI":{ats:"lv",slug:"shieldai"},"Sierra AI":{ats:"ab",slug:"sierra"},"Simular":{ats:"ab",slug:"simular"},"Sisense":{ats:"gh",slug:"sisense"},"Snorkel AI":{ats:"gh",slug:"snorkelai"},"Snowflake":{ats:"ab",slug:"snowflake"},"SpaceX":{ats:"gh",slug:"spacex"},"Speak":{ats:"ab",slug:"speak"},"Stability AI":{ats:"gh",slug:"stabilityai"},"Stainless":{ats:"ab",slug:"stainlessapi"},"Statsig":{ats:"ab",slug:"statsig"},"Steadily":{ats:"ab",slug:"steadily"},"Stripe":{ats:"gh",slug:"stripe"},"Suno":{ats:"ab",slug:"suno"},"Supabase":{ats:"ab",slug:"supabase"},"Swap":{ats:"ab",slug:"swap"},"Sword Health":{ats:"lv",slug:"swordhealth"},"Synthesia":{ats:"ab",slug:"synthesia"},"Tabs":{ats:"ab",slug:"tabs"},"Tanium":{ats:"gh",slug:"tanium"},"Thinking Machines":{ats:"gh",slug:"thinkingmachines"},"Thrive Market":{ats:"gh",slug:"thrivemarket"},"Tines":{ats:"gh",slug:"tines"},"Torq":{ats:"gh",slug:"torq"},"Truveta":{ats:"gh",slug:"truveta"},"Typeform":{ats:"gh",slug:"typeform"},"Unify":{ats:"ab",slug:"unify"},"Unstructured":{ats:"ab",slug:"unstructured"},"Vannevar Labs":{ats:"gh",slug:"vannevarlabs"},"Vanta":{ats:"ab",slug:"vanta"},"Vercel":{ats:"gh",slug:"vercel"},"Verkada":{ats:"gh",slug:"verkada"},"Warp":{ats:"gh",slug:"warp"},"Waymo":{ats:"gh",slug:"waymo"},"Wealthsimple":{ats:"ab",slug:"wealthsimple"},"Weaviate":{ats:"ab",slug:"weaviate"},"Webflow":{ats:"gh",slug:"webflow"},"Whatnot":{ats:"ab",slug:"whatnot"},"Whoop":{ats:"ab",slug:"whoop"},"Wrike":{ats:"gh",slug:"wrike"},"Writer":{ats:"ab",slug:"writer"},"Zip":{ats:"ab",slug:"zip"},"Zuora":{ats:"gh",slug:"zuora"},"n8n":{ats:"ab",slug:"n8n"},"xAI":{ats:"gh",slug:"xai"},"Fireworks AI":{ats:"gh",slug:"fireworksai"},"Baseten":{ats:"ab",slug:"baseten"},"EvenUp":{ats:"ab",slug:"evenup"},"EliseAI":{ats:"ab",slug:"eliseai"},"Luma AI":{ats:"ab",slug:"luma-ai"},"Ambience Healthcare":{ats:"ab",slug:"ambiencehealthcare"},"Sesame":{ats:"ab",slug:"sesame"},"You.com":{ats:"gh",slug:"youcom"},"Uniphore":{ats:"lv",slug:"uniphore"},"Eudia":{ats:"gh",slug:"eudia"}};
+var { list } = require("@vercel/blob");
+
+// ── Registry cache (module-scope, survives warm starts) ──
+var _registryCache = null;
+var _registryCacheTime = 0;
+var REGISTRY_TTL = 5 * 60 * 1000; // 5 minutes
+
+async function getAtsMap() {
+  var now = Date.now();
+  if (_registryCache && (now - _registryCacheTime) < REGISTRY_TTL) {
+    return _registryCache;
+  }
+  try {
+    var token = process.env.BLOB_READ_WRITE_TOKEN;
+    var { blobs } = await list({ prefix: "ats-registry", limit: 5, token: token });
+    if (!blobs || blobs.length === 0) return _registryCache || {};
+    var latest = blobs.sort(function(a, b) {
+      return new Date(b.uploadedAt) - new Date(a.uploadedAt);
+    })[0];
+    var resp = await fetch(latest.url, { signal: AbortSignal.timeout(5000) });
+    if (!resp.ok) return _registryCache || {};
+    var registry = await resp.json();
+    var atsMap = {};
+    if (registry.mappings) {
+      for (var name in registry.mappings) {
+        var entry = registry.mappings[name];
+        if (entry.ats && entry.slug) {
+          atsMap[name] = { ats: entry.ats, slug: entry.slug };
+        }
+      }
+    }
+    _registryCache = atsMap;
+    _registryCacheTime = now;
+    return atsMap;
+  } catch (e) {
+    // On error, use stale cache if available, otherwise empty
+    return _registryCache || {};
+  }
+}
+
+// ── Helpers ──
 
 function stripHtml(s) {
   if (!s) return "";
@@ -58,6 +98,8 @@ function fetchRecruitee(name, slug) {
     }).catch(function() { return []; });
 }
 
+// ── Handler ──
+
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -67,6 +109,8 @@ module.exports = async function handler(req, res) {
   var company = req.query.company;
   if (!company) return res.status(400).json({ error: "Missing company parameter" });
 
+  // Load ATS registry (cached in memory, 5-min TTL)
+  var ATS_MAP = await getAtsMap();
   var mapping = ATS_MAP[company];
   var jobs = [];
 

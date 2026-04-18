@@ -1,10 +1,11 @@
 // scripts/refresh-jobs.js
-// Fetches jobs from all ATS-mapped companies + JSearch fallback
+// Fetches jobs from all companies using ATS registry from Vercel Blob
+// ATS mappings are stored externally in ats-registry.json — no code deploy needed
 // Uploads results to Vercel Blob Storage
 // Run: node scripts/refresh-jobs.js
 // Requires env vars: RAPIDAPI_KEY, BLOB_READ_WRITE_TOKEN
 
-const { put } = require("@vercel/blob");
+const { put, list } = require("@vercel/blob");
 
 const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
@@ -12,52 +13,65 @@ const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 if (!RAPIDAPI_KEY) { console.error("Missing RAPIDAPI_KEY"); process.exit(1); }
 if (!BLOB_TOKEN) { console.error("Missing BLOB_READ_WRITE_TOKEN"); process.exit(1); }
 
-// ── ATS MAPPINGS ──
+// ── ATS REGISTRY (loaded from Vercel Blob at runtime) ──
+// The registry is the single source of truth for all ATS mappings.
+// Update mappings by modifying ats-registry.json in Blob — no code deploy needed.
+// Seed with: node scripts/seed-registry.js --upload
 
-const ATS_MAP = {
-  "1Password":{ats:"ab",slug:"1password"},"Abacum":{ats:"ab",slug:"abacum"},"Abnormal Security":{ats:"gh",slug:"abnormalsecurity"},"Abridge":{ats:"ab",slug:"abridge"},"Affirm":{ats:"gh",slug:"affirm"},"Airtable":{ats:"gh",slug:"airtable"},"Alchemy":{ats:"ab",slug:"alchemy"},"Alloy":{ats:"gh",slug:"alloy"},"AlphaSense":{ats:"gh",slug:"alphasense"},"Amplitude":{ats:"gh",slug:"amplitude"},"Anaplan":{ats:"gh",slug:"anaplan"},"Anduril":{ats:"gh",slug:"andurilindustries"},"Anthropic":{ats:"gh",slug:"anthropic"},"Apollo":{ats:"gh",slug:"apollo"},"AppLovin":{ats:"gh",slug:"applovin"},"Applied Intuition":{ats:"gh",slug:"appliedintuition"},"Apptronik":{ats:"gh",slug:"apptronik"},"Articulate":{ats:"lv",slug:"articulate"},"Ashby":{ats:"ab",slug:"ashby"},"Attentive":{ats:"gh",slug:"attentive"},"Benchling":{ats:"ab",slug:"benchling"},"Braze":{ats:"gh",slug:"braze"},"Brex":{ats:"gh",slug:"brex"},"Calendly":{ats:"gh",slug:"calendly"},"Calm":{ats:"gh",slug:"calm"},"Campfire":{ats:"ab",slug:"campfire"},"CaptivateIQ":{ats:"lv",slug:"captivateiq"},"Carta":{ats:"gh",slug:"carta"},"Celonis":{ats:"gh",slug:"celonis"},"Cerebras Systems":{ats:"gh",slug:"cerebrassystems"},"Chainguard":{ats:"gh",slug:"chainguard"},"ClickUp":{ats:"ab",slug:"clickup"},"Coast":{ats:"gh",slug:"coast"},"Cockroach Labs":{ats:"gh",slug:"cockroachlabs"},"Cognition AI":{ats:"ab",slug:"cognition"},"Cohere":{ats:"ab",slug:"cohere"},"Common Room":{ats:"ab",slug:"commonroom"},"Contentful":{ats:"gh",slug:"contentful"},"CoreWeave":{ats:"gh",slug:"coreweave"},"Coupa":{ats:"lv",slug:"coupa"},"Coursera":{ats:"gh",slug:"coursera"},"Crusoe":{ats:"ab",slug:"crusoe"},"Cube":{ats:"ab",slug:"cube"},"Databricks":{ats:"gh",slug:"databricks"},"Datadog":{ats:"gh",slug:"datadog"},"Datarails":{ats:"gh",slug:"datarails"},"Decagon":{ats:"ab",slug:"decagon"},"Deel":{ats:"ab",slug:"deel"},"DeepL":{ats:"ab",slug:"deepl"},"Discord":{ats:"gh",slug:"discord"},"Doppler":{ats:"ab",slug:"doppler"},"DOSS":{ats:"ab",slug:"doss"},"Drata":{ats:"ab",slug:"drata"},"Drivetrain":{ats:"lv",slug:"drivetrain"},"DualEntry":{ats:"rc",slug:"dualentry"},"Duolingo":{ats:"gh",slug:"duolingo"},"ElevenLabs":{ats:"ab",slug:"elevenlabs"},"Esusu":{ats:"gh",slug:"esusu"},"Faire":{ats:"gh",slug:"faire"},"Figma":{ats:"gh",slug:"figma"},"Figure AI":{ats:"gh",slug:"figureai"},"Fivetran":{ats:"gh",slug:"fivetran"},"Flexport":{ats:"gh",slug:"flexport"},"FloQast":{ats:"lv",slug:"floqast"},"Form Energy":{ats:"ab",slug:"formenergy"},"Forter":{ats:"gh",slug:"forter"},"Glean":{ats:"gh",slug:"gleanwork"},"GoCardless":{ats:"gh",slug:"gocardless"},"Gong":{ats:"rc",slug:"gong"},"Grafana Labs":{ats:"gh",slug:"grafanalabs"},"Gusto":{ats:"gh",slug:"gusto"},"Halcyon":{ats:"gh",slug:"halcyon"},"Handshake":{ats:"ab",slug:"handshake"},"Harvey AI":{ats:"ab",slug:"harvey"},"Hebbia":{ats:"gh",slug:"hebbia"},"Highspot":{ats:"lv",slug:"highspot"},"Hightouch":{ats:"gh",slug:"hightouch"},"Inflection AI":{ats:"gh",slug:"inflectionai"},"Intercom":{ats:"gh",slug:"intercom"},"Kalshi":{ats:"ab",slug:"kalshi"},"Klaviyo":{ats:"gh",slug:"klaviyo"},"Lambda":{ats:"ab",slug:"lambda"},"LangChain":{ats:"ab",slug:"langchain"},"LaunchDarkly":{ats:"gh",slug:"launchdarkly"},"Lattice":{ats:"gh",slug:"lattice"},"Lightdash":{ats:"ab",slug:"lightdash"},"Linear":{ats:"ab",slug:"linear"},"Lovable":{ats:"ab",slug:"lovable"},"Melio":{ats:"gh",slug:"melio"},"Mercor":{ats:"ab",slug:"mercor"},"Mercury":{ats:"gh",slug:"mercury"},"Mistral AI":{ats:"lv",slug:"mistral"},"Modal":{ats:"ab",slug:"modal"},"Monte Carlo":{ats:"ab",slug:"montecarlodata"},"Moveworks":{ats:"ab",slug:"moveworks"},"n8n":{ats:"ab",slug:"n8n"},"NICE":{ats:"gh",slug:"nice"},"Notion":{ats:"ab",slug:"notion"},"Numeric":{ats:"ab",slug:"numeric"},"Nuro":{ats:"gh",slug:"nuro"},"Omnea":{ats:"ab",slug:"omnea"},"OpenAI":{ats:"ab",slug:"openai"},"OpenEvidence":{ats:"ab",slug:"openevidence"},"Oura":{ats:"gh",slug:"oura"},"Pacaso":{ats:"gh",slug:"pacaso"},"Palantir":{ats:"lv",slug:"palantir"},"Parloa":{ats:"gh",slug:"parloa"},"Pearl Health":{ats:"ab",slug:"pearlhealth"},"Physical Intelligence":{ats:"ab",slug:"physicalintelligence"},"Pigment":{ats:"lv",slug:"pigment"},"Pika":{ats:"ab",slug:"pika"},"Pinecone":{ats:"ab",slug:"pinecone"},"Plaid":{ats:"ab",slug:"plaid"},"PostHog":{ats:"ab",slug:"posthog"},"Profound":{ats:"ab",slug:"profound"},"Ramp":{ats:"ab",slug:"ramp"},"Redwood Materials":{ats:"gh",slug:"redwoodmaterials"},"Remote":{ats:"gh",slug:"remote"},"Render":{ats:"ab",slug:"render"},"Replit":{ats:"ab",slug:"replit"},"Retool":{ats:"ab",slug:"retool"},"Rillet":{ats:"ab",slug:"rillet"},"Riskified":{ats:"gh",slug:"riskified"},"Ro":{ats:"lv",slug:"ro"},"Roblox":{ats:"gh",slug:"roblox"},"Runway":{ats:"ab",slug:"runway"},"Samsara":{ats:"gh",slug:"samsara"},"Saronic":{ats:"ab",slug:"saronic"},"Scale AI":{ats:"gh",slug:"scaleai"},"Serval":{ats:"ab",slug:"serval"},"Shield AI":{ats:"lv",slug:"shieldai"},"Sierra AI":{ats:"ab",slug:"sierra"},"Simular":{ats:"ab",slug:"simular"},"Sisense":{ats:"gh",slug:"sisense"},"Snorkel AI":{ats:"gh",slug:"snorkelai"},"Snowflake":{ats:"ab",slug:"snowflake"},"SpaceX":{ats:"gh",slug:"spacex"},"Speak":{ats:"ab",slug:"speak"},"Spring Health":{ats:"ab",slug:"springhealth"},"Stability AI":{ats:"gh",slug:"stabilityai"},"Stainless":{ats:"ab",slug:"stainlessapi"},"Statsig":{ats:"ab",slug:"statsig"},"Steadily":{ats:"ab",slug:"steadily"},"Stripe":{ats:"gh",slug:"stripe"},"Suno":{ats:"ab",slug:"suno"},"Supabase":{ats:"ab",slug:"supabase"},"Swap":{ats:"ab",slug:"swap"},"Sword Health":{ats:"lv",slug:"swordhealth"},"Synthesia":{ats:"ab",slug:"synthesia"},"Tanium":{ats:"gh",slug:"tanium"},"Thinking Machines":{ats:"gh",slug:"thinkingmachines"},"Thrive Market":{ats:"gh",slug:"thrivemarket"},"Tines":{ats:"gh",slug:"tines"},"Torq":{ats:"gh",slug:"torq"},"Truveta":{ats:"gh",slug:"truveta"},"Typeform":{ats:"gh",slug:"typeform"},"Unify":{ats:"ab",slug:"unify"},"Unstructured":{ats:"ab",slug:"unstructured"},"Vanta":{ats:"ab",slug:"vanta"},"Vannevar Labs":{ats:"gh",slug:"vannevarlabs"},"Vercel":{ats:"gh",slug:"vercel"},"Verkada":{ats:"gh",slug:"verkada"},"Warp":{ats:"gh",slug:"warp"},"Waymo":{ats:"gh",slug:"waymo"},"Wealthsimple":{ats:"ab",slug:"wealthsimple"},"Weaviate":{ats:"ab",slug:"weaviate"},"Webflow":{ats:"gh",slug:"webflow"},"Whatnot":{ats:"ab",slug:"whatnot"},"Whoop":{ats:"ab",slug:"whoop"},"Wrike":{ats:"gh",slug:"wrike"},"Writer":{ats:"ab",slug:"writer"},"xAI":{ats:"gh",slug:"xai"},"Zip":{ats:"ab",slug:"zip"},"Zuora":{ats:"gh",slug:"zuora"},"Fireworks AI":{ats:"gh",slug:"fireworksai"},"Baseten":{ats:"ab",slug:"baseten"},"EvenUp":{ats:"ab",slug:"evenup"},"EliseAI":{ats:"ab",slug:"eliseai"},"Luma AI":{ats:"ab",slug:"luma-ai"},"Ambience Healthcare":{ats:"ab",slug:"ambiencehealthcare"},"Sesame":{ats:"ab",slug:"sesame"},"You.com":{ats:"gh",slug:"youcom"},"Uniphore":{ats:"lv",slug:"uniphore"},"Eudia":{ats:"gh",slug:"eudia"}
-};
+var ATS_MAP = {};
+var ALL_COMPANIES = [];
 
-const ALL_COMPANIES = [...new Set([
-  "OpenAI","Anthropic","Mistral AI","Cohere","Databricks","Hugging Face","Together AI","Groq",
-  "Cerebras Systems","xAI","CoreWeave","Lambda","SambaNova","ScaleOps","Perplexity AI","Jasper",
-  "Runway","Glean","Harvey AI","ElevenLabs","Cursor","Cognition AI","Suno","Pika",
-  "Writer","Replit","Moveworks","Genspark","Unstructured","Sierra AI","Lovable","Credo AI",
-  "Stripe","Ramp","Brex","Plaid","Mercury","Navan","Deel","Rippling",
-  "Carta","Zip","Billd","Steadily","Klarna","Revolut","Esusu","Wiz",
-  "Abnormal Security","Island","Chainguard","Snyk","Cyera","Halcyon","Flock Safety","Abridge",
-  "Tempus AI","Spring Health","Hippocratic AI","Pearl Health","Truveta","Benchling","Vercel","Supabase",
-  "PostHog","Linear","Grafana Labs","Retool","Datadog","Canva","Notion","Figma",
-  "Monday.com","Drata","Vanta","Clay","Lattice","Gong","Celonis","CaptivateIQ",
-  "Common Room","ServiceNow","HubSpot","Docusign","AlphaSense","Snowflake","dbt Labs","Dataiku",
-  "Scale AI","Cribl","Figure AI","Anduril","Physical Intelligence","Saronic","Shield AI","Gecko Robotics",
-  "Apptronik","Whatnot","Faire","Flexport","Pacaso","Thrive Market","Redwood Materials","Form Energy",
-  "Commonwealth Fusion","Northvolt","Duolingo","Handshake","Coursera","Gusto","Palantir","SpaceX",
-  "Vannevar Labs","Ironclad","EvenUp","Discord","Whoop","Oura","ICON 3D","World Wide Technology",
-  "Shopify","CrowdStrike","AppLovin","LangChain","Retell AI","Serval","Resolve AI","CrewAI",
-  "Peec AI","DOSS","Crusoe","VAST Data","Thinking Machines Lab","Speak","OpenEvidence","Decagon",
-  "Luminance","Hebbia","Coactive AI","Weights & Biases","Adept AI","Wrike","Amplitude","Airtable",
-  "Freshworks","HashiCorp","Contentful","GitLab","Miro","ClickUp","Webflow","Warp",
-  "Verkada","Applied Intuition","Nuro","Articulate","Grammarly","Relativity Space","Corebridge Financial","Sword Health",
-  "Nuvei","Bain & Company","Trader Joe's","Box","Procore","Calm","Built Technologies","Hinge Health",
-  "Alto Pharmacy","Findigs","Coast","Wealthsimple","Calendly","Typeform","Remote","Waymo",
-  "Omnea","Bolt","Stability AI","Inflection AI","Modal","Pinecone","Weaviate","Character AI",
-  "Midjourney","Synthesia","Coupa","Cockroach Labs","LaunchDarkly","Fivetran","Monte Carlo","Snorkel AI",
-  "Alchemy","Braze","Kong","Harness","SentinelOne","1Password","Tanium","Arctic Wolf",
-  "Noom","Ro","Devoted Health","Oscar Health","Outreach","Seismic","Highspot","Attentive",
-  "Klaviyo","Forter","Flutterwave","GoCardless","Melio","Kalshi","Hex","Tome",
-  "Orb","Statsig","Stainless","Codeium","Graphiant","Affirm","Pluralsight","Riskified",
-  "Alloy","Zuora","Tropic","Doppler","Flatfile","Render","Roblox","Campfire",
-  "DualEntry","Light","Tabs","Base44","Samsara","Rillet","Skild AI","DeepL",
-  "Swap","Kore.ai","Wise","Aisera","NICE","Cognigy","Intercom","Numeric",
-  "Pega","Mercor","Apollo","n8n","Tines","Torq","Parloa","MainFunc",
-  "Darwinbox","Ashby","Hightouch","DevRev","Basis","Profound","Unify","Giga",
-  "Synthflow AI","Simular","Anaplan","OneStream","Wolters Kluwer","Board International","Jedox","Pigment",
-  "Abacum","Runway Financial","Datarails","Cube","Drivetrain","Vena Solutions","Planful","Nominal",
-  "FloQast","BlackLine","Accrual","ThoughtSpot","Domo","Sisense","Sigma Computing","Deepnote",
-  "Pyramid Analytics","Omni Analytics","Lightdash","Bryant Park Consulting","Echo Park Consulting",
-  "Fireworks AI","Baseten","EliseAI","Sesame","You.com","Modular","Luma AI","Uniphore","Eudia","Ambience Healthcare"
-])];
+async function loadRegistry() {
+  console.log("Loading ATS registry from Blob...");
+  try {
+    var { blobs } = await list({ prefix: "ats-registry", limit: 5, token: BLOB_TOKEN });
+    if (!blobs || blobs.length === 0) {
+      throw new Error("No ats-registry blob found. Run: node scripts/seed-registry.js --upload");
+    }
+    var latest = blobs.sort(function(a, b) {
+      return new Date(b.uploadedAt) - new Date(a.uploadedAt);
+    })[0];
+
+    var resp = await fetch(latest.url);
+    if (!resp.ok) throw new Error("Blob fetch failed: HTTP " + resp.status);
+    var registry = await resp.json();
+
+    // Validate structure
+    if (!registry.mappings || typeof registry.mappings !== "object") {
+      throw new Error("Registry missing 'mappings' object");
+    }
+    if (!Array.isArray(registry.unmapped)) {
+      throw new Error("Registry missing 'unmapped' array");
+    }
+
+    // Build ATS_MAP from registry (strip metadata, keep only ats + slug)
+    var mapped = 0;
+    for (var name in registry.mappings) {
+      var entry = registry.mappings[name];
+      if (entry.ats && entry.slug) {
+        ATS_MAP[name] = { ats: entry.ats, slug: entry.slug };
+        mapped++;
+      }
+    }
+
+    // Build ALL_COMPANIES = mapped + unmapped
+    ALL_COMPANIES = Object.keys(ATS_MAP).concat(registry.unmapped);
+
+    // Guard: refuse to run with 0 mappings
+    if (mapped === 0) {
+      throw new Error("Registry has 0 valid mappings — aborting");
+    }
+    if (ALL_COMPANIES.length < 100) {
+      throw new Error("Registry has only " + ALL_COMPANIES.length + " companies — expected 200+");
+    }
+
+    console.log("Registry loaded: " + mapped + " mapped, " + registry.unmapped.length + " unmapped, " + ALL_COMPANIES.length + " total");
+    console.log("Registry version: " + (registry.version || "?") + ", updated: " + (registry.updated_at || "?"));
+  } catch (e) {
+    console.error("FATAL: Could not load ATS registry — " + e.message);
+    process.exit(1);
+  }
+}
 
 // ── FETCH HELPERS ──
 
@@ -250,7 +264,11 @@ async function fetchCompany(name) {
 
 async function main() {
   console.log("=== ASCENT REFRESH START ===");
-  console.log("[BUILD:2026-04-04T19:00] Parser active, validator active");
+  console.log("[BUILD:2026-04-15] Registry-backed, parser active, validator active");
+
+  // Load ATS registry from Blob (populates ATS_MAP and ALL_COMPANIES)
+  await loadRegistry();
+
   console.log("Companies: " + ALL_COMPANIES.length + ", ATS-mapped: " + Object.keys(ATS_MAP).length);
 
   var allJobs = [];
