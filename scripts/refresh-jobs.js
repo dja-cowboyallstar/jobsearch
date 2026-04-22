@@ -20,6 +20,7 @@ if (!BLOB_TOKEN) { console.error("Missing BLOB_READ_WRITE_TOKEN"); process.exit(
 
 var ATS_MAP = {};
 var ALL_COMPANIES = [];
+var REGISTRY_OBJ = null;
 
 async function loadRegistry() {
   console.log("Loading ATS registry from Blob...");
@@ -65,6 +66,7 @@ async function loadRegistry() {
       throw new Error("Registry has only " + ALL_COMPANIES.length + " companies — expected 200+");
     }
 
+    REGISTRY_OBJ = registry;
     console.log("Registry loaded: " + mapped + " mapped, " + registry.unmapped.length + " unmapped, " + ALL_COMPANIES.length + " total");
     console.log("Registry version: " + (registry.version || "?") + ", updated: " + (registry.updated_at || "?"));
   } catch (e) {
@@ -262,6 +264,134 @@ async function fetchCompany(name) {
 
 // ── MAIN ──
 
+// -- ATS AUTO-DISCOVERY --
+var DISCOVERY_TIME_CAP_MS = 55000;
+var PROBE_TIMEOUT_MS = 5000;
+
+function generateSlugVariants(name) {
+  var base = name.toLowerCase()
+    .replace(/[\u2018\u2019']/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+  var stripped = base
+    .replace(/-ai$/, "").replace(/-inc$/, "").replace(/-corp$/, "")
+    .replace(/-labs$/, "").replace(/-technologies$/, "").replace(/-systems$/, "")
+    .replace(/-platform$/, "").replace(/-hq$/, "").replace(/-app$/, "");
+  var nohyphen = base.replace(/-/g, "");
+  var variants = [base];
+  if (stripped !== base) variants.push(stripped);
+  if (nohyphen !== base && nohyphen !== stripped) variants.push(nohyphen);
+  return variants.filter(function(v, i, a) { return a.indexOf(v) === i; });
+}
+
+async function probeATSEndpoint(ats, slug) {
+  var urls = {
+    gh: "https://boards-api.greenhouse.io/v1/boards/" + slug + "/jobs",
+    ab: "https://api.ashbyhq.com/posting-api/job-board/" + slug,
+    lv: "https://api.lever.co/v0/postings/" + slug + "?mode=json",
+    rc: "https://" + slug + ".recruitee.com/api/offers"
+  };
+  var url = urls[ats];
+  if (!url) return { count: 0, titles: [] };
+  try {
+    var controller = new AbortController();
+    var timer = setTimeout(function() { controller.abort(); }, PROBE_TIMEOUT_MS);
+    var resp = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!resp.ok) return { count: 0, titles: [] };
+    var data = await resp.json();
+    var jobs = [];
+    if (ats === "gh") jobs = data.jobs || [];
+    else if (ats === "ab") jobs = data.jobs || [];
+    else if (ats === "lv") jobs = Array.isArray(data) ? data : [];
+    else if (ats === "rc") jobs = data.offers || [];
+    var titles = jobs.slice(0, 10).map(function(j) {
+      return (j.title || j.text || "").toLowerCase();
+    });
+    return { count: jobs.length, titles: titles };
+  } catch (e) {
+    return { count: 0, titles: [] };
+  }
+}
+
+var AI_TITLE_KEYWORDS = [
+  "engineer","software","data","ml","ai","product","research","scientist",
+  "analyst","developer","manager","design","ops","platform","infrastructure",
+  "backend","frontend","fullstack","security","devops","cloud","machine","learning",
+  "model","llm","applied","founding","technical","architect","principal","recruiter",
+  "finance","legal","marketing","sales","operations","counsel","accounting"
+];
+
+function isTitlePlausible(titles) {
+  if (titles.length === 0) return false;
+  var matches = titles.filter(function(t) {
+    return AI_TITLE_KEYWORDS.some(function(kw) { return t.indexOf(kw) > -1; });
+  });
+  return (matches.length / titles.length) >= 0.4;
+}
+
+async function runDiscoveryPhase(unmappedList) {
+  if (!unmappedList || unmappedList.length === 0) return [];
+  console.log("\n=== DISCOVERY PHASE ===");
+  console.log("Probing " + unmappedList.length + " unmapped companies...");
+  var ATS_TYPES = ["gh", "ab", "lv", "rc"];
+  var newMappings = [];
+  var phaseStart = Date.now();
+  for (var i = 0; i < unmappedList.length; i++) {
+    if (Date.now() - phaseStart > DISCOVERY_TIME_CAP_MS) {
+      console.log("  Time cap reached -- " + (unmappedList.length - i) + " companies skipped");
+      break;
+    }
+    var company = unmappedList[i];
+    var slugs = generateSlugVariants(company);
+    var best = null;
+    for (var a = 0; a < ATS_TYPES.length && !best; a++) {
+      for (var s = 0; s < slugs.length && !best; s++) {
+        var result = await probeATSEndpoint(ATS_TYPES[a], slugs[s]);
+        if (result.count > 0) {
+          if (isTitlePlausible(result.titles)) {
+            best = { ats: ATS_TYPES[a], slug: slugs[s], count: result.count };
+          } else {
+            console.log("  SKIP (implausible titles): " + company + " -> " + ATS_TYPES[a] + "/" + slugs[s]);
+          }
+        }
+      }
+    }
+    if (best) {
+      console.log("  DISCOVERED: " + company + " -> " + best.ats + "/" + best.slug + " (" + best.count + " jobs)");
+      newMappings.push({ company: company, ats: best.ats, slug: best.slug });
+    }
+  }
+  console.log("Discovery complete: " + newMappings.length + " new mappings found");
+  return newMappings;
+}
+
+async function saveUpdatedRegistry(newMappings) {
+  if (!REGISTRY_OBJ) {
+    console.error("  Registry object unavailable - skipping registry update (non-fatal)");
+    return;
+  }
+  var today = new Date().toISOString().slice(0, 10);
+  for (var i = 0; i < newMappings.length; i++) {
+    var m = newMappings[i];
+    REGISTRY_OBJ.mappings[m.company] = { ats: m.ats, slug: m.slug, verified_at: today, source: "auto-discovery" };
+    REGISTRY_OBJ.unmapped = REGISTRY_OBJ.unmapped.filter(function(u) { return u !== m.company; });
+  }
+  REGISTRY_OBJ.version = (REGISTRY_OBJ.version || 1) + 1;
+  REGISTRY_OBJ.updated_at = new Date().toISOString();
+  try {
+    await put("ats-registry.json", JSON.stringify(REGISTRY_OBJ), {
+      access: "public",
+      contentType: "application/json",
+      token: BLOB_TOKEN,
+      addRandomSuffix: false
+    });
+    console.log("  Registry updated in Blob: " + Object.keys(REGISTRY_OBJ.mappings).length + " mapped, " + REGISTRY_OBJ.unmapped.length + " unmapped, version " + REGISTRY_OBJ.version);
+  } catch (e) {
+    console.error("  Registry Blob write FAILED (non-fatal): " + e.message);
+  }
+}
+
 async function main() {
   console.log("=== ASCENT REFRESH START ===");
   console.log("[BUILD:2026-04-15] Registry-backed, parser active, validator active");
@@ -297,6 +427,15 @@ async function main() {
   }
 
   console.log("Fetch complete: " + allJobs.length + " jobs");
+
+  // -- AUTO-DISCOVERY --
+  var unmappedAtStart = ALL_COMPANIES.filter(function(c) { return !ATS_MAP[c]; });
+  var newMappings = await runDiscoveryPhase(unmappedAtStart);
+  if (newMappings.length > 0) {
+    console.log("Saving " + newMappings.length + " new mappings to registry...");
+    await saveUpdatedRegistry(newMappings);
+  }
+
 
   // ── LOCATION NORMALIZER ──
   var CITY_ALIASES = {
