@@ -292,13 +292,13 @@ async function probeATSEndpoint(ats, slug) {
     rc: "https://" + slug + ".recruitee.com/api/offers"
   };
   var url = urls[ats];
-  if (!url) return { count: 0, titles: [] };
+  if (!url) return { count: 0, titles: [], probed: false };
   try {
     var controller = new AbortController();
     var timer = setTimeout(function() { controller.abort(); }, PROBE_TIMEOUT_MS);
     var resp = await fetch(url, { signal: controller.signal });
     clearTimeout(timer);
-    if (!resp.ok) return { count: 0, titles: [] };
+    if (!resp.ok) return { count: 0, titles: [], probed: false };
     var data = await resp.json();
     var jobs = [];
     if (ats === "gh") jobs = data.jobs || [];
@@ -308,9 +308,9 @@ async function probeATSEndpoint(ats, slug) {
     var titles = jobs.slice(0, 10).map(function(j) {
       return (j.title || j.text || "").toLowerCase();
     });
-    return { count: jobs.length, titles: titles };
+    return { count: jobs.length, titles: titles, probed: true };
   } catch (e) {
-    return { count: 0, titles: [] };
+    return { count: 0, titles: [], probed: false };
   }
 }
 
@@ -330,24 +330,46 @@ function isTitlePlausible(titles) {
   return (matches.length / titles.length) >= 0.4;
 }
 
-async function runDiscoveryPhase(unmappedList) {
-  if (!unmappedList || unmappedList.length === 0) return [];
+async function runDiscoveryPhase(unmappedList, probeTimestamps) {
+  if (!unmappedList || unmappedList.length === 0) return { newMappings: [], probedCompanies: [] };
+  probeTimestamps = probeTimestamps || {};
+
+  // Rotation: sort ascending by last-probed timestamp so never-probed and stalest companies go first.
+  // Null/undefined timestamps become 0 (epoch), which sorts to the front. Alphabetical tiebreak keeps
+  // ordering deterministic across runs with identical timestamps. The registry blob itself is the
+  // rotation state -- no separate cursor file, no env var -- so corrupt state is impossible by
+  // construction (a missing blob field just means "everyone is max priority").
+  var rotated = unmappedList.slice().sort(function(a, b) {
+    var ta = probeTimestamps[a] ? new Date(probeTimestamps[a]).getTime() : 0;
+    var tb = probeTimestamps[b] ? new Date(probeTimestamps[b]).getTime() : 0;
+    if (isNaN(ta)) ta = 0;
+    if (isNaN(tb)) tb = 0;
+    if (ta !== tb) return ta - tb;
+    return a < b ? -1 : a > b ? 1 : 0;
+  });
+
   console.log("\n=== DISCOVERY PHASE ===");
-  console.log("Probing " + unmappedList.length + " unmapped companies...");
+  console.log("Probing " + rotated.length + " unmapped companies (rotation: oldest-probed first)...");
+  var neverProbed = rotated.filter(function(c) { return !probeTimestamps[c]; }).length;
+  console.log("  Never probed: " + neverProbed + " | Previously probed: " + (rotated.length - neverProbed));
+
   var ATS_TYPES = ["gh", "ab", "lv", "rc"];
   var newMappings = [];
+  var probedCompanies = [];
   var phaseStart = Date.now();
-  for (var i = 0; i < unmappedList.length; i++) {
+  for (var i = 0; i < rotated.length; i++) {
     if (Date.now() - phaseStart > DISCOVERY_TIME_CAP_MS) {
-      console.log("  Time cap reached -- " + (unmappedList.length - i) + " companies skipped");
+      console.log("  Time cap reached -- " + (rotated.length - i) + " companies skipped (will be prioritized next run)");
       break;
     }
-    var company = unmappedList[i];
+    var company = rotated[i];
     var slugs = generateSlugVariants(company);
     var best = null;
+    var anyProbed = false;
     for (var a = 0; a < ATS_TYPES.length && !best; a++) {
       for (var s = 0; s < slugs.length && !best; s++) {
         var result = await probeATSEndpoint(ATS_TYPES[a], slugs[s]);
+        if (result.probed) anyProbed = true;
         if (result.count > 0) {
           if (isTitlePlausible(result.titles)) {
             best = { ats: ATS_TYPES[a], slug: slugs[s], count: result.count };
@@ -361,9 +383,13 @@ async function runDiscoveryPhase(unmappedList) {
       console.log("  DISCOVERED: " + company + " -> " + best.ats + "/" + best.slug + " (" + best.count + " jobs)");
       newMappings.push({ company: company, ats: best.ats, slug: best.slug });
     }
+    // Stamp only if at least one ATS responded with a 2xx. Failed probes (network / timeout / non-2xx)
+    // do NOT advance rotation -- they retry next run. This prevents a company whose endpoints are all
+    // timing out from being skipped for 4 runs.
+    if (anyProbed) probedCompanies.push(company);
   }
-  console.log("Discovery complete: " + newMappings.length + " new mappings found");
-  return newMappings;
+  console.log("Discovery complete: " + newMappings.length + " new mappings found, " + probedCompanies.length + " companies probed successfully");
+  return { newMappings: newMappings, probedCompanies: probedCompanies };
 }
 
 async function saveUpdatedRegistry(newMappings) {
@@ -377,7 +403,11 @@ async function saveUpdatedRegistry(newMappings) {
     REGISTRY_OBJ.mappings[m.company] = { ats: m.ats, slug: m.slug, verified_at: today, source: "auto-discovery" };
     REGISTRY_OBJ.unmapped = REGISTRY_OBJ.unmapped.filter(function(u) { return u !== m.company; });
   }
-  REGISTRY_OBJ.version = (REGISTRY_OBJ.version || 1) + 1;
+  // Bump version only on schema changes (new mappings). Pure probe-timestamp updates bump updated_at
+  // but not version, so consumers keying on version number don't see churn from rotation.
+  if (newMappings.length > 0) {
+    REGISTRY_OBJ.version = (REGISTRY_OBJ.version || 1) + 1;
+  }
   REGISTRY_OBJ.updated_at = new Date().toISOString();
   try {
     await put("ats-registry.json", JSON.stringify(REGISTRY_OBJ), {
@@ -386,7 +416,8 @@ async function saveUpdatedRegistry(newMappings) {
       token: BLOB_TOKEN,
       addRandomSuffix: false
     });
-    console.log("  Registry updated in Blob: " + Object.keys(REGISTRY_OBJ.mappings).length + " mapped, " + REGISTRY_OBJ.unmapped.length + " unmapped, version " + REGISTRY_OBJ.version);
+    var stampedCount = REGISTRY_OBJ.probeTimestamps ? Object.keys(REGISTRY_OBJ.probeTimestamps).length : 0;
+    console.log("  Registry updated in Blob: " + Object.keys(REGISTRY_OBJ.mappings).length + " mapped, " + REGISTRY_OBJ.unmapped.length + " unmapped, " + stampedCount + " probe-stamped, version " + REGISTRY_OBJ.version);
   } catch (e) {
     console.error("  Registry Blob write FAILED (non-fatal): " + e.message);
   }
@@ -430,9 +461,21 @@ async function main() {
 
   // -- AUTO-DISCOVERY --
   var unmappedAtStart = ALL_COMPANIES.filter(function(c) { return !ATS_MAP[c]; });
-  var newMappings = await runDiscoveryPhase(unmappedAtStart);
-  if (newMappings.length > 0) {
-    console.log("Saving " + newMappings.length + " new mappings to registry...");
+  var priorTimestamps = (REGISTRY_OBJ && REGISTRY_OBJ.probeTimestamps) || {};
+  var discoveryResult = await runDiscoveryPhase(unmappedAtStart, priorTimestamps);
+  var newMappings = discoveryResult.newMappings;
+  var probedCompanies = discoveryResult.probedCompanies;
+  // Stamp successfully-probed companies in the registry. Rotation state lives in the blob itself,
+  // so next run reads these timestamps back and sorts the stalest to the front of the probe list.
+  if (probedCompanies.length > 0 && REGISTRY_OBJ) {
+    if (!REGISTRY_OBJ.probeTimestamps) REGISTRY_OBJ.probeTimestamps = {};
+    var nowISO = new Date().toISOString();
+    for (var pc = 0; pc < probedCompanies.length; pc++) {
+      REGISTRY_OBJ.probeTimestamps[probedCompanies[pc]] = nowISO;
+    }
+  }
+  if (newMappings.length > 0 || probedCompanies.length > 0) {
+    console.log("Saving registry: " + newMappings.length + " new mapping(s), " + probedCompanies.length + " probe timestamp(s) updated...");
     await saveUpdatedRegistry(newMappings);
   }
 
