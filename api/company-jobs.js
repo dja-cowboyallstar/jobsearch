@@ -28,7 +28,9 @@ async function getAtsMap() {
     if (registry.mappings) {
       for (var name in registry.mappings) {
         var entry = registry.mappings[name];
-        if (entry.ats && entry.slug) {
+        if (entry.ats === "wd" && entry.tenant && entry.dc && entry.site) {
+          atsMap[name] = { ats: "wd", tenant: entry.tenant, dc: entry.dc, site: entry.site };
+        } else if (entry.ats && entry.slug) {
           atsMap[name] = { ats: entry.ats, slug: entry.slug };
         }
       }
@@ -88,6 +90,55 @@ function fetchAshby(name, slug) {
     }).catch(function() { return []; });
 }
 
+// Workday: list-only (no detail calls) to stay within Vercel serverless 60s budget.
+// Descriptions are populated by the nightly scripts/refresh-workday.js pipeline
+// and served via /api/jobs-data.js. This endpoint is a fresh-on-demand supplement.
+function fetchWorkday(name, tenant, dc, site) {
+  var base = "https://" + tenant + "." + dc + ".myworkdayjobs.com";
+  var listUrl = base + "/wday/cxs/" + tenant + "/" + site + "/jobs";
+  var PAGE = 20;
+  var MAX_PAGES = 6; // 120-job cap per company for this endpoint
+  var headers = { "Content-Type": "application/json", "Accept": "application/json" };
+
+  function page(offset) {
+    return fetch(listUrl, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({ appliedFacets: {}, limit: PAGE, offset: offset, searchText: "" }),
+      signal: AbortSignal.timeout(8000)
+    }).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
+  }
+
+  return page(0).then(function(first) {
+    if (!first || !Array.isArray(first.jobPostings)) return [];
+    var total = typeof first.total === "number" ? first.total : first.jobPostings.length;
+    var totalPages = Math.min(Math.ceil(total / PAGE), MAX_PAGES);
+    var pages = [Promise.resolve(first)];
+    for (var p = 1; p < totalPages; p++) pages.push(page(p * PAGE));
+    return Promise.all(pages).then(function(results) {
+      var all = [];
+      results.forEach(function(r) { if (r && Array.isArray(r.jobPostings)) all = all.concat(r.jobPostings); });
+      return all.map(function(j) {
+        var ext = j.externalPath || "";
+        var applyUrl = ext ? (base + "/en-US/" + site + ext) : base;
+        var jobId = ext.split("/").pop() || j.bulletFields && j.bulletFields[0] || j.title;
+        return {
+          job_id: "wd_" + tenant + "_" + jobId,
+          job_title: j.title || "",
+          employer_name: name,
+          employer_logo: null,
+          job_apply_link: applyUrl,
+          job_description: "", // Filled by nightly pipeline; left blank here for speed
+          job_employment_type: null,
+          job_posted_at: j.postedOn || null,
+          _company: name,
+          _loc: j.locationsText || ""
+        };
+      });
+    });
+  }).catch(function() { return []; });
+}
+
 function fetchRecruitee(name, slug) {
   return fetch("https://" + slug + ".recruitee.com/api/offers", { signal: AbortSignal.timeout(8000) })
     .then(function(r) { return r.ok ? r.json() : { offers: [] }; })
@@ -121,11 +172,12 @@ module.exports = async function handler(req, res) {
       else if (mapping.ats === "lv") jobs = await fetchLever(company, mapping.slug);
       else if (mapping.ats === "ab") jobs = await fetchAshby(company, mapping.slug);
       else if (mapping.ats === "rc") jobs = await fetchRecruitee(company, mapping.slug);
+      else if (mapping.ats === "wd") jobs = await fetchWorkday(company, mapping.tenant, mapping.dc, mapping.site);
     } catch (e) { jobs = []; }
   }
 
-  // JSearch fallback if ATS returned nothing
-  if (jobs.length === 0) {
+  // JSearch fallback if ATS returned nothing (skip for wd — Workday is authoritative)
+  if (jobs.length === 0 && !(mapping && mapping.ats === "wd")) {
     var KEY = process.env.RAPIDAPI_KEY;
     if (KEY) {
       try {

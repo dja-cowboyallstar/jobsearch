@@ -45,11 +45,15 @@ async function loadRegistry() {
       throw new Error("Registry missing 'unmapped' array");
     }
 
-    // Build ATS_MAP from registry (strip metadata, keep only ats + slug)
+    // Build ATS_MAP from registry (strip metadata, keep only ats + routing fields).
+    // Workday entries carry {tenant, dc, site} instead of {slug}; other ATS stay on slug.
     var mapped = 0;
     for (var name in registry.mappings) {
       var entry = registry.mappings[name];
-      if (entry.ats && entry.slug) {
+      if (entry.ats === "wd" && entry.tenant && entry.dc && entry.site) {
+        ATS_MAP[name] = { ats: "wd", tenant: entry.tenant, dc: entry.dc, site: entry.site };
+        mapped++;
+      } else if (entry.ats && entry.slug) {
         ATS_MAP[name] = { ats: entry.ats, slug: entry.slug };
         mapped++;
       }
@@ -254,9 +258,14 @@ async function fetchCompany(name) {
       case "ab": jobs = await fetchAshby(name, mapping.slug); break;
       case "lv": jobs = await fetchLever(name, mapping.slug); break;
       case "rc": jobs = await fetchRecruitee(name, mapping.slug); break;
+      case "wd": jobs = []; break; // Handled by scripts/refresh-workday.js; merged below
     }
   }
-  if (jobs.length === 0) {
+  // JSearch fallback fires for ATS-mapped companies that returned 0 AND for
+  // unmapped companies. Workday companies intentionally return 0 here because
+  // the dedicated pipeline owns their data; we do NOT fall back to JSearch for
+  // them or we'd pollute Workday data with stale aggregator results.
+  if (jobs.length === 0 && !(mapping && mapping.ats === "wd")) {
     jobs = await fetchJSearch(name);
   }
   return jobs;
@@ -781,6 +790,35 @@ async function main() {
     }
   }
   console.log("\n========================\n");
+
+  // ── Merge jobs from the Workday pipeline (separate workflow, 2 AM UTC) ──
+  // refresh-workday.js writes `jobs-workday.json` on its own cadence. We read
+  // it here and merge so the final jobs-data.json blob is the single source of
+  // truth consumed by /api/jobs-data. If the blob is missing or stale we log
+  // and continue — the main pipeline never blocks on Workday.
+  try {
+    var wdBlobs = await list({ prefix: "jobs-workday", limit: 3, token: BLOB_TOKEN });
+    if (wdBlobs && wdBlobs.blobs && wdBlobs.blobs.length > 0) {
+      var wdLatest = wdBlobs.blobs.sort(function(a, b) {
+        return new Date(b.uploadedAt) - new Date(a.uploadedAt);
+      })[0];
+      var ageHours = (Date.now() - new Date(wdLatest.uploadedAt).getTime()) / 3600000;
+      var wdResp = await fetch(wdLatest.url);
+      if (wdResp.ok) {
+        var wdData = await wdResp.json();
+        var wdJobs = (wdData && Array.isArray(wdData.data)) ? wdData.data : [];
+        allJobs = allJobs.concat(wdJobs);
+        console.log("Workday merge: +" + wdJobs.length + " jobs from jobs-workday.json (age " + ageHours.toFixed(1) + "h)");
+        if (ageHours > 30) console.log("  WARNING: Workday blob is stale (>30h old)");
+      } else {
+        console.log("Workday merge: fetch failed HTTP " + wdResp.status + " — continuing without");
+      }
+    } else {
+      console.log("Workday merge: no jobs-workday blob yet — skipping");
+    }
+  } catch (e) {
+    console.log("Workday merge: error (" + e.message + ") — continuing without");
+  }
 
   // Build the output
   var output = JSON.stringify({
