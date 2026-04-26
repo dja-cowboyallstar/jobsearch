@@ -1206,6 +1206,7 @@ function App(){
     // TABS
     h("div",{className:"tabs"},h("div",{className:"tabs-in"},
       h("button",{className:"tab"+(tab==="companies"?" on":""),onClick:function(){setTab("companies")}},"Companies"),
+      h("button",{className:"tab"+(tab==="jobs"?" on":""),onClick:function(){setTab("jobs")}},"Jobs"),
       IS_PREVIEW&&h("button",{className:"tab"+(tab==="foryou"?" on":""),onClick:function(){setTab("foryou")}},"For You",h("span",{className:"new-pill"},"new")),
       h("span",{className:"tab-sep"}),
       h("button",{className:"tab"+(tab==="learn"?" on":""),onClick:function(){setTab("learn")}},"AI Learning"),
