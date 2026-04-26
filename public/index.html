@@ -953,7 +953,7 @@ function App(){
       return primary.indexOf(w)>-1||rx.test(desc);
     });
     return allWholeWord;
-  });}if(netSuiteFilterActive&&nsLive.matchingJobs.length>0){var nsIds={};nsLive.matchingJobs.forEach(function(j){nsIds[j.job_id]=true});r=r.filter(function(j){return nsIds[j.job_id]});}if(selectedCategories.length)r=r.filter(function(j){return selectedCategories.indexOf(j._cat)>-1});if(selectedWorkType!=="all")r=r.filter(function(j){return j._wt===selectedWorkType});if(IS_PREVIEW&&selectedWorkTypes.length)r=r.filter(function(j){return selectedWorkTypes.indexOf(j._wt||getWorkType(j))>-1});if(IS_PREVIEW&&selectedLocations.length)r=r.filter(function(j){return selectedLocations.indexOf(j._loc)>-1});if(selectedSectors.length)r=r.filter(function(j){return j._co&&selectedSectors.indexOf(j._co.s)>-1});if(selectedAwards.length)r=r.filter(function(j){return j._co&&selectedAwards.some(function(a){return j._co.aw.indexOf(a)>-1})});if(filterAwardedOnly)r=r.filter(function(j){return j._co&&j._co.aw.length>0});return r;},[jobs,searchQuery,selectedCategories,selectedWorkType,selectedWorkTypes,selectedLocations,selectedSectors,selectedAwards,filterAwardedOnly,netSuiteFilterActive,nsLive]);
+  });}if(netSuiteFilterActive&&nsLive.matchingJobs.length>0){var nsIds={};nsLive.matchingJobs.forEach(function(j){nsIds[j.job_id]=true});r=r.filter(function(j){return nsIds[j.job_id]});}if(selectedCategories.length)r=r.filter(function(j){return selectedCategories.indexOf(j._cat)>-1});if(selectedWorkType!=="all")r=r.filter(function(j){return j._wt===selectedWorkType});if(selectedWorkTypes.length)r=r.filter(function(j){return selectedWorkTypes.indexOf(j._wt||getWorkType(j))>-1});if(selectedLocations.length)r=r.filter(function(j){return selectedLocations.indexOf(j._loc)>-1});if(selectedSectors.length)r=r.filter(function(j){return j._co&&selectedSectors.indexOf(j._co.s)>-1});if(selectedAwards.length)r=r.filter(function(j){return j._co&&selectedAwards.some(function(a){return j._co.aw.indexOf(a)>-1})});if(filterAwardedOnly)r=r.filter(function(j){return j._co&&j._co.aw.length>0});return r;},[jobs,searchQuery,selectedCategories,selectedWorkType,selectedWorkTypes,selectedLocations,selectedSectors,selectedAwards,filterAwardedOnly,netSuiteFilterActive,nsLive]);
 
   var totalPages=Math.ceil(filteredJobs.length/perPage),pageData=filteredJobs.slice((currentPage-1)*perPage,currentPage*perPage);
   ue(function(){setCurrentPage(1)},[searchQuery,selectedCategories,selectedWorkType,selectedWorkTypes,selectedLocations,selectedSectors,selectedAwards,filterAwardedOnly,netSuiteFilterActive]);
@@ -990,7 +990,7 @@ function App(){
     return {fn:fn,wt:wt,loc:loc};
   },[jobs,selectedCategories,selectedWorkTypes,selectedLocations]);
   var uniqueLocations=um(function(){var s={};jobs.forEach(function(j){var L=j._loc;if(L)s[L]=true;});return Object.keys(s).sort();},[jobs]);
-  var activeFilterCount=selectedCategories.length+selectedSectors.length+selectedAwards.length+(selectedWorkType!=="all"?1:0)+(filterAwardedOnly?1:0)+(IS_PREVIEW?(selectedWorkTypes.length+selectedLocations.length):0);
+  var activeFilterCount=selectedCategories.length+selectedSectors.length+selectedAwards.length+(selectedWorkType!=="all"?1:0)+(filterAwardedOnly?1:0)+(selectedWorkTypes.length+selectedLocations.length);
   function clearAllFilters(){setSelectedCategories([]);setSelectedSectors([]);setSelectedWorkType("all");setSelectedWorkTypes([]);setSelectedLocations([]);setSelectedAwards([]);setFilterAwardedOnly(false);setNetSuiteFilterActive(false);setOpenPopover(null);setFbSearch("");}
   function toggleFilter(a,s,v){s(function(p){return p.indexOf(v)>-1?p.filter(function(x){return x!==v}):p.concat([v])})}
 
@@ -1384,10 +1384,10 @@ function App(){
 
         // Sidebar + Grid layout (preview: FilterBar; prod: sidebar)
         jobs.length>0&&h("div",null,
-          IS_PREVIEW&&h(FilterBar,{openPopover:openPopover,setOpenPopover:setOpenPopover,selectedCategories:selectedCategories,setSelectedCategories:setSelectedCategories,selectedWorkTypes:selectedWorkTypes,setSelectedWorkTypes:setSelectedWorkTypes,selectedLocations:selectedLocations,setSelectedLocations:setSelectedLocations,facetCounts:facetCounts,filteredJobsCount:filteredJobs.length,activeFilterCount:activeFilterCount,clearAllFilters:clearAllFilters,fbSearch:fbSearch,setFbSearch:setFbSearch,uniqueLocations:uniqueLocations,CATS:CATS,toggleFilter:toggleFilter}),
-        h("div",{className:IS_PREVIEW?"":"job-layout"},
-          // LEFT SIDEBAR (legacy, hidden in preview)
-          !IS_PREVIEW&&h("aside",{className:"sidebar"},
+          h(FilterBar,{openPopover:openPopover,setOpenPopover:setOpenPopover,selectedCategories:selectedCategories,setSelectedCategories:setSelectedCategories,selectedWorkTypes:selectedWorkTypes,setSelectedWorkTypes:setSelectedWorkTypes,selectedLocations:selectedLocations,setSelectedLocations:setSelectedLocations,facetCounts:facetCounts,filteredJobsCount:filteredJobs.length,activeFilterCount:activeFilterCount,clearAllFilters:clearAllFilters,fbSearch:fbSearch,setFbSearch:setFbSearch,uniqueLocations:uniqueLocations,CATS:CATS,toggleFilter:toggleFilter}),
+        h("div",{className:""},
+          // LEFT SIDEBAR (legacy, dead-coded post-cutover; remove in Phase 1.1 cleanup)
+          false&&h("aside",{className:"sidebar"},
             // Function
             h("div",{className:"sidebar-sec"},
               h("div",{className:"sidebar-title"},"Function",selectedCategories.length>0&&h("span",{className:"sidebar-clear",onClick:function(){setSelectedCategories([])}},"Clear")),
@@ -1402,7 +1402,7 @@ function App(){
           ),
 
           // RIGHT CONTENT
-          h("div",{className:"job-right",style:IS_PREVIEW?{maxHeight:"none",overflow:"visible",paddingRight:0}:{}},
+          h("div",{className:"job-right",style:{maxHeight:"none",overflow:"visible",paddingRight:0}},
             // AI Match + NS Tracker toggles
             h("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:14,flexWrap:"wrap"}},
               h("button",{className:"ft"+(showAiPanel?" on":""),onClick:function(){setShowAiPanel(!showAiPanel)}},"AI Match"),
