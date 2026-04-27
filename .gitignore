@@ -1,2 +1,47 @@
+﻿# Backup files (timestamped local backups, never commit)
+*.bak.*
+*.backup
+*.bak
 
+# Local staging / scratch directories
+files/
+_staging/
+_zipcheck/
+_strays.txt
+
+# Local working / experimental scripts (root level)
+ascent-*.js
+ascent-*.ps1
+ascent-*.txt
+ascent-*.xlsx
+ascent-*.yml
+
+# Stale root duplicates of canonical scripts/* files
+/refresh-jobs.js
+/company-jobs.js
+/seed-registry.js
+/firecrawl-test.json
+/files.zip
+/ats-registry-preview.json
+
+# Local-only intermediate registry/report artifacts
+scripts/candidates-input.json
+scripts/proposed-registry-additions.json
+scripts/proposed-registry-merged.json
+scripts/verify-add-companies.js
+scripts/merge-registry-patch.js
+scripts/reclassify-report.js
+scripts/verify-report.json
+scripts/verify-report-reclassified.json
+scripts/ats-registry-backup-*.json
+scripts/company-jobs.js
+
+# pre-existing
 scripts/verify-add-from-report.js
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
