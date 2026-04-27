@@ -386,6 +386,21 @@ body.modal-open{overflow:hidden}
 .rt-final{padding:18px;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:10px;font:400 13px/1.6 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:var(--text);white-space:pre-wrap;max-height:480px;overflow-y:auto}
 .rt-priv{font:400 12px/1.5 var(--sans);color:var(--text-m);padding:12px 14px;background:rgba(91,148,207,0.06);border:1px solid rgba(91,148,207,0.20);border-radius:8px;margin-bottom:14px}
 @media(max-width:720px){.rt-diff{grid-template-columns:1fr}}
+/* FYF debug panel (Slice 2) — only visible with ?fyf-debug=1 in URL */
+.fyf-debug{margin:16px 0 24px;padding:18px;background:rgba(91,148,207,0.04);border:1px solid rgba(91,148,207,0.25);border-radius:10px}
+.fyf-debug-h{font:600 11px/1 var(--sans);color:var(--text-sec);margin:0 0 12px;text-transform:uppercase;letter-spacing:.08em}
+.fyf-debug-row{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.fyf-debug-input{flex:1;min-width:240px;padding:8px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:400 13px/1.4 var(--sans)}
+.fyf-debug-btn{padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:6px;font:600 12px/1 var(--sans);cursor:pointer}
+.fyf-debug-btn:hover{filter:brightness(1.1)}
+.fyf-debug-btn-sec{padding:8px 14px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:6px;font:600 12px/1 var(--sans);cursor:pointer}
+.fyf-debug-meta{font:400 12px/1.5 var(--sans);color:var(--text-m);margin:8px 0}
+.fyf-debug-tbl{width:100%;border-collapse:collapse;margin-top:8px;font:400 12px/1.4 var(--sans)}
+.fyf-debug-tbl th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text-sec);font:600 11px/1 var(--sans);text-transform:uppercase;letter-spacing:.05em}
+.fyf-debug-tbl td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text);vertical-align:top}
+.fyf-debug-pass{color:#4ead6b;font-weight:600}
+.fyf-debug-fail{color:#d46855;font-weight:600}
+.fyf-debug-warn{color:#d4a06b;font:500 11px/1.4 var(--sans);padding:6px 10px;background:rgba(212,160,107,0.08);border:1px solid rgba(212,160,107,0.25);border-radius:6px;margin-bottom:12px;display:inline-block}
 </style>
 </head>
 <body>
@@ -542,6 +557,266 @@ var AW={glassdoor:{lb:"Glassdoor",c:"#4ead6b",ic:"\u2605",f:"Glassdoor Best Plac
 var AW_EMP=Object.keys(AW).filter(function(k){return AW[k].g==="emp"});
 var AW_MED=Object.keys(AW).filter(function(k){return AW[k].g==="med"});
 var CATS=["Engineering","Product","Design","Data Science","Marketing","Sales","Operations","Finance","HR & People","Customer Success","Legal","Executive","Research","DevOps & Infra","Security","Other"];
+
+
+// FIND YOUR FIT engine — Slice 2 (see find-your-fit-design-v2.md).
+// Performance budget (measured 2026-04-27 against 13k synthetic jobs × 10 credentials, 5 runs):
+//   min 155.4ms, mean 172.4ms, max 225.7ms.
+// Within client-side budget on desktop. Mobile may need spinner UX in Slice 3.
+// matchResults objects carry schemaVersion=1 for downstream consumer safety.
+// ── FIND YOUR FIT (FYF) — Slice 2 engine ──
+// Phase 1 design: see find-your-fit-design-v2.md
+// Anti-pigeonhole: this code never references Oracle, NetSuite, NS_*, or any
+// per-credential constant. All credentials are equal in the data model.
+
+// Static alias table. Phase 1 ships 11 entries. Phase 2 graduates to embeddings.
+// Each entry: canonical token (key) -> array of equivalent forms (values).
+// Matching is case-insensitive; both sides are normalized via fyfNormalize.
+var FYF_ALIASES={
+  "JavaScript":["JS","Javascript"],
+  "TypeScript":["TS","Typescript"],
+  "Amazon Web Services":["AWS"],
+  "Google Cloud Platform":["GCP","Google Cloud"],
+  "Machine Learning":["ML"],
+  "Artificial Intelligence":["AI"],
+  "Product Manager":["PM"],
+  "Software Engineer":["SWE"],
+  "Certified Public Accountant":["CPA"],
+  "Project Management Professional":["PMP"],
+  "Chartered Financial Analyst":["CFA"]
+};
+
+// Build reverse lookup: any form -> canonical
+var FYF_ALIAS_LOOKUP=(function(){
+  var map={};
+  Object.keys(FYF_ALIASES).forEach(function(canonical){
+    map[canonical.toLowerCase()]=canonical;
+    FYF_ALIASES[canonical].forEach(function(alias){map[alias.toLowerCase()]=canonical});
+  });
+  return map;
+})();
+
+// Normalize a string for matching: lowercase, collapse whitespace, trim.
+function fyfNormalize(s){
+  if(!s)return "";
+  return String(s).toLowerCase().replace(/\s+/g," ").trim();
+}
+
+// Word-boundary match. Matches token within text where token is bounded by non-word chars.
+// Tested against: "AWS,X" / "AWS.X" / "AWS X" / "AWS-X" / "AWS_X" should match (1-4 yes, 5 no since _ is a word char).
+// "AWSX" / "XAWS" / "MCPA" / "BCPA" should NOT match.
+// Uses [^a-z0-9] lookarounds because \b in JS treats _ as a word char (we want _ to BE a boundary for credentials).
+function fyfWordBoundaryMatch(haystack,needle){
+  if(!haystack||!needle)return false;
+  var h=fyfNormalize(haystack);
+  var n=fyfNormalize(needle);
+  if(!n)return false;
+  // Escape regex special chars in needle
+  var esc=n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  // (^|[^a-z0-9])needle($|[^a-z0-9]) — boundary chars are anything not alphanumeric
+  var re=new RegExp("(^|[^a-z0-9])"+esc+"($|[^a-z0-9])","i");
+  return re.test(h);
+}
+
+// Extract credentials from typed tokens (mode 3). Comma-separated input.
+// Each token becomes {token, weight: 1.0, type: "user"}.
+// Tokens are deduplicated. Aliases are preserved as the user typed them
+// (canonicalization happens at match time, not extract time, so that
+// users see what they typed in the debug panel and downstream UI).
+function extractFromTokens(input){
+  if(!input||typeof input!=="string")return [];
+  var seen={};
+  var out=[];
+  input.split(/[,;\n]/).forEach(function(raw){
+    var t=raw.trim();
+    if(!t)return;
+    var key=t.toLowerCase();
+    if(seen[key])return;
+    seen[key]=true;
+    out.push({token:t,weight:1.0,type:"user"});
+  });
+  return out;
+}
+
+// Slice 3 stubs. Real implementations require API wiring.
+function extractFromLinkedIn(url){
+  return Promise.reject({error:"LinkedIn extraction not yet implemented (Slice 3)."});
+}
+function extractFromResume(text){
+  return Promise.reject({error:"Resume extraction not yet implemented (Slice 3)."});
+}
+
+// Score a single job against a matchQuery. Pure function. No side effects.
+// Returns: { score: number, hits: [{token, where, confidence}] }
+// Scan order (per design doc §3): _must (high), job_required_skills (high),
+// _nice (medium), job_highlights.qual (medium). NO full-text job_description in Phase 1.
+function scoreJob(job,query){
+  if(!job||!query||!query.credentials||!query.credentials.length){
+    return {score:0,hits:[]};
+  }
+  var hits=[];
+  var score=0;
+  // Confidence multipliers
+  var CONF={high:1.0,medium:0.6};
+
+  query.credentials.forEach(function(cred){
+    // Build the set of forms to check: the typed token + any aliases
+    var forms=[cred.token];
+    var canonical=FYF_ALIAS_LOOKUP[cred.token.toLowerCase()];
+    if(canonical){
+      // Add canonical and all its aliases
+      forms.push(canonical);
+      (FYF_ALIASES[canonical]||[]).forEach(function(a){forms.push(a)});
+    }
+    // De-dup forms
+    var seen={};
+    forms=forms.filter(function(f){var k=f.toLowerCase();if(seen[k])return false;seen[k]=true;return true});
+
+    // Helper to test if any form matches in a given text
+    function anyFormMatches(text){
+      for(var i=0;i<forms.length;i++){
+        if(fyfWordBoundaryMatch(text,forms[i]))return forms[i];
+      }
+      return null;
+    }
+    // Helper to test array of strings
+    function anyFormMatchesArray(arr){
+      if(!arr||!arr.length)return null;
+      for(var i=0;i<arr.length;i++){
+        var m=anyFormMatches(arr[i]);
+        if(m)return m;
+      }
+      return null;
+    }
+
+    // Tier 1: _must (high)
+    var mustHit=anyFormMatchesArray(job._must);
+    if(mustHit){
+      hits.push({token:cred.token,matched:mustHit,where:"_must",confidence:"high"});
+      score+=cred.weight*CONF.high;
+      return; // one hit per credential, prefer highest tier
+    }
+    // Tier 1: job_required_skills (high)
+    var skillHit=anyFormMatchesArray(job.job_required_skills);
+    if(skillHit){
+      hits.push({token:cred.token,matched:skillHit,where:"job_required_skills",confidence:"high"});
+      score+=cred.weight*CONF.high;
+      return;
+    }
+    // Tier 2: _nice (medium)
+    var niceHit=anyFormMatchesArray(job._nice);
+    if(niceHit){
+      hits.push({token:cred.token,matched:niceHit,where:"_nice",confidence:"medium"});
+      score+=cred.weight*CONF.medium;
+      return;
+    }
+    // Tier 2: job_highlights.qual (medium)
+    var qualArr=job.job_highlights&&job.job_highlights.qual;
+    var qualHit=anyFormMatchesArray(qualArr);
+    if(qualHit){
+      hits.push({token:cred.token,matched:qualHit,where:"job_highlights.qual",confidence:"medium"});
+      score+=cred.weight*CONF.medium;
+      return;
+    }
+  });
+
+  // Normalize score to 0-100 scale based on max possible (sum of credential weights at high confidence)
+  var maxScore=query.credentials.reduce(function(s,c){return s+c.weight*CONF.high},0);
+  var pct=maxScore>0?Math.round((score/maxScore)*100):0;
+  return {score:pct,hits:hits};
+}
+
+// Self-test cases. Run inside debug panel via fyfRunSelfTests button.
+// Each case: {name, run, expect} — run() returns actual, compared to expect with deep equality on bool/number.
+var FYF_TEST_CASES=[
+  // Word boundary
+  {name:"WB: AWS matches in 'AWS, EC2'",run:function(){return fyfWordBoundaryMatch("AWS, EC2","AWS")},expect:true},
+  {name:"WB: AWS matches in 'AWS.EC2'",run:function(){return fyfWordBoundaryMatch("AWS.EC2","AWS")},expect:true},
+  {name:"WB: AWS matches in 'AWS-EC2'",run:function(){return fyfWordBoundaryMatch("AWS-EC2","AWS")},expect:true},
+  {name:"WB: AWS does NOT match 'AWSX'",run:function(){return fyfWordBoundaryMatch("AWSX","AWS")},expect:false},
+  {name:"WB: AWS does NOT match 'XAWS'",run:function(){return fyfWordBoundaryMatch("XAWS","AWS")},expect:false},
+  {name:"WB: CPA does NOT match 'MCPA'",run:function(){return fyfWordBoundaryMatch("MCPA","CPA")},expect:false},
+  {name:"WB: CPA does NOT match 'BCPA'",run:function(){return fyfWordBoundaryMatch("BCPA","CPA")},expect:false},
+  {name:"WB: CPA matches 'CPA required'",run:function(){return fyfWordBoundaryMatch("CPA required","CPA")},expect:true},
+  {name:"WB: case-insensitive 'python' matches 'Python'",run:function(){return fyfWordBoundaryMatch("Python","python")},expect:true},
+  // Alias resolution via scoreJob
+  {name:"Alias: 'JS' matches job._must containing 'JavaScript'",run:function(){
+    var job={_must:["JavaScript required"]};
+    var query={credentials:[{token:"JS",weight:1.0,type:"user"}]};
+    var r=scoreJob(job,query);
+    return r.hits.length===1&&r.hits[0].confidence==="high";
+  },expect:true},
+  {name:"Alias: 'AWS' matches job._must containing 'Amazon Web Services'",run:function(){
+    var job={_must:["Experience with Amazon Web Services"]};
+    var query={credentials:[{token:"AWS",weight:1.0,type:"user"}]};
+    var r=scoreJob(job,query);
+    return r.hits.length===1;
+  },expect:true},
+  {name:"Alias: 'CPA' matches job._nice containing 'Certified Public Accountant'",run:function(){
+    var job={_nice:["Certified Public Accountant preferred"]};
+    var query={credentials:[{token:"CPA",weight:1.0,type:"user"}]};
+    var r=scoreJob(job,query);
+    return r.hits.length===1&&r.hits[0].confidence==="medium";
+  },expect:true},
+  // Confidence tiers
+  {name:"Tier: _must produces high confidence",run:function(){
+    var job={_must:["Python required"]};
+    var query={credentials:[{token:"Python",weight:1.0,type:"user"}]};
+    return scoreJob(job,query).hits[0].confidence==="high";
+  },expect:true},
+  {name:"Tier: _nice produces medium confidence",run:function(){
+    var job={_nice:["Python preferred"]};
+    var query={credentials:[{token:"Python",weight:1.0,type:"user"}]};
+    return scoreJob(job,query).hits[0].confidence==="medium";
+  },expect:true},
+  {name:"Tier: highest tier wins when both _must and _nice contain token",run:function(){
+    var job={_must:["Python required"],_nice:["Python preferred"]};
+    var query={credentials:[{token:"Python",weight:1.0,type:"user"}]};
+    var r=scoreJob(job,query);
+    return r.hits.length===1&&r.hits[0].where==="_must";
+  },expect:true},
+  // Empty / edge cases
+  {name:"Edge: empty query returns score 0",run:function(){
+    return scoreJob({_must:["Python"]},{credentials:[]}).score===0;
+  },expect:true},
+  {name:"Edge: empty job returns score 0",run:function(){
+    return scoreJob({},{credentials:[{token:"Python",weight:1.0,type:"user"}]}).score===0;
+  },expect:true},
+  {name:"Edge: null job returns score 0",run:function(){
+    return scoreJob(null,{credentials:[{token:"Python",weight:1.0,type:"user"}]}).score===0;
+  },expect:true},
+  {name:"Edge: full match scores 100",run:function(){
+    var job={_must:["Python required","SQL required"]};
+    var query={credentials:[{token:"Python",weight:1.0,type:"user"},{token:"SQL",weight:1.0,type:"user"}]};
+    return scoreJob(job,query).score===100;
+  },expect:true},
+  // Token extraction
+  {name:"Extract: comma-separated tokens",run:function(){
+    var c=extractFromTokens("Python, SQL, AWS");
+    return c.length===3&&c[0].token==="Python"&&c[2].token==="AWS";
+  },expect:true},
+  {name:"Extract: dedup preserves first occurrence",run:function(){
+    var c=extractFromTokens("Python, python, PYTHON");
+    return c.length===1&&c[0].token==="Python";
+  },expect:true},
+  {name:"Extract: empty input returns empty array",run:function(){
+    return extractFromTokens("").length===0;
+  },expect:true}
+];
+
+// Run all self-tests. Returns {pass, fail, total, failures: [{name, expected, actual}]}.
+function fyfRunSelfTests(){
+  var pass=0,fail=0,failures=[];
+  FYF_TEST_CASES.forEach(function(tc){
+    try{
+      var actual=tc.run();
+      if(actual===tc.expect){pass++}else{fail++;failures.push({name:tc.name,expected:tc.expect,actual:actual})}
+    }catch(e){
+      fail++;failures.push({name:tc.name,expected:tc.expect,actual:"THREW: "+e.message});
+    }
+  });
+  return {pass:pass,fail:fail,total:FYF_TEST_CASES.length,failures:failures};
+}
 
 function classifyJobFunction(t){t=(t||"").toLowerCase();
 // Check compound titles first (order matters — longer matches before shorter)
@@ -1274,6 +1549,54 @@ function App(){
   var _ra=us(""),refreshedAt=_ra[0],setRefreshedAt=_ra[1];
   var _fm=us("cache"),fetchMode=_fm[0],setFetchMode=_fm[1];
   var perPage=24,aRef=ur(null);
+  // FYF state (Slice 2). matchQuery is null until a search is run; matchResults is computed by useMemo.
+  // fyfDebugMode is set by URL flag ?fyf-debug=1 — see check below.
+  var _mq=us(null),matchQuery=_mq[0],setMatchQuery=_mq[1];
+  var _fdm=us(false),fyfDebugMode=_fdm[0],setFyfDebugMode=_fdm[1];
+  ue(function(){
+    try{
+      var sp=new URLSearchParams(window.location.search);
+      if(sp.get("fyf-debug")==="1")setFyfDebugMode(true);
+    }catch(e){/* URLSearchParams failure → debug off, no-op */}
+  },[]);
+  // matchResults: computed when matchQuery is populated. Returns null otherwise (early-out for production users).
+  var matchResults=um(function(){
+    if(!matchQuery||!matchQuery.credentials||matchQuery.credentials.length===0)return null;
+    if(!jobs||jobs.length===0)return {schemaVersion:1,query:matchQuery,byCompany:[],byCredential:[],totalMatches:0,searchedJobs:0,totalJobs:0,coverage:0,elapsedMs:0};
+    var t0=(typeof performance!=="undefined"&&performance.now)?performance.now():Date.now();
+    function hasStructured(j){
+      return (j._must&&j._must.length>0)||(j._nice&&j._nice.length>0)||(j.job_required_skills&&j.job_required_skills.length>0)||(j.job_highlights&&j.job_highlights.qual&&j.job_highlights.qual.length>0);
+    }
+    var searched=0;
+    var byCompanyMap={};
+    var credCount={};
+    matchQuery.credentials.forEach(function(c){credCount[c.token]={token:c.token,appearsIn:0,requiredIn:0,preferredIn:0}});
+    jobs.forEach(function(j){
+      if(!hasStructured(j))return;
+      searched++;
+      var r=scoreJob(j,matchQuery);
+      if(r.score>0){
+        var coName=(j._co&&j._co.n)||j.employer_name||"Unknown";
+        if(!byCompanyMap[coName])byCompanyMap[coName]={company:coName,bestScore:0,jobs:[]};
+        byCompanyMap[coName].jobs.push({jobId:j.job_id,title:j.job_title,score:r.score,hits:r.hits});
+        if(r.score>byCompanyMap[coName].bestScore)byCompanyMap[coName].bestScore=r.score;
+        r.hits.forEach(function(h){
+          if(credCount[h.token]){
+            credCount[h.token].appearsIn++;
+            if(h.confidence==="high")credCount[h.token].requiredIn++;
+            else credCount[h.token].preferredIn++;
+          }
+        });
+      }
+    });
+    var byCompany=Object.values(byCompanyMap).sort(function(a,b){return b.bestScore-a.bestScore});
+    var totalMatches=byCompany.reduce(function(s,c){return s+c.jobs.length},0);
+    var t1=(typeof performance!=="undefined"&&performance.now)?performance.now():Date.now();
+    return {schemaVersion:1,query:matchQuery,byCompany:byCompany,byCredential:Object.values(credCount),totalMatches:totalMatches,searchedJobs:searched,totalJobs:jobs.length,coverage:jobs.length>0?searched/jobs.length:0,elapsedMs:Math.round((t1-t0)*10)/10};
+  },[jobs,matchQuery]);
+  // Debug panel local state
+  var _fdi=us(""),fyfDebugInput=_fdi[0],setFyfDebugInput=_fdi[1];
+  var _fts=us(null),fyfTestResults=_fts[0],setFyfTestResults=_fts[1];
   var awN=um(function(){return ST.filter(function(x){return x.aw.length>0}).length},[]);
 
   ue(function(){setLoading(true);setErrorMessage("");fetch("/api/jobs-data").then(function(r){return r.json()}).then(function(d){
@@ -1610,6 +1933,47 @@ function App(){
     )),
 
     h("main",{className:"mn"},
+      // FYF debug panel (Slice 2) — visible only with ?fyf-debug=1
+      fyfDebugMode&&h("div",{className:"fyf-debug"},
+        h("div",{className:"fyf-debug-warn"},"DEBUG \u2014 internal validation only. Not a user-facing feature."),
+        h("p",{className:"fyf-debug-h"},"Find Your Fit \u2014 Slice 2 engine"),
+        h("div",{className:"fyf-debug-row"},
+          h("input",{className:"fyf-debug-input",type:"text",placeholder:"Type credentials, comma-separated (e.g. Python, AWS, CPA)",value:fyfDebugInput,onChange:function(e){setFyfDebugInput(e.target.value)},onKeyDown:function(e){if(e.key==="Enter"){var creds=extractFromTokens(fyfDebugInput);setMatchQuery(creds.length>0?{source:"credentials",raw:fyfDebugInput,credentials:creds,meta:{extractedBy:"user",extractedAt:Date.now()}}:null)}}}),
+          h("button",{className:"fyf-debug-btn",onClick:function(){var creds=extractFromTokens(fyfDebugInput);setMatchQuery(creds.length>0?{source:"credentials",raw:fyfDebugInput,credentials:creds,meta:{extractedBy:"user",extractedAt:Date.now()}}:null)}},"Score"),
+          h("button",{className:"fyf-debug-btn-sec",onClick:function(){setFyfTestResults(fyfRunSelfTests())}},"Run self-tests"),
+          h("button",{className:"fyf-debug-btn-sec",onClick:function(){setMatchQuery(null);setFyfDebugInput("");setFyfTestResults(null)}},"Clear")
+        ),
+        // Self-test results
+        fyfTestResults&&h("div",{className:"fyf-debug-meta"},
+          h("span",{className:fyfTestResults.fail===0?"fyf-debug-pass":"fyf-debug-fail"},"Self-tests: "+fyfTestResults.pass+"/"+fyfTestResults.total+(fyfTestResults.fail===0?" PASS":" FAIL")),
+          fyfTestResults.fail>0&&h("ul",{style:{margin:"6px 0 0 18px",padding:0}},fyfTestResults.failures.map(function(f,i){return h("li",{key:i,style:{color:"var(--text-sec)",font:"400 11px/1.5 var(--sans)"}},f.name+" \u2014 expected "+JSON.stringify(f.expected)+", got "+JSON.stringify(f.actual))}))
+        ),
+        // Match results
+        matchResults&&h("div",null,
+          h("p",{className:"fyf-debug-meta"},
+            h("b",null,matchResults.totalMatches)," matches across ",h("b",null,matchResults.byCompany.length)," companies",
+            " \u00b7 searched ",h("b",null,matchResults.searchedJobs)," of ",matchResults.totalJobs," jobs (",
+            (matchResults.coverage*100).toFixed(1),"% coverage) \u00b7 ",
+            h("b",null,matchResults.elapsedMs+"ms")
+          ),
+          matchResults.totalMatches===0&&h("p",{className:"fyf-debug-meta",style:{color:"var(--text-m)"}},"No matches in parsed roles for these credentials. Try different tokens or check the alias table."),
+          matchResults.byCompany.length>0&&h("table",{className:"fyf-debug-tbl"},
+            h("thead",null,h("tr",null,h("th",null,"Company"),h("th",null,"Best score"),h("th",null,"Jobs"),h("th",null,"Top hit"))),
+            h("tbody",null,matchResults.byCompany.slice(0,15).map(function(c,i){
+              var topJob=c.jobs[0];
+              var topHit=topJob&&topJob.hits&&topJob.hits[0];
+              return h("tr",{key:i},
+                h("td",null,c.company),
+                h("td",null,c.bestScore),
+                h("td",null,c.jobs.length),
+                h("td",null,topHit?topHit.token+" \u2192 "+topHit.where+" ("+topHit.confidence+")":"\u2014")
+              )
+            }))
+          ),
+          h("p",{className:"fyf-debug-meta",style:{fontSize:11,color:"var(--text-m)",marginTop:8}},"Showing top 15 of ",matchResults.byCompany.length," companies. Schema v",matchResults.schemaVersion,".")
+        ),
+        !matchResults&&!fyfTestResults&&h("p",{className:"fyf-debug-meta",style:{color:"var(--text-m)"}},"Type credentials and click Score, or click Run self-tests to validate the engine.")
+      ),
       // ─── COMPANIES DIRECTORY TAB ───
       tab==="companies"&&h("div",{className:"fu"},
         h("section",{className:"mh"},
