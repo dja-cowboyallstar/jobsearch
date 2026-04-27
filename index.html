@@ -401,6 +401,41 @@ body.modal-open{overflow:hidden}
 .fyf-debug-pass{color:#4ead6b;font-weight:600}
 .fyf-debug-fail{color:#d46855;font-weight:600}
 .fyf-debug-warn{color:#d4a06b;font:500 11px/1.4 var(--sans);padding:6px 10px;background:rgba(212,160,107,0.08);border:1px solid rgba(212,160,107,0.25);border-radius:6px;margin-bottom:12px;display:inline-block}
+/* FYF user-facing panel (Slice 3) — Find Your Fit on Companies tab */
+.fyf-toggle{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;background:transparent;color:var(--text);border:1px solid rgba(91,148,207,0.35);border-radius:8px;font:600 13px/1 var(--sans);cursor:pointer;transition:background .15s,border-color .15s;margin:14px 0 10px}
+.fyf-toggle:hover{background:rgba(91,148,207,0.06);border-color:rgba(91,148,207,0.55)}
+.fyf-toggle.on{background:rgba(91,148,207,0.10);border-color:var(--accent)}
+.fyf-toggle-count{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:var(--accent);color:#fff;border-radius:10px;font:600 11px/1.2 var(--sans);margin-left:6px}
+.fyf-toggle-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.fyf-panel{margin:8px 0 18px;padding:18px;background:rgba(91,148,207,0.04);border:1px solid rgba(91,148,207,0.25);border-radius:10px}
+.fyf-panel-h{font:600 14px/1.2 var(--sans);color:var(--text);margin:0 0 4px}
+.fyf-panel-sub{font:400 12px/1.5 var(--sans);color:var(--text-m);margin:0 0 12px}
+.fyf-input-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.fyf-input{flex:1;min-width:240px;padding:10px 14px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font:400 14px/1.4 var(--sans)}
+.fyf-input:focus{outline:none;border-color:var(--accent)}
+.fyf-btn{padding:10px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font:600 13px/1 var(--sans);cursor:pointer}
+.fyf-btn:hover:not(:disabled){filter:brightness(1.1)}
+.fyf-btn:disabled{opacity:.45;cursor:not-allowed}
+.fyf-btn-sec{padding:10px 16px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:8px;font:600 13px/1 var(--sans);cursor:pointer}
+.fyf-coverage{font:400 11px/1.5 var(--sans);color:var(--text-m);margin:6px 0 10px}
+.fyf-top-matches{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.fyf-top-matches-h{font:600 11px/1 var(--sans);color:var(--text-sec);margin:0 0 8px;text-transform:uppercase;letter-spacing:.08em}
+.fyf-top-match-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.fyf-top-match-row:last-child{border-bottom:none}
+.fyf-top-match-co{font:600 13px/1.2 var(--sans);color:var(--text);flex:1}
+.fyf-top-match-meta{font:400 11px/1.4 var(--sans);color:var(--text-m)}
+.fyf-top-match-score{font:600 12px/1 var(--sans);color:var(--accent);min-width:40px;text-align:right}
+.fyf-empty{padding:14px;background:rgba(212,160,107,0.06);border:1px solid rgba(212,160,107,0.20);border-radius:8px;margin-top:10px}
+.fyf-empty-h{font:600 13px/1.4 var(--sans);color:var(--text);margin:0 0 6px}
+.fyf-empty-sub{font:400 12px/1.5 var(--sans);color:var(--text-sec);margin:0 0 10px}
+.fyf-empty-actions{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.fyf-empty-action{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;font:500 12px/1 var(--sans);color:var(--text);cursor:pointer}
+.fyf-empty-action:hover{background:rgba(255,255,255,0.08)}
+.fyf-empty-action-x{color:var(--text-m);margin-left:2px}
+.fyf-empty-foot{font:400 11px/1.5 var(--sans);color:var(--text-m);margin:6px 0 0}
+.fyf-badge-strong{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:rgba(78,173,107,0.12);color:#4ead6b;border:1px solid rgba(78,173,107,0.30);border-radius:10px;font:600 11px/1.2 var(--sans);cursor:default}
+.fyf-badge-partial{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:rgba(212,160,107,0.10);color:#d4a06b;border:1px solid rgba(212,160,107,0.30);border-radius:10px;font:600 11px/1.2 var(--sans);cursor:default}
+.fyf-chip.on{background:rgba(91,148,207,0.20);border-color:var(--accent);color:var(--text)}
 </style>
 </head>
 <body>
@@ -869,6 +904,8 @@ function FilterBar(p){
   var fbSearch=p.fbSearch,setFbSearch=p.setFbSearch;
   var uniqueLocations=p.uniqueLocations||[],CATS=p.CATS,toggleFilter=p.toggleFilter;
   var cityGroups=p.cityGroups,resultsLabel=p.resultsLabel||"roles";
+  // Slice 3: optional extraChips for FYF (or future) — array of {key,label,onClick,onRemove}
+  var extraChips=p.extraChips||[];
   function togglePop(which){if(openPop===which){setOpenPop(null);setFbSearch("");}else{setOpenPop(which);setFbSearch("");}}
   function removeChip(arr,set,v){set(arr.filter(function(x){return x!==v}));}
   var wtValues=["Remote","Hybrid","On-site"];
@@ -897,7 +934,8 @@ function FilterBar(p){
       h("p",{className:"fbar-results","aria-live":"polite"},h("b",null,p.filteredJobsCount)," ",resultsLabel),
       afc>0&&h("button",{className:"fbar-clear",onClick:p.clearAllFilters},"Clear all")
     ),
-    afc>0&&h("div",{className:"fbar-chips"},
+    (afc>0||extraChips.length>0)&&h("div",{className:"fbar-chips"},
+      extraChips.map(function(ec){return h("span",{key:"x-"+ec.key,className:"fbar-chip fyf-chip"+(ec.active?" on":""),onClick:ec.onClick},ec.label," ",h("span",{className:"fbar-chip-x",onClick:function(e){e.stopPropagation();if(ec.onRemove)ec.onRemove()}},"\u00D7"));}),
       cats.map(function(c){return h("span",{key:"c-"+c,className:"fbar-chip",onClick:function(){removeChip(cats,setCats,c);}},c," ",h("span",{className:"fbar-chip-x"},"\u00D7"));}),
       wts.map(function(w){return h("span",{key:"w-"+w,className:"fbar-chip",onClick:function(){removeChip(wts,setWts,w);}},w," ",h("span",{className:"fbar-chip-x"},"\u00D7"));}),
       locs.map(function(L){return h("span",{key:"l-"+L,className:"fbar-chip",onClick:function(){removeChip(locs,setLocs,L);}},L," ",h("span",{className:"fbar-chip-x"},"\u00D7"));})
@@ -1597,6 +1635,32 @@ function App(){
   // Debug panel local state
   var _fdi=us(""),fyfDebugInput=_fdi[0],setFyfDebugInput=_fdi[1];
   var _fts=us(null),fyfTestResults=_fts[0],setFyfTestResults=_fts[1];
+  // Slice 3: user-facing Find Your Fit panel state. Separate from debug panel state to avoid cross-talk.
+  // Both panels share matchQuery/setMatchQuery for results, but each owns its own input.
+  var _fpo=us(false),fyfPanelOpen=_fpo[0],setFyfPanelOpen=_fpo[1];
+  var _fpi=us(""),fyfPanelInput=_fpi[0],setFyfPanelInput=_fpi[1];
+  var _ffa=us(false),fyfFilterActive=_ffa[0],setFyfFilterActive=_ffa[1];
+  // Set of company names with at least one match — O(1) membership check during directory render
+  var fyfMatchedCompanies=um(function(){
+    var s={};
+    if(matchResults&&matchResults.byCompany){
+      matchResults.byCompany.forEach(function(c){s[c.company]=true});
+    }
+    return s;
+  },[matchResults]);
+  // Remove a credential from the current matchQuery and re-score (used by empty-state action chips)
+  function fyfRemoveCredentialAndRescore(token){
+    if(!matchQuery||!matchQuery.credentials)return;
+    var remaining=matchQuery.credentials.filter(function(c){return c.token!==token});
+    if(remaining.length===0){
+      setMatchQuery(null);
+      // Also clear the user-visible input to reflect cleared state
+      setFyfPanelInput("");
+    }else{
+      setMatchQuery({source:matchQuery.source,raw:remaining.map(function(c){return c.token}).join(", "),credentials:remaining,meta:{extractedBy:"user",extractedAt:Date.now()}});
+      setFyfPanelInput(remaining.map(function(c){return c.token}).join(", "));
+    }
+  }
   var awN=um(function(){return ST.filter(function(x){return x.aw.length>0}).length},[]);
 
   ue(function(){setLoading(true);setErrorMessage("");fetch("/api/jobs-data").then(function(r){return r.json()}).then(function(d){
@@ -1848,9 +1912,26 @@ function App(){
       });
     }
 
-    r.sort(function(a,b){return a.n.localeCompare(b.n)});
+    // Slice 3: fyfFilterActive — show only companies with at least one match
+    if(fyfFilterActive&&matchResults){
+      r=r.filter(function(c){return fyfMatchedCompanies[c.n]});
+    }
+
+    // Slice 3: when matchResults populated, sort by best match score desc, then by name.
+    // Otherwise, original alphabetical sort.
+    if(matchResults&&matchResults.byCompany&&matchResults.byCompany.length>0){
+      var scoreMap={};
+      matchResults.byCompany.forEach(function(mc){scoreMap[mc.company]=mc.bestScore});
+      r.sort(function(a,b){
+        var sa=scoreMap[a.n]||0,sb=scoreMap[b.n]||0;
+        if(sa!==sb)return sb-sa;
+        return a.n.localeCompare(b.n);
+      });
+    }else{
+      r.sort(function(a,b){return a.n.localeCompare(b.n)});
+    }
     return r;
-  },[directorySearch,directoryAwardFilter,directoryFunctionFilter,directoryWorkTypeFilter,directoryLocationFilter,jobs,cardJobs]);
+  },[directorySearch,directoryAwardFilter,directoryFunctionFilter,directoryWorkTypeFilter,directoryLocationFilter,jobs,cardJobs,matchResults,fyfFilterActive,fyfMatchedCompanies]);
 
   // Intersection-aware facet counts for the FilterBar (companies, not jobs)
   var dirFacetCounts=um(function(){
@@ -1985,7 +2066,43 @@ function App(){
         h("div",{className:"dir-search"},
           h("div",{className:"sb",style:{flex:1}},SI,h("input",{className:"si",type:"text",placeholder:"Search by function, company, or role title\u2026",value:directorySearchInput,onChange:function(e){onDirSearch(e.target.value)},"aria-label":"Search companies and roles"})),
         ),
-        h(FilterBar,{openPopover:openPopover,setOpenPopover:setOpenPopover,selectedCategories:directoryFunctionFilter,setSelectedCategories:setDirectoryFunctionFilter,selectedWorkTypes:directoryWorkTypeFilter,setSelectedWorkTypes:setDirectoryWorkTypeFilter,selectedLocations:directoryLocationFilter,setSelectedLocations:setDirectoryLocationFilter,facetCounts:dirFacetCounts,filteredJobsCount:dirFiltered.length,activeFilterCount:directoryFunctionFilter.length+directoryWorkTypeFilter.length+directoryLocationFilter.length,clearAllFilters:clearDirFilters,fbSearch:fbSearch,setFbSearch:setFbSearch,cityGroups:CITY_GROUPS,CATS:CATS,toggleFilter:toggleFilter,resultsLabel:"companies"}),
+        h(FilterBar,{openPopover:openPopover,setOpenPopover:setOpenPopover,selectedCategories:directoryFunctionFilter,setSelectedCategories:setDirectoryFunctionFilter,selectedWorkTypes:directoryWorkTypeFilter,setSelectedWorkTypes:setDirectoryWorkTypeFilter,selectedLocations:directoryLocationFilter,setSelectedLocations:setDirectoryLocationFilter,facetCounts:dirFacetCounts,filteredJobsCount:dirFiltered.length,activeFilterCount:directoryFunctionFilter.length+directoryWorkTypeFilter.length+directoryLocationFilter.length,clearAllFilters:clearDirFilters,fbSearch:fbSearch,setFbSearch:setFbSearch,cityGroups:CITY_GROUPS,CATS:CATS,toggleFilter:toggleFilter,resultsLabel:"companies",extraChips:(IS_PREVIEW&&matchResults&&matchResults.totalMatches>0)?[{key:"fyf-fit",label:"Match: top fits",active:fyfFilterActive,onClick:function(){setFyfFilterActive(!fyfFilterActive)},onRemove:function(){setFyfFilterActive(false);setMatchQuery(null);setFyfPanelInput("")}}]:[]}),
+        // ─── FYF (Find Your Fit) toggle + panel — Slice 3, IS_PREVIEW only ───
+        IS_PREVIEW&&h("button",{className:"fyf-toggle"+(fyfPanelOpen?" on":""),onClick:function(){setFyfPanelOpen(!fyfPanelOpen)}},"\u2728 Find your fit",matchResults&&matchResults.totalMatches>0?h("span",{className:"fyf-toggle-count"},matchResults.totalMatches," matches"):null,!fyfPanelOpen&&matchResults&&matchResults.totalMatches>0?h("span",{className:"fyf-toggle-dot"}):null),
+        IS_PREVIEW&&fyfPanelOpen&&h("div",{className:"fyf-panel"},
+          h("div",{className:"fyf-panel-h"},"Find your fit"),
+          h("p",{className:"fyf-panel-sub"},"Type credentials, skills, or certifications to see which companies are hiring for them right now."),
+          h("div",{className:"fyf-input-row"},
+            h("input",{className:"fyf-input",type:"text",placeholder:"e.g. Python, AWS, CPA",value:fyfPanelInput,onChange:function(e){setFyfPanelInput(e.target.value)},onKeyDown:function(e){if(e.key==="Enter"&&fyfPanelInput.trim()){var creds=extractFromTokens(fyfPanelInput);if(creds.length>0)setMatchQuery({source:"credentials",raw:fyfPanelInput,credentials:creds,meta:{extractedBy:"user",extractedAt:Date.now()}})}}}),
+            h("button",{className:"fyf-btn",disabled:!fyfPanelInput.trim(),onClick:function(){var creds=extractFromTokens(fyfPanelInput);if(creds.length>0)setMatchQuery({source:"credentials",raw:fyfPanelInput,credentials:creds,meta:{extractedBy:"user",extractedAt:Date.now()}})}},"Score"),
+            h("button",{className:"fyf-btn-sec",onClick:function(){setMatchQuery(null);setFyfPanelInput("");setFyfFilterActive(false)}},"Clear")
+          ),
+          matchResults&&h("div",{className:"fyf-coverage"},"Searching ",(matchResults.coverage*100).toFixed(0),"% of roles whose qualifications have been parsed (",matchResults.searchedJobs," of ",matchResults.totalJobs," jobs). Coverage improves as we add more roles."),
+          // Top matches preview (Q5 — show headline result inline so user doesn't have to scroll)
+          matchResults&&matchResults.totalMatches>0&&h("div",{className:"fyf-top-matches"},
+            h("div",{className:"fyf-top-matches-h"},"Top matches"),
+            matchResults.byCompany.slice(0,3).map(function(c,i){
+              var topJob=c.jobs[0];
+              var topHits=topJob&&topJob.hits?topJob.hits.map(function(h){return h.token}).join(", "):"";
+              return h("div",{key:i,className:"fyf-top-match-row"},
+                h("span",{className:"fyf-top-match-co"},c.company),
+                h("span",{className:"fyf-top-match-meta"},c.jobs.length+" role"+(c.jobs.length!==1?"s":"")+(topHits?" \u00b7 "+topHits:"")),
+                h("span",{className:"fyf-top-match-score"},c.bestScore)
+              );
+            })
+          ),
+          // Two-tier empty state (Q2 — actionable, not just informative)
+          matchResults&&matchResults.totalMatches===0&&matchResults.query&&matchResults.query.credentials.length>0&&h("div",{className:"fyf-empty"},
+            h("div",{className:"fyf-empty-h"},"No exact matches yet for these credentials"),
+            h("div",{className:"fyf-empty-sub"},"Try removing one credential to broaden the search:"),
+            h("div",{className:"fyf-empty-actions"},
+              matchResults.query.credentials.map(function(c,i){
+                return h("span",{key:i,className:"fyf-empty-action",onClick:function(){fyfRemoveCredentialAndRescore(c.token)}},"Remove ",c.token,h("span",{className:"fyf-empty-action-x"},"\u00D7"));
+              })
+            ),
+            h("div",{className:"fyf-empty-foot"},"Note: searching ",(matchResults.coverage*100).toFixed(0),"% of roles whose qualifications have been parsed. Coverage improves as we add more roles.")
+          )
+        ),
         h("p",{className:"dir-count","aria-live":"polite"},h("b",null,dirFiltered.length)," companies",directorySearch&&h("span",null," matching \u201C",directorySearch,"\u201D"),directoryFunctionFilter.length>0&&h("span",null," \u00b7 ",directoryFunctionFilter.join(", ")),directoryWorkTypeFilter.length>0&&h("span",null," \u00b7 ",directoryWorkTypeFilter.join(", ")),directoryLocationFilter.length>0&&h("span",null," \u00b7 ",directoryLocationFilter.join(", "))),
         h("div",{className:"dir-grid"},dirFiltered.flatMap(function(c){
           var isExp=expandedCompany===c.n;
@@ -2008,6 +2125,23 @@ function App(){
             ),
             h("div",{className:"dir-card-hq"},c.hq),
             c.aw.length>0&&h("div",{className:"dir-card-awards"},c.aw.map(function(a){var m=AW[a];if(!m)return null;return h("span",{key:a,className:"cd-ab",style:{background:m.c+"15",color:m.c}},m.lb)})),
+            // FYF match badge (Slice 3) — only renders when company has matches
+            (function(){
+              if(!matchResults||!matchResults.byCompany)return null;
+              var mc=null;
+              for(var i=0;i<matchResults.byCompany.length;i++){if(matchResults.byCompany[i].company===c.n){mc=matchResults.byCompany[i];break;}}
+              if(!mc)return null;
+              // Determine confidence: strong if any job has a "high" hit; partial otherwise
+              var hasHigh=mc.jobs.some(function(j){return j.hits&&j.hits.some(function(h){return h.confidence==="high"})});
+              var matchedTokens={};
+              mc.jobs.forEach(function(j){if(j.hits)j.hits.forEach(function(h){matchedTokens[h.token]=true})});
+              var tooltip="Matched: "+Object.keys(matchedTokens).join(", ");
+              if(hasHigh){
+                return h("div",{style:{marginTop:6}},h("span",{className:"fyf-badge-strong",title:tooltip},mc.jobs.length+" "+(mc.jobs.length===1?"match":"matches")));
+              }else{
+                return h("div",{style:{marginTop:6}},h("span",{className:"fyf-badge-partial",title:tooltip},mc.jobs.length+" partial"));
+              }
+            })(),
             !isExp&&h("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10}},
               h("div",{className:"dir-card-src"},"Source: "+c.src)
             ),
