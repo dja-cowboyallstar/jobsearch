@@ -537,7 +537,7 @@ function FilterBar(p){
   function togglePop(which){if(openPop===which){setOpenPop(null);setFbSearch("");}else{setOpenPop(which);setFbSearch("");}}
   function removeChip(arr,set,v){set(arr.filter(function(x){return x!==v}));}
   var wtValues=["Remote","Hybrid","On-site"];
-  var fnList=CATS.filter(function(c){return (fc.fn[c]||0)>0||cats.indexOf(c)>-1;}).filter(function(c){return !fbSearch||c.toLowerCase().indexOf(fbSearch.toLowerCase())>-1;});
+  var fnList=CATS;
   var locList=uniqueLocations.filter(function(L){return (fc.loc[L]||0)>0||locs.indexOf(L)>-1;}).filter(function(L){return !fbSearch||L.toLowerCase().indexOf(fbSearch.toLowerCase())>-1;});
   function popItem(label,cnt,on,onClick){var disabled=!on&&cnt===0;return h("div",{className:"fbar-pop-item"+(on?" on":"")+(disabled?" disabled":""),onClick:disabled?null:onClick},h("span",{style:{flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},label),h("span",{className:"fbar-pop-item-cnt"},cnt));}
   function renderGroupedLocation(){var q=(fbSearch||"").toLowerCase();return cityGroups.map(function(g){var matches=g.cities.filter(function(city){return !q||city.toLowerCase().indexOf(q)>-1||g.label.toLowerCase().indexOf(q)>-1;});if(matches.length===0)return null;return h("div",{key:g.label},h("div",{className:"fbar-pop-group"},g.label),matches.map(function(city){return h("div",{key:city},popItem(city,fc.loc[city]||0,locs.indexOf(city)>-1,function(){toggleFilter(locs,setLocs,city);}));}));});}
@@ -853,10 +853,13 @@ function App(){
   var perPage=24,aRef=ur(null);
   var awN=um(function(){return ST.filter(function(x){return x.aw.length>0}).length},[]);
 
-  ue(function(){setLoading(true);setErrorMessage("");fetch("/api/jobs-data").then(function(r){return r.json()}).then(function(d){if(d.status==="OK"&&d.data&&d.data.length>0){var m=d.data.map(mapJob);setJobs(m);
+  ue(function(){setLoading(true);setErrorMessage("");fetch("/api/jobs-data").then(function(r){return r.json()}).then(function(d){
+    // Accept both wrapper format {status:"OK",data:[...]} AND raw array [...] (blob redirect)
+    var arr=Array.isArray(d)?d:(d&&Array.isArray(d.data)?d.data:[]);
+    if(arr.length>0){var m=arr.map(mapJob);setJobs(m);
     // Pre-populate cardJobs from cache so search works across all companies
     var grouped={};m.forEach(function(j){if(j._co){var cn=j._co.n;if(!grouped[cn])grouped[cn]=[];grouped[cn].push(j)}});setCardJobs(grouped);
-    var cos={};m.forEach(function(j){if(j._co)cos[j._co.n]=true;});setLoadedCompanies(Object.keys(cos));if(d.refreshed_at)setRefreshedAt(d.refreshed_at);setFetchMode("cache");}else{setFetchMode("live");}setLoading(false);}).catch(function(){setFetchMode("live");setLoading(false);});},[]);
+    var cos={};m.forEach(function(j){if(j._co)cos[j._co.n]=true;});setLoadedCompanies(Object.keys(cos));if(d&&d.refreshed_at)setRefreshedAt(d.refreshed_at);setFetchMode("cache");}else{setFetchMode("live");}setLoading(false);}).catch(function(e){console.error("jobs-data fetch failed:",e);setFetchMode("live");setLoading(false);});},[]);
 
   function fetchJobSearch(q2){return fetch("/api/jobs?query="+encodeURIComponent(q2)+"&num_pages=1&page=1").then(function(r){if(!r.ok)return r.json().catch(function(){return{}}).then(function(e){return{status:"ERROR",error:e.error||"HTTP "+r.status,data:[]};});return r.json();}).catch(function(e){return{status:"ERROR",error:e.message,data:[]};});}
   function fetchCompanyJobs(co){return fetchJobSearch(co.n+" jobs").then(function(d){if(d.error)return{j:[],e:d.error};if(d.status==="OK"&&d.data){var cn=co.n.toLowerCase().replace(/[^a-z0-9]/g,"");return{j:d.data.filter(function(j){var e=(j.employer_name||"").toLowerCase();return e.indexOf(cn)>-1||cn.indexOf(e.replace(/[^a-z0-9]/g,""))>-1}).map(function(j){return Object.assign({},j,{_co:co,_cat:classifyJobFunction(j.job_title),_wt:getWorkType(j),_loc:formatLocation(j)})}),e:null};}return{j:[],e:null};}).catch(function(e){return{j:[],e:e.message};});}
