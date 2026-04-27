@@ -1,0 +1,3001 @@
+{
+  "version": 1,
+  "generated_at": "2026-04-24T15:44:28.699Z",
+  "duration_ms": 485644,
+  "input_count": 79,
+  "status_counts": {
+    "VERIFIED_LOW_CONFIDENCE": 45,
+    "UNVERIFIED": 31,
+    "VERIFIED_EMPTY": 2,
+    "VERIFIED_WITH_JOBS": 1
+  },
+  "results": [
+    {
+      "name": "Auctor",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "auctor",
+      "careers_url": "https://www.getauctor.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "auctor",
+      "job_count": 11,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.getauctor.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "auctor",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "auctor",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 11,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/auctor?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dust",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "dust",
+      "careers_url": "https://dust.tt/jobs",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "dust",
+      "job_count": 23,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://dust.tt/jobs",
+          "ok": true,
+          "ats": "ab",
+          "slug": "dust",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "dust",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 23,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/dust?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reflection AI",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "reflection",
+      "careers_url": "https://reflection.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "reflectionai",
+      "job_count": 36,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://reflection.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "reflectionai",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "reflectionai",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 36,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/reflectionai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gamma",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "gamma",
+      "careers_url": "https://gamma.app/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "gamma",
+      "job_count": 61,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://gamma.app/careers",
+          "ok": false,
+          "reason": "HTTP 403"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "gamma",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 61,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/gamma?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Black Forest Labs",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "blackforest",
+      "careers_url": "https://blackforestlabs.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "blackforestlabs",
+      "job_count": 13,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://blackforestlabs.ai/careers",
+          "ok": true,
+          "ats": "gh",
+          "slug": "blackforestlabs",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "blackforestlabs",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 13,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/blackforestlabs/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chai Discovery",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "chaidiscovery",
+      "careers_url": "https://www.chaidiscovery.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "chaidiscovery",
+      "job_count": 13,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.chaidiscovery.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "chaidiscovery",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "chaidiscovery",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 13,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/chaidiscovery?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fal (fal.ai)",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "falfalai",
+      "careers_url": "https://fal.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "fal",
+      "job_count": 32,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://fal.ai/careers",
+          "ok": true,
+          "ats": "gh",
+          "slug": "fal",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "fal",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 32,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/fal/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HeyGen",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "heygen",
+      "careers_url": "https://www.heygen.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "heygen",
+      "job_count": 23,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.heygen.com/careers",
+          "ok": true,
+          "ats": "gh",
+          "slug": "heygen",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "heygen",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 23,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/heygen/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Krea",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "krea",
+      "careers_url": "https://www.krea.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "krea",
+      "job_count": 14,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.krea.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "krea",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "krea",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 14,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/krea?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Legora",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "legora",
+      "careers_url": "https://legora.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "legora",
+      "job_count": 144,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://legora.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 475467
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "legora",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 144,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/legora?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Listen Labs",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "listen",
+      "careers_url": "https://www.listenlabs.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "listenlabs",
+      "job_count": 22,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.listenlabs.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 372276
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "listen",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/listen?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "listenlabs",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 22,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/listenlabs?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rogo",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "rogo",
+      "careers_url": "https://rogo.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "Rogo",
+      "job_count": 44,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://rogo.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "Rogo",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "Rogo",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 44,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/Rogo?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Surge AI",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "surge",
+      "careers_url": "https://www.surgehq.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.surgehq.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 70844
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "surge",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/surge/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "surgeai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/surgeai/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "surge-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/surge-ai/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Safe Superintelligence (SSI)",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "safesuperintelligencessi",
+      "careers_url": "https://ssi.inc/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://ssi.inc/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "safesuperintelligencessi",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/safesuperintelligencessi?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "safe-superintelligence-ssi",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/safe-superintelligence-ssi?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Poolside",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "poolside",
+      "careers_url": "https://poolside.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "poolside",
+      "job_count": 13,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://poolside.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 198706
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "poolside",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 13,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/poolside?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Magic",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "magic",
+      "careers_url": "https://magic.dev/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "magic.dev",
+      "job_count": 11,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://magic.dev/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "magic.dev",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "magic.dev",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 11,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/magic.dev?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tessl",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "tessl",
+      "careers_url": "https://tessl.io/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "tesslcareers",
+      "job_count": 8,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://tessl.io/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "tesslcareers",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "tesslcareers",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 8,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/tesslcareers?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CodeRabbit",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "coderabbit",
+      "careers_url": "https://www.coderabbit.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "coderabbit",
+      "job_count": 47,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.coderabbit.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "coderabbit",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "coderabbit",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 47,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/coderabbit?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Augment Code",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "augmentcode",
+      "careers_url": "https://www.augmentcode.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.augmentcode.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 74834
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "augmentcode",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/augmentcode/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "augment-code",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/augment-code/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Qodo (formerly Codium AI)",
+      "priority": "C",
+      "probable_ats": "gh",
+      "probable_slug": "qodoformerlycodiumai",
+      "careers_url": "https://www.qodo.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.qodo.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 94406
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "qodoformerlycodiumai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/qodoformerlycodiumai/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "qodo-formerly-codium-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/qodo-formerly-codium-ai/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Codegen",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "codegen",
+      "careers_url": "https://www.codegen.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.codegen.com/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "codegen",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/codegen?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Typeface",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "typeface",
+      "careers_url": "https://www.typeface.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "typeface",
+      "job_count": 30,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.typeface.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 129383
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "typeface",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 30,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/typeface/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Copy.ai",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "copy",
+      "careers_url": "https://www.copy.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.copy.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "copy",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/copy?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "copyai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/copyai?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "copy-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/copy-ai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Regie.ai",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "regie",
+      "careers_url": "https://www.regie.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.regie.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 69555
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "regie",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/regie?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "regieai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/regieai?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "regie-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/regie-ai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "11x",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "11x",
+      "careers_url": "https://www.11x.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": "ab",
+      "detected_slug": "11x",
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.11x.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "11x",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "11x",
+              "source": "scrape",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/11x?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rox",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "rox",
+      "careers_url": "https://www.rox.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.rox.com/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "rox",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/rox?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Distyl AI",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "distyl",
+      "careers_url": "https://distyl.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://distyl.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "distyl",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/distyl/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "distylai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/distylai/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "distyl-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/distyl-ai/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Relevance AI",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "relevance",
+      "careers_url": "https://relevanceai.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "relevanceai",
+      "job_count": 20,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://relevanceai.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "relevanceai",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "relevanceai",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 20,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/relevanceai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lindy AI",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "lindy",
+      "careers_url": "https://www.lindy.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "lindy",
+      "job_count": 6,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.lindy.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "lindy",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "lindy",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 6,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/lindy?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Imbue",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "imbue",
+      "careers_url": "https://imbue.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "imbue",
+      "job_count": 3,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://imbue.com/careers",
+          "ok": true,
+          "ats": "gh",
+          "slug": "imbue",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "imbue",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 3,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/imbue/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "World Labs",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "world",
+      "careers_url": "https://www.worldlabs.ai/careers",
+      "status": "VERIFIED_EMPTY",
+      "detected_ats": "ab",
+      "detected_slug": "worldlabs",
+      "job_count": 0,
+      "name_match": true,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.worldlabs.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "world",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/world?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "worldlabs",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 0,
+              "nameMatch": true,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/worldlabs?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Browserbase",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "browserbase",
+      "careers_url": "https://www.browserbase.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "browserbase",
+      "job_count": 9,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.browserbase.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "browserbase",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "browserbase",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 9,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/browserbase?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Foundry",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "foundry",
+      "careers_url": "https://mlfoundry.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://mlfoundry.com/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "foundry",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/foundry?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Articul8 AI",
+      "priority": "C",
+      "probable_ats": "gh",
+      "probable_slug": "articul8",
+      "careers_url": "https://www.articul8.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.articul8.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "articul8",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/articul8/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "articul8ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/articul8ai/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "articul8-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/articul8-ai/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Deepgram",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "deepgram",
+      "careers_url": "https://deepgram.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "Deepgram",
+      "job_count": 58,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://deepgram.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "Deepgram",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "Deepgram",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 58,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/Deepgram?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cartesia",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "cartesia",
+      "careers_url": "https://cartesia.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "cartesia",
+      "job_count": 32,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://cartesia.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "cartesia",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "cartesia",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 32,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/cartesia?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Vapi",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "vapi",
+      "careers_url": "https://vapi.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "vapi",
+      "job_count": 23,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://vapi.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "vapi",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "vapi",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 23,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/vapi?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bland AI",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "bland",
+      "careers_url": "https://www.bland.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "bland",
+      "job_count": 13,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.bland.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "bland",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 13,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/bland?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Higgsfield",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "higgsfield",
+      "careers_url": "https://higgsfield.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "higgsfieldai",
+      "job_count": 13,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://higgsfield.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "higgsfieldai",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "higgsfieldai",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 13,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/higgsfieldai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Captions",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "captions",
+      "careers_url": "https://www.captions.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": "ab",
+      "detected_slug": "mirage",
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.captions.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "mirage",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "mirage",
+              "source": "scrape",
+              "ok": false,
+              "reason": "fetch error: This operation was aborted",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/mirage?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tavus",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "tavus",
+      "careers_url": "https://www.tavus.io/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "tavus",
+      "job_count": 13,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.tavus.io/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "tavus",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "tavus",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 13,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/tavus?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arize AI",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "arize",
+      "careers_url": "https://arize.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "arizeai",
+      "job_count": 35,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://arize.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 298718
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "arize",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/arize/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "arizeai",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 35,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/arizeai/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dagster Labs",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "dagster",
+      "careers_url": "https://dagster.io/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "dagsterlabs",
+      "job_count": 4,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://dagster.io/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 63594
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "dagster",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/dagster/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "dagsterlabs",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 4,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/dagsterlabs/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Galileo AI",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "galileo",
+      "careers_url": "https://www.rungalileo.io/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.rungalileo.io/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "galileo",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/galileo?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "galileoai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/galileoai?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "galileo-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/galileo-ai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Encord",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "encord",
+      "careers_url": "https://encord.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "lv",
+      "detected_slug": "CordTechnologies",
+      "job_count": 67,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://encord.com/careers",
+          "ok": true,
+          "ats": "lv",
+          "slug": "CordTechnologies",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "lv",
+              "slug": "CordTechnologies",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 67,
+              "nameMatch": false,
+              "url": "https://api.lever.co/v0/postings/CordTechnologies?mode=json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Labelbox",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "labelbox",
+      "careers_url": "https://labelbox.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "labelbox",
+      "job_count": 9,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://labelbox.com/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "labelbox",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 9,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/labelbox/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1X Technologies",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "1xtechnologies",
+      "careers_url": "https://www.1x.tech/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "rc",
+      "detected_slug": "1x",
+      "job_count": 128,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.1x.tech/careers",
+          "ok": true,
+          "ats": "rc",
+          "slug": "1x",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "rc",
+              "slug": "1x",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 128,
+              "nameMatch": false,
+              "url": "https://1x.recruitee.com/api/offers/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Covariant",
+      "priority": "C",
+      "probable_ats": "gh",
+      "probable_slug": "covariant",
+      "careers_url": "https://covariant.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://covariant.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 167919
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "covariant",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/covariant/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Helsing",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "helsing",
+      "careers_url": "https://helsing.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "helsing",
+      "job_count": 106,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://helsing.ai/careers",
+          "ok": false,
+          "reason": "HTTP 429"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "helsing",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 106,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/helsing/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Castelion",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "castelion",
+      "careers_url": "https://www.castelion.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.castelion.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 132271
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "castelion",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/castelion/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chaos Industries",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "chaosindustries",
+      "careers_url": "https://www.chaosindustries.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "chaosindustries",
+      "job_count": 119,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.chaosindustries.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 44916
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "chaosindustries",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 119,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/chaosindustries/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Horizon3.ai",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "horizon3",
+      "careers_url": "https://horizon3.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "horizon3ai",
+      "job_count": 53,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://horizon3.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "horizon3ai",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "horizon3ai",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 53,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/horizon3ai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sublime Security",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "sublimesecurity",
+      "careers_url": "https://sublime.security/careers",
+      "status": "VERIFIED_EMPTY",
+      "detected_ats": "ab",
+      "detected_slug": "sublime-security",
+      "job_count": 0,
+      "name_match": true,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://sublime.security/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "sublimesecurity",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/sublimesecurity?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "sublime-security",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 0,
+              "nameMatch": true,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/sublime-security?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Xaira Therapeutics",
+      "priority": "A",
+      "probable_ats": "wd",
+      "probable_slug": "xairatherapeutics",
+      "careers_url": "https://xaira.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://xaira.com/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "wd",
+              "slug": "xairatherapeutics",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "Workday verification is manual — visit the URL in a browser",
+              "url": "https://xairatherapeutics.wdX.myworkdayjobs.com/"
+            },
+            {
+              "ats": "wd",
+              "slug": "xaira-therapeutics",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "Workday verification is manual — visit the URL in a browser",
+              "url": "https://xaira-therapeutics.wdX.myworkdayjobs.com/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Isomorphic Labs",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "isomorphic",
+      "careers_url": "https://www.isomorphiclabs.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "isomorphiclabs",
+      "job_count": 32,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.isomorphiclabs.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 48617
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "isomorphic",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/isomorphic/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "isomorphiclabs",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 32,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/isomorphiclabs/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "insitro",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "insitro",
+      "careers_url": "https://www.insitro.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.insitro.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 86561
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "insitro",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/insitro/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Iambic Therapeutics",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "iambictherapeutics",
+      "careers_url": "https://www.iambic.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "iambic-therapeutics",
+      "job_count": 15,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.iambic.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "iambic-therapeutics",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "iambic-therapeutics",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 15,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/iambic-therapeutics?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eikon Therapeutics",
+      "priority": "A",
+      "probable_ats": "wd",
+      "probable_slug": "eikontherapeutics",
+      "careers_url": "https://eikontx.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://eikontx.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 61233
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "wd",
+              "slug": "eikontherapeutics",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "Workday verification is manual — visit the URL in a browser",
+              "url": "https://eikontherapeutics.wdX.myworkdayjobs.com/"
+            },
+            {
+              "ats": "wd",
+              "slug": "eikon-therapeutics",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "Workday verification is manual — visit the URL in a browser",
+              "url": "https://eikon-therapeutics.wdX.myworkdayjobs.com/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Generate Biomedicines",
+      "priority": "B",
+      "probable_ats": "gh",
+      "probable_slug": "generatebiomedicines",
+      "careers_url": "https://generatebiomedicines.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "generatebiomedicines",
+      "job_count": 19,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://generatebiomedicines.com/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 53827
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "generatebiomedicines",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 19,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/generatebiomedicines/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EvolutionaryScale",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "evolutionaryscale",
+      "careers_url": "https://www.evolutionaryscale.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.evolutionaryscale.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "evolutionaryscale",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/evolutionaryscale?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Freed AI",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "freed",
+      "careers_url": "https://www.getfreed.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "freed",
+      "job_count": 8,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.getfreed.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 98220
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "freed",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 8,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/freed?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Heidi Health",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "heidihealth",
+      "careers_url": "https://www.heidihealth.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": "ab",
+      "detected_slug": "heidihealth.com.au",
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.heidihealth.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "heidihealth.com.au",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "heidihealth.com.au",
+              "source": "scrape",
+              "ok": false,
+              "reason": "fetch error: This operation was aborted",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/heidihealth.com.au?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Commure",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "commure",
+      "careers_url": "https://commure.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": "ab",
+      "detected_slug": "Commure-Athelas",
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://commure.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "Commure-Athelas",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "Commure-Athelas",
+              "source": "scrape",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/Commure-Athelas?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eve",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "eve",
+      "careers_url": "https://eve.legal/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "gh",
+      "detected_slug": "eve",
+      "job_count": 33,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://eve.legal/careers",
+          "ok": true,
+          "ats": "gh",
+          "slug": "eve",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "eve",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 33,
+              "nameMatch": false,
+              "url": "https://boards-api.greenhouse.io/v1/boards/eve/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Spellbook",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "spellbook",
+      "careers_url": "https://www.spellbook.legal/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "spellbook.legal",
+      "job_count": 25,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.spellbook.legal/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "spellbook.legal",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "spellbook.legal",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 25,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/spellbook.legal?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Darrow",
+      "priority": "C",
+      "probable_ats": "gh",
+      "probable_slug": "darrow",
+      "careers_url": "https://www.darrow.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.darrow.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "darrow",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/darrow/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Supio",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "supio",
+      "careers_url": "https://www.supio.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": "gh",
+      "detected_slug": "embed",
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.supio.com/careers",
+          "ok": true,
+          "ats": "gh",
+          "slug": "embed",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "embed",
+              "source": "scrape",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/embed/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MagicSchool",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "magicschool",
+      "careers_url": "https://www.magicschool.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "magicschool",
+      "job_count": 7,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.magicschool.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "magicschool",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "magicschool",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 7,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/magicschool?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Brisk Teaching",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "briskteaching",
+      "careers_url": "https://www.briskteaching.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "brisk-teaching",
+      "job_count": 9,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.briskteaching.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "brisk-teaching",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "brisk-teaching",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 9,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/brisk-teaching?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sakana AI",
+      "priority": "A",
+      "probable_ats": "gh",
+      "probable_slug": "sakana",
+      "careers_url": "https://sakana.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://sakana.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 51519
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "gh",
+              "slug": "sakana",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/sakana/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "sakanaai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/sakanaai/jobs"
+            },
+            {
+              "ats": "gh",
+              "slug": "sakana-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://boards-api.greenhouse.io/v1/boards/sakana-ai/jobs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Photoroom",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "photoroom",
+      "careers_url": "https://www.photoroom.com/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "photoroom",
+      "job_count": 12,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.photoroom.com/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "photoroom",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "photoroom",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 12,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/photoroom?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Leya",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "leya",
+      "careers_url": "https://runleya.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://runleya.com/careers",
+          "ok": false,
+          "reason": "fetch error: fetch failed"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "leya",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/leya?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Norm AI",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "norm",
+      "careers_url": "https://www.normai.com/careers",
+      "status": "VERIFIED_WITH_JOBS",
+      "detected_ats": "ab",
+      "detected_slug": "norm-ai",
+      "job_count": 16,
+      "name_match": true,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.normai.com/careers",
+          "ok": false,
+          "reason": "fetch error: This operation was aborted"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "norm",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/norm?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "normai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/normai?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "norm-ai",
+              "source": "probable-fallback",
+              "ok": true,
+              "jobCount": 16,
+              "nameMatch": true,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/norm-ai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zeplyn",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "zeplyn",
+      "careers_url": "https://zeplyn.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://zeplyn.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "zeplyn",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/zeplyn?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gigacatalyst",
+      "priority": "C",
+      "probable_ats": "ab",
+      "probable_slug": "gigacatalyst",
+      "careers_url": "https://gigacatalyst.com/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://gigacatalyst.com/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "gigacatalyst",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/gigacatalyst?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hex Security",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "hexsecurity",
+      "careers_url": "https://hexsecurity.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://hexsecurity.ai/careers",
+          "ok": false,
+          "reason": "fetch error: fetch failed"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "hexsecurity",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/hexsecurity?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "hex-security",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/hex-security?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pocket",
+      "priority": "A",
+      "probable_ats": "ab",
+      "probable_slug": "pocket",
+      "careers_url": "https://pocket.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://pocket.ai/careers",
+          "ok": false,
+          "reason": "HTTP 404"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "pocket",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/pocket?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PaleBlueDot AI",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "palebluedot",
+      "careers_url": "https://palebluedot.ai/careers",
+      "status": "UNVERIFIED",
+      "detected_ats": null,
+      "detected_slug": null,
+      "job_count": null,
+      "name_match": null,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://palebluedot.ai/careers",
+          "ok": false,
+          "reason": "no ATS signature found in HTML",
+          "htmlLen": 1183
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "palebluedot",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/palebluedot?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "palebluedotai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/palebluedotai?includeCompensation=true"
+            },
+            {
+              "ats": "ab",
+              "slug": "palebluedot-ai",
+              "source": "probable-fallback",
+              "ok": false,
+              "reason": "HTTP 404",
+              "url": "https://api.ashbyhq.com/posting-api/job-board/palebluedot-ai?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Granola",
+      "priority": "B",
+      "probable_ats": "ab",
+      "probable_slug": "granola",
+      "careers_url": "https://www.granola.ai/careers",
+      "status": "VERIFIED_LOW_CONFIDENCE",
+      "detected_ats": "ab",
+      "detected_slug": "granola",
+      "job_count": 18,
+      "name_match": false,
+      "attempts": [
+        {
+          "phase": "A:html-scrape",
+          "url": "https://www.granola.ai/careers",
+          "ok": true,
+          "ats": "ab",
+          "slug": "granola",
+          "source": "html-scrape"
+        },
+        {
+          "phase": "B:ats-api",
+          "attempts": [
+            {
+              "ats": "ab",
+              "slug": "granola",
+              "source": "scrape",
+              "ok": true,
+              "jobCount": 18,
+              "nameMatch": false,
+              "url": "https://api.ashbyhq.com/posting-api/job-board/granola?includeCompensation=true"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

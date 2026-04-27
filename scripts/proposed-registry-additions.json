@@ -1,0 +1,306 @@
+{
+  "version": 2,
+  "generated_at": "2026-04-24T15:48:03.537Z",
+  "note": "Three tiers: auto_high is scrape-derived and safe to merge into the registry as-is. review_med was slug-guessed and jobs were found, but spot-check 2-3 random rows before merging. empty_with_board should be added only if we accept 0-job companies (they'd just emit no jobs until they hire).",
+  "counts": {
+    "auto_high": 31,
+    "review_med": 15,
+    "empty_with_board": 0
+  },
+  "auto_high": {
+    "Auctor": {
+      "ats": "ab",
+      "slug": "auctor",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Dust": {
+      "ats": "ab",
+      "slug": "dust",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Reflection AI": {
+      "ats": "ab",
+      "slug": "reflectionai",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Black Forest Labs": {
+      "ats": "gh",
+      "slug": "blackforestlabs",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Chai Discovery": {
+      "ats": "ab",
+      "slug": "chaidiscovery",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Fal (fal.ai)": {
+      "ats": "gh",
+      "slug": "fal",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "HeyGen": {
+      "ats": "gh",
+      "slug": "heygen",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Krea": {
+      "ats": "ab",
+      "slug": "krea",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Rogo": {
+      "ats": "ab",
+      "slug": "Rogo",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Magic": {
+      "ats": "ab",
+      "slug": "magic.dev",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Tessl": {
+      "ats": "ab",
+      "slug": "tesslcareers",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "CodeRabbit": {
+      "ats": "ab",
+      "slug": "coderabbit",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Relevance AI": {
+      "ats": "ab",
+      "slug": "relevanceai",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Lindy AI": {
+      "ats": "ab",
+      "slug": "lindy",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Imbue": {
+      "ats": "gh",
+      "slug": "imbue",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Browserbase": {
+      "ats": "ab",
+      "slug": "browserbase",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Deepgram": {
+      "ats": "ab",
+      "slug": "Deepgram",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Cartesia": {
+      "ats": "ab",
+      "slug": "cartesia",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Vapi": {
+      "ats": "ab",
+      "slug": "vapi",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Higgsfield": {
+      "ats": "ab",
+      "slug": "higgsfieldai",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Tavus": {
+      "ats": "ab",
+      "slug": "tavus",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Encord": {
+      "ats": "lv",
+      "slug": "CordTechnologies",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "1X Technologies": {
+      "ats": "rc",
+      "slug": "1x",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Horizon3.ai": {
+      "ats": "ab",
+      "slug": "horizon3ai",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Iambic Therapeutics": {
+      "ats": "ab",
+      "slug": "iambic-therapeutics",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Eve": {
+      "ats": "gh",
+      "slug": "eve",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Spellbook": {
+      "ats": "ab",
+      "slug": "spellbook.legal",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "MagicSchool": {
+      "ats": "ab",
+      "slug": "magicschool",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Brisk Teaching": {
+      "ats": "ab",
+      "slug": "brisk-teaching",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Photoroom": {
+      "ats": "ab",
+      "slug": "photoroom",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    },
+    "Granola": {
+      "ats": "ab",
+      "slug": "granola",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:scrape:2026-04-24"
+    }
+  },
+  "review_med": {
+    "Gamma": {
+      "ats": "ab",
+      "slug": "gamma",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Legora": {
+      "ats": "ab",
+      "slug": "legora",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Listen Labs": {
+      "ats": "ab",
+      "slug": "listenlabs",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Poolside": {
+      "ats": "ab",
+      "slug": "poolside",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Typeface": {
+      "ats": "gh",
+      "slug": "typeface",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Bland AI": {
+      "ats": "ab",
+      "slug": "bland",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Arize AI": {
+      "ats": "gh",
+      "slug": "arizeai",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Dagster Labs": {
+      "ats": "gh",
+      "slug": "dagsterlabs",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Labelbox": {
+      "ats": "gh",
+      "slug": "labelbox",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Helsing": {
+      "ats": "gh",
+      "slug": "helsing",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Chaos Industries": {
+      "ats": "gh",
+      "slug": "chaosindustries",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Isomorphic Labs": {
+      "ats": "gh",
+      "slug": "isomorphiclabs",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Generate Biomedicines": {
+      "ats": "gh",
+      "slug": "generatebiomedicines",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Freed AI": {
+      "ats": "ab",
+      "slug": "freed",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    },
+    "Norm AI": {
+      "ats": "ab",
+      "slug": "norm-ai",
+      "verified_at": "2026-04-24",
+      "source": "verify-add-companies:fallback:2026-04-24",
+      "_needs_spot_check": true
+    }
+  },
+  "empty_with_board": {}
+}

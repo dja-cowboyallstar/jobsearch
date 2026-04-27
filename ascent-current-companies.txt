@@ -1,0 +1,303 @@
+1Password
+Abacum
+Abnormal Security
+Abridge
+Accrual
+Adept AI
+Affirm
+Airtable
+Aisera
+Alchemy
+Alloy
+AlphaSense
+Alto Pharmacy
+Ambience Healthcare
+Amplitude
+Anaplan
+Anduril
+Anthropic
+Apollo
+AppLovin
+Applied Intuition
+Apptronik
+Arctic Wolf
+Articulate
+Ashby
+Attentive
+Bain & Company
+Base44
+Baseten
+Basis
+Benchling
+Billd
+BlackLine
+Board International
+Bolt
+Box
+Braze
+Brex
+Bryant Park Consulting
+Built Technologies
+Calendly
+Calm
+Campfire
+Canva
+CaptivateIQ
+Carta
+Celonis
+Cerebras Systems
+Chainguard
+Character AI
+Clay
+ClickUp
+Coactive AI
+Coast
+Cockroach Labs
+Codeium
+Cognigy
+Cognition AI
+Cohere
+Common Room
+Commonwealth Fusion
+Contentful
+CoreWeave
+Corebridge Financial
+Coupa
+Coursera
+Credo AI
+CrewAI
+Cribl
+CrowdStrike
+Crusoe
+Cube
+Cursor
+Cyera
+DOSS
+Darwinbox
+Databricks
+Datadog
+Dataiku
+Datarails
+Decagon
+Deel
+DeepL
+Deepnote
+DevRev
+Devoted Health
+Discord
+Docusign
+Domo
+Doppler
+Drata
+Drivetrain
+DualEntry
+Duolingo
+Echo Park Consulting
+ElevenLabs
+EliseAI
+Esusu
+Eudia
+EvenUp
+Faire
+Figma
+Figure AI
+Findigs
+Fireworks AI
+Fivetran
+Flatfile
+Flexport
+FloQast
+Flock Safety
+Flutterwave
+Form Energy
+Forter
+Freshworks
+Gecko Robotics
+Genspark
+Giga
+GitLab
+Glean
+GoCardless
+Gong
+Grafana Labs
+Grammarly
+Graphiant
+Groq
+Gusto
+Halcyon
+Handshake
+Harness
+Harvey AI
+HashiCorp
+Hebbia
+Hex
+Highspot
+Hightouch
+Hinge Health
+Hippocratic AI
+HubSpot
+Hugging Face
+ICON 3D
+Inflection AI
+Intercom
+Ironclad
+Island
+Jasper
+Jedox
+Kalshi
+Klarna
+Klaviyo
+Kong
+Kore.ai
+Lambda
+LangChain
+Lattice
+LaunchDarkly
+Light
+Lightdash
+Linear
+Lovable
+Luma AI
+Luminance
+MainFunc
+Melio
+Mercor
+Mercury
+Midjourney
+Miro
+Mistral AI
+Modal
+Modular
+Monday.com
+Monte Carlo
+Moveworks
+NICE
+Navan
+Nominal
+Noom
+Northvolt
+Notion
+Numeric
+Nuro
+Nuvei
+Omnea
+Omni Analytics
+OneStream
+OpenAI
+OpenEvidence
+Orb
+Oscar Health
+Oura
+Outreach
+Pacaso
+Palantir
+Parloa
+Pearl Health
+Peec AI
+Pega
+Perplexity AI
+Physical Intelligence
+Pigment
+Pika
+Pinecone
+Plaid
+Planful
+Pluralsight
+PostHog
+Procore
+Profound
+Pyramid Analytics
+Ramp
+Redwood Materials
+Relativity Space
+Remote
+Render
+Replit
+Resolve AI
+Retell AI
+Retool
+Revolut
+Rillet
+Rippling
+Riskified
+Ro
+Roblox
+Runway
+Runway Financial
+SambaNova
+Samsara
+Saronic
+Scale AI
+ScaleOps
+Seismic
+SentinelOne
+Serval
+ServiceNow
+Sesame
+Shield AI
+Shopify
+Sierra AI
+Sigma Computing
+Simular
+Sisense
+Skild AI
+Snorkel AI
+Snowflake
+Snyk
+SpaceX
+Speak
+Spring Health
+Stability AI
+Stainless
+Statsig
+Steadily
+Stripe
+Suno
+Supabase
+Swap
+Sword Health
+Synthesia
+Synthflow AI
+Tabs
+Tanium
+Tempus AI
+Thinking Machines Lab
+ThoughtSpot
+Thrive Market
+Tines
+Together AI
+Tome
+Torq
+Trader Joe's
+Tropic
+Truveta
+Typeform
+Unify
+Uniphore
+Unstructured
+VAST Data
+Vannevar Labs
+Vanta
+Vena Solutions
+Vercel
+Verkada
+Warp
+Waymo
+Wealthsimple
+Weaviate
+Webflow
+Weights & Biases
+Whatnot
+Whoop
+Wise
+Wiz
+Wolters Kluwer
+World Wide Technology
+Wrike
+Writer
+You.com
+Zip
+Zuora
+dbt Labs
+n8n
+xAI

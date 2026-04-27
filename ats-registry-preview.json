@@ -1,0 +1,1252 @@
+{
+  "version": 1,
+  "schema": "ats-registry-v1",
+  "updated_at": "2026-04-21T22:22:51.802Z",
+  "mappings": {
+    "OpenAI": {
+      "ats": "ab",
+      "slug": "openai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Anthropic": {
+      "ats": "gh",
+      "slug": "anthropic",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Mistral AI": {
+      "ats": "lv",
+      "slug": "mistral",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Cohere": {
+      "ats": "ab",
+      "slug": "cohere",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Databricks": {
+      "ats": "gh",
+      "slug": "databricks",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Cerebras Systems": {
+      "ats": "gh",
+      "slug": "cerebrassystems",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "xAI": {
+      "ats": "gh",
+      "slug": "xai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "CoreWeave": {
+      "ats": "gh",
+      "slug": "coreweave",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Lambda": {
+      "ats": "ab",
+      "slug": "lambda",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Runway": {
+      "ats": "ab",
+      "slug": "runway",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Glean": {
+      "ats": "gh",
+      "slug": "gleanwork",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Harvey AI": {
+      "ats": "ab",
+      "slug": "harvey",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "ElevenLabs": {
+      "ats": "ab",
+      "slug": "elevenlabs",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Cognition AI": {
+      "ats": "ab",
+      "slug": "cognition",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Suno": {
+      "ats": "ab",
+      "slug": "suno",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Pika": {
+      "ats": "ab",
+      "slug": "pika",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Writer": {
+      "ats": "ab",
+      "slug": "writer",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Replit": {
+      "ats": "ab",
+      "slug": "replit",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Moveworks": {
+      "ats": "ab",
+      "slug": "moveworks",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Unstructured": {
+      "ats": "ab",
+      "slug": "unstructured",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Sierra AI": {
+      "ats": "ab",
+      "slug": "sierra",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Lovable": {
+      "ats": "ab",
+      "slug": "lovable",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Stripe": {
+      "ats": "gh",
+      "slug": "stripe",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Ramp": {
+      "ats": "ab",
+      "slug": "ramp",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Brex": {
+      "ats": "gh",
+      "slug": "brex",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Plaid": {
+      "ats": "ab",
+      "slug": "plaid",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Mercury": {
+      "ats": "gh",
+      "slug": "mercury",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Deel": {
+      "ats": "ab",
+      "slug": "deel",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Carta": {
+      "ats": "gh",
+      "slug": "carta",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Zip": {
+      "ats": "ab",
+      "slug": "zip",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Steadily": {
+      "ats": "ab",
+      "slug": "steadily",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Esusu": {
+      "ats": "gh",
+      "slug": "esusu",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Abnormal Security": {
+      "ats": "gh",
+      "slug": "abnormalsecurity",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Chainguard": {
+      "ats": "gh",
+      "slug": "chainguard",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Halcyon": {
+      "ats": "gh",
+      "slug": "halcyon",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Abridge": {
+      "ats": "ab",
+      "slug": "abridge",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Spring Health": {
+      "ats": "ab",
+      "slug": "springhealth",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Pearl Health": {
+      "ats": "ab",
+      "slug": "pearlhealth",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Truveta": {
+      "ats": "gh",
+      "slug": "truveta",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Benchling": {
+      "ats": "ab",
+      "slug": "benchling",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Vercel": {
+      "ats": "gh",
+      "slug": "vercel",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Supabase": {
+      "ats": "ab",
+      "slug": "supabase",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "PostHog": {
+      "ats": "ab",
+      "slug": "posthog",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Linear": {
+      "ats": "ab",
+      "slug": "linear",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Grafana Labs": {
+      "ats": "gh",
+      "slug": "grafanalabs",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Retool": {
+      "ats": "ab",
+      "slug": "retool",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Datadog": {
+      "ats": "gh",
+      "slug": "datadog",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Notion": {
+      "ats": "ab",
+      "slug": "notion",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Figma": {
+      "ats": "gh",
+      "slug": "figma",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Drata": {
+      "ats": "ab",
+      "slug": "drata",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Vanta": {
+      "ats": "ab",
+      "slug": "vanta",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Lattice": {
+      "ats": "gh",
+      "slug": "lattice",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Gong": {
+      "ats": "rc",
+      "slug": "gong",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Celonis": {
+      "ats": "gh",
+      "slug": "celonis",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "CaptivateIQ": {
+      "ats": "lv",
+      "slug": "captivateiq",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Common Room": {
+      "ats": "ab",
+      "slug": "commonroom",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "AlphaSense": {
+      "ats": "gh",
+      "slug": "alphasense",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Snowflake": {
+      "ats": "ab",
+      "slug": "snowflake",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Scale AI": {
+      "ats": "gh",
+      "slug": "scaleai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Figure AI": {
+      "ats": "gh",
+      "slug": "figureai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Anduril": {
+      "ats": "gh",
+      "slug": "andurilindustries",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Physical Intelligence": {
+      "ats": "ab",
+      "slug": "physicalintelligence",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Saronic": {
+      "ats": "ab",
+      "slug": "saronic",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Shield AI": {
+      "ats": "lv",
+      "slug": "shieldai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Apptronik": {
+      "ats": "gh",
+      "slug": "apptronik",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Whatnot": {
+      "ats": "ab",
+      "slug": "whatnot",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Faire": {
+      "ats": "gh",
+      "slug": "faire",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Flexport": {
+      "ats": "gh",
+      "slug": "flexport",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Pacaso": {
+      "ats": "gh",
+      "slug": "pacaso",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Thrive Market": {
+      "ats": "gh",
+      "slug": "thrivemarket",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Redwood Materials": {
+      "ats": "gh",
+      "slug": "redwoodmaterials",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Form Energy": {
+      "ats": "ab",
+      "slug": "formenergy",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Duolingo": {
+      "ats": "gh",
+      "slug": "duolingo",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Handshake": {
+      "ats": "ab",
+      "slug": "handshake",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Coursera": {
+      "ats": "gh",
+      "slug": "coursera",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Gusto": {
+      "ats": "gh",
+      "slug": "gusto",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Palantir": {
+      "ats": "lv",
+      "slug": "palantir",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "SpaceX": {
+      "ats": "gh",
+      "slug": "spacex",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Vannevar Labs": {
+      "ats": "gh",
+      "slug": "vannevarlabs",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "EvenUp": {
+      "ats": "ab",
+      "slug": "evenup",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Discord": {
+      "ats": "gh",
+      "slug": "discord",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Whoop": {
+      "ats": "ab",
+      "slug": "whoop",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Oura": {
+      "ats": "gh",
+      "slug": "oura",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "AppLovin": {
+      "ats": "gh",
+      "slug": "applovin",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "LangChain": {
+      "ats": "ab",
+      "slug": "langchain",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Serval": {
+      "ats": "ab",
+      "slug": "serval",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "DOSS": {
+      "ats": "ab",
+      "slug": "doss",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Crusoe": {
+      "ats": "ab",
+      "slug": "crusoe",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Speak": {
+      "ats": "ab",
+      "slug": "speak",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "OpenEvidence": {
+      "ats": "ab",
+      "slug": "openevidence",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Decagon": {
+      "ats": "ab",
+      "slug": "decagon",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Hebbia": {
+      "ats": "gh",
+      "slug": "hebbia",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Wrike": {
+      "ats": "gh",
+      "slug": "wrike",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Amplitude": {
+      "ats": "gh",
+      "slug": "amplitude",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Airtable": {
+      "ats": "gh",
+      "slug": "airtable",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Contentful": {
+      "ats": "gh",
+      "slug": "contentful",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "ClickUp": {
+      "ats": "ab",
+      "slug": "clickup",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Webflow": {
+      "ats": "gh",
+      "slug": "webflow",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Warp": {
+      "ats": "gh",
+      "slug": "warp",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Verkada": {
+      "ats": "gh",
+      "slug": "verkada",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Applied Intuition": {
+      "ats": "gh",
+      "slug": "appliedintuition",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Nuro": {
+      "ats": "gh",
+      "slug": "nuro",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Articulate": {
+      "ats": "lv",
+      "slug": "articulate",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Sword Health": {
+      "ats": "lv",
+      "slug": "swordhealth",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Calm": {
+      "ats": "gh",
+      "slug": "calm",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Coast": {
+      "ats": "gh",
+      "slug": "coast",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Wealthsimple": {
+      "ats": "ab",
+      "slug": "wealthsimple",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Calendly": {
+      "ats": "gh",
+      "slug": "calendly",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Typeform": {
+      "ats": "gh",
+      "slug": "typeform",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Remote": {
+      "ats": "gh",
+      "slug": "remote",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Waymo": {
+      "ats": "gh",
+      "slug": "waymo",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Omnea": {
+      "ats": "ab",
+      "slug": "omnea",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Stability AI": {
+      "ats": "gh",
+      "slug": "stabilityai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Inflection AI": {
+      "ats": "gh",
+      "slug": "inflectionai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Modal": {
+      "ats": "ab",
+      "slug": "modal",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Pinecone": {
+      "ats": "ab",
+      "slug": "pinecone",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Weaviate": {
+      "ats": "ab",
+      "slug": "weaviate",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Synthesia": {
+      "ats": "ab",
+      "slug": "synthesia",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Coupa": {
+      "ats": "lv",
+      "slug": "coupa",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Cockroach Labs": {
+      "ats": "gh",
+      "slug": "cockroachlabs",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "LaunchDarkly": {
+      "ats": "gh",
+      "slug": "launchdarkly",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Fivetran": {
+      "ats": "gh",
+      "slug": "fivetran",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Monte Carlo": {
+      "ats": "ab",
+      "slug": "montecarlodata",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Snorkel AI": {
+      "ats": "gh",
+      "slug": "snorkelai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Alchemy": {
+      "ats": "ab",
+      "slug": "alchemy",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Braze": {
+      "ats": "gh",
+      "slug": "braze",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Kong": {
+      "ats": "ab",
+      "slug": "kong",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "1Password": {
+      "ats": "ab",
+      "slug": "1password",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Tanium": {
+      "ats": "gh",
+      "slug": "tanium",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Ro": {
+      "ats": "lv",
+      "slug": "ro",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Highspot": {
+      "ats": "lv",
+      "slug": "highspot",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Attentive": {
+      "ats": "gh",
+      "slug": "attentive",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Klaviyo": {
+      "ats": "gh",
+      "slug": "klaviyo",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Forter": {
+      "ats": "gh",
+      "slug": "forter",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "GoCardless": {
+      "ats": "gh",
+      "slug": "gocardless",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Melio": {
+      "ats": "gh",
+      "slug": "melio",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Kalshi": {
+      "ats": "ab",
+      "slug": "kalshi",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Statsig": {
+      "ats": "ab",
+      "slug": "statsig",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Stainless": {
+      "ats": "ab",
+      "slug": "stainlessapi",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Affirm": {
+      "ats": "gh",
+      "slug": "affirm",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Riskified": {
+      "ats": "gh",
+      "slug": "riskified",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Alloy": {
+      "ats": "gh",
+      "slug": "alloy",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Zuora": {
+      "ats": "gh",
+      "slug": "zuora",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Doppler": {
+      "ats": "ab",
+      "slug": "doppler",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Render": {
+      "ats": "ab",
+      "slug": "render",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Roblox": {
+      "ats": "gh",
+      "slug": "roblox",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Campfire": {
+      "ats": "ab",
+      "slug": "campfire",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "DualEntry": {
+      "ats": "rc",
+      "slug": "dualentry",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Light": {
+      "ats": "ab",
+      "slug": "light",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Tabs": {
+      "ats": "ab",
+      "slug": "tabs",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Samsara": {
+      "ats": "gh",
+      "slug": "samsara",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Rillet": {
+      "ats": "ab",
+      "slug": "rillet",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "DeepL": {
+      "ats": "ab",
+      "slug": "deepl",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Swap": {
+      "ats": "ab",
+      "slug": "swap",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "NICE": {
+      "ats": "gh",
+      "slug": "nice",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Intercom": {
+      "ats": "gh",
+      "slug": "intercom",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Numeric": {
+      "ats": "ab",
+      "slug": "numeric",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Mercor": {
+      "ats": "ab",
+      "slug": "mercor",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Apollo": {
+      "ats": "gh",
+      "slug": "apollo",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "n8n": {
+      "ats": "ab",
+      "slug": "n8n",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Tines": {
+      "ats": "gh",
+      "slug": "tines",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Torq": {
+      "ats": "gh",
+      "slug": "torq",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Parloa": {
+      "ats": "gh",
+      "slug": "parloa",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Ashby": {
+      "ats": "ab",
+      "slug": "ashby",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Hightouch": {
+      "ats": "gh",
+      "slug": "hightouch",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Profound": {
+      "ats": "ab",
+      "slug": "profound",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Unify": {
+      "ats": "ab",
+      "slug": "unify",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Simular": {
+      "ats": "ab",
+      "slug": "simular",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Anaplan": {
+      "ats": "gh",
+      "slug": "anaplan",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Pigment": {
+      "ats": "lv",
+      "slug": "pigment",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Abacum": {
+      "ats": "ab",
+      "slug": "abacum",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Datarails": {
+      "ats": "gh",
+      "slug": "datarails",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Cube": {
+      "ats": "ab",
+      "slug": "cube",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Drivetrain": {
+      "ats": "lv",
+      "slug": "drivetrain",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "FloQast": {
+      "ats": "lv",
+      "slug": "floqast",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Sisense": {
+      "ats": "gh",
+      "slug": "sisense",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Deepnote": {
+      "ats": "ab",
+      "slug": "deepnote",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Lightdash": {
+      "ats": "ab",
+      "slug": "lightdash",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Fireworks AI": {
+      "ats": "gh",
+      "slug": "fireworksai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Baseten": {
+      "ats": "ab",
+      "slug": "baseten",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "EliseAI": {
+      "ats": "ab",
+      "slug": "eliseai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Sesame": {
+      "ats": "ab",
+      "slug": "sesame",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "You.com": {
+      "ats": "gh",
+      "slug": "youcom",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Luma AI": {
+      "ats": "ab",
+      "slug": "luma-ai",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Uniphore": {
+      "ats": "lv",
+      "slug": "uniphore",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Eudia": {
+      "ats": "gh",
+      "slug": "eudia",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Ambience Healthcare": {
+      "ats": "ab",
+      "slug": "ambiencehealthcare",
+      "verified_at": "2026-04-17",
+      "source": "seed"
+    },
+    "Thinking Machines Lab": {
+      "ats": "gh",
+      "slug": "thinkingmachines",
+      "verified_at": "2026-04-17",
+      "source": "seed-orphan:Thinking Machines"
+    }
+  },
+  "unmapped": [
+    "Hugging Face",
+    "Together AI",
+    "Groq",
+    "SambaNova",
+    "ScaleOps",
+    "Perplexity AI",
+    "Jasper",
+    "Cursor",
+    "Genspark",
+    "Credo AI",
+    "Navan",
+    "Rippling",
+    "Billd",
+    "Klarna",
+    "Revolut",
+    "Wiz",
+    "Island",
+    "Snyk",
+    "Cyera",
+    "Flock Safety",
+    "Tempus AI",
+    "Hippocratic AI",
+    "Canva",
+    "Monday.com",
+    "Clay",
+    "ServiceNow",
+    "HubSpot",
+    "Docusign",
+    "dbt Labs",
+    "Dataiku",
+    "Cribl",
+    "Gecko Robotics",
+    "Commonwealth Fusion",
+    "Northvolt",
+    "Ironclad",
+    "ICON 3D",
+    "World Wide Technology",
+    "Shopify",
+    "CrowdStrike",
+    "Retell AI",
+    "Resolve AI",
+    "CrewAI",
+    "Peec AI",
+    "VAST Data",
+    "Luminance",
+    "Coactive AI",
+    "Weights & Biases",
+    "Adept AI",
+    "Freshworks",
+    "HashiCorp",
+    "GitLab",
+    "Miro",
+    "Grammarly",
+    "Relativity Space",
+    "Corebridge Financial",
+    "Nuvei",
+    "Bain & Company",
+    "Trader Joe's",
+    "Box",
+    "Procore",
+    "Built Technologies",
+    "Hinge Health",
+    "Alto Pharmacy",
+    "Findigs",
+    "Bolt",
+    "Character AI",
+    "Midjourney",
+    "Harness",
+    "SentinelOne",
+    "Arctic Wolf",
+    "Noom",
+    "Devoted Health",
+    "Oscar Health",
+    "Outreach",
+    "Seismic",
+    "Flutterwave",
+    "Hex",
+    "Tome",
+    "Orb",
+    "Codeium",
+    "Graphiant",
+    "Pluralsight",
+    "Tropic",
+    "Flatfile",
+    "Base44",
+    "Skild AI",
+    "Kore.ai",
+    "Wise",
+    "Aisera",
+    "Cognigy",
+    "Pega",
+    "MainFunc",
+    "Darwinbox",
+    "DevRev",
+    "Basis",
+    "Giga",
+    "Synthflow AI",
+    "OneStream",
+    "Wolters Kluwer",
+    "Board International",
+    "Jedox",
+    "Runway Financial",
+    "Vena Solutions",
+    "Planful",
+    "Nominal",
+    "BlackLine",
+    "Accrual",
+    "ThoughtSpot",
+    "Domo",
+    "Sigma Computing",
+    "Pyramid Analytics",
+    "Omni Analytics",
+    "Bryant Park Consulting",
+    "Echo Park Consulting",
+    "Modular"
+  ]
+}
