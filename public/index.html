@@ -1662,6 +1662,7 @@ function App(){
     h("div",{className:"tabs"},h("div",{className:"tabs-in"},
       h("button",{className:"tab"+(tab==="companies"?" on":""),onClick:function(){setTab("companies")}},"Companies"),
       IS_PREVIEW&&h("button",{className:"tab"+(tab==="foryou"?" on":""),onClick:function(){setTab("foryou")}},"For You",h("span",{className:"new-pill"},"new")),
+      IS_PREVIEW&&h("button",{className:"tab"+(tab==="jobs"?" on":""),onClick:function(){setTab("jobs")}},"Job Posts",h("span",{className:"new-pill"},"preview")),
       h("span",{className:"tab-sep"}),
       h("button",{className:"tab"+(tab==="learn"?" on":""),onClick:function(){setTab("learn")}},"AI Learning"),
       h("button",{className:"tab"+(tab==="resume"?" on":""),onClick:function(){setTab("resume")}},"Resume Tips"),
@@ -1776,6 +1777,9 @@ function App(){
       ),
 
       // ─── JOB POSTS TAB ───
+      // ORPHANED 2026-04-27: This tab has no production nav entry. Reachable on IS_PREVIEW only via the
+      // "Job Posts" button added to the tab nav. This UI predates the Companies tab redesign and is being
+      // evaluated for keep/redesign/delete. Do not edit without first deciding the orphan's fate.
       tab==="jobs"&&h("div",null,
         h("section",{className:"mh fu"},h("div",{className:"mh-ey"},"Curated Companies from Glassdoor, Fortune, Forbes, LinkedIn, TechCrunch & more"),h("h1",null,"All in one place. So you don\u2019t have to look everywhere else."),h("p",{className:"mh-sub"},jobs.length>0?h("span",null,h("b",null,filteredJobs.length.toLocaleString())," open roles across ",h("b",null,loadedCompanies.length)," companies",refreshedAt?h("span",null," \u00b7 Updated ",new Date(refreshedAt).toLocaleDateString("en-US",{month:"short",day:"numeric"})):""):fetchMode==="live"?"Click below to fetch live job data.":"Loading jobs\u2026")),
         h("div",{className:"sr fu d1"},h("div",{className:"sb"},SI,h("input",{className:"si",type:"text",placeholder:"Search roles, companies, or locations\u2026",value:searchInput,onChange:function(e){onSearch(e.target.value)},"aria-label":"Search"})),fetchMode==="live"&&jobs.length===0&&!loading&&h("button",{className:"btn bp",onClick:loadAll},"Fetch jobs"),loading&&fetchMode==="live"&&h("button",{className:"btn bs",onClick:function(){if(aRef.current)aRef.current.abort();setLoading(false)}},"Stop")),
