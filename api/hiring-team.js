@@ -1,17 +1,30 @@
 // api/hiring-team.js
 //
-// Phase 0 v2 — Find the Hiring Team (orchestrator)
+// Phase 0 v2 Handoff 4 — Find the Hiring Team (orchestrator)
 //
-// Flow:
-//   1. Validate request (method, params, whitelist, rate limit, daily ceiling)
-//   2. Canonicalize company
-//   3. Check empty-sentinel cache (skip Firecrawl entirely if recently empty)
-//   4. Check team cache; serve if fresh
-//   5. Build 4 queries; fan out via Firecrawl /v2/search in parallel
-//   6. Require >=2 successful sub-queries to render team UI
-//   7. Dedupe + rank (lib/hiring-team-rank.js)
-//   8. Write cache (team or empty sentinel)
-//   9. Return structured response
+// Changes from Handoff 1:
+//   1. Rate limit moved AFTER cache lookup — cache hits don't count.
+//      The rate limit protects Firecrawl call rate, not endpoint hit rate.
+//   2. Per-IP cache-miss rate raised from 10/hour to 30/hour.
+//   3. Added separate per-IP TOTAL request rate (200/hour) as outer defense.
+//   4. Daily Firecrawl ceiling raised from 100/day to 200/day.
+//   5. Added [hiring-team] prefixed diagnostic logging at every decision
+//      point (matches §10 self-healing pattern from ascent-engineering).
+//
+// Flow (corrected):
+//   1. Validate request (method, params)
+//   2. Whitelist check (zero-cost rejection of non-corpus companies)
+//   3. Per-IP TOTAL request limit (catches runaway clients only)
+//   4. Canonicalize company
+//   5. Check empty-sentinel cache (zero credits, fast bailout)
+//   6. Check team cache; serve if fresh (zero credits, fast bailout)
+//   7. Per-IP CACHE-MISS rate limit (only counts here — protects Firecrawl)
+//   8. Daily Firecrawl ceiling check (circuit breaker)
+//   9. Build 4 queries; fan out via Firecrawl /v2/search in parallel
+//  10. Require >=2 successful sub-queries to render team UI
+//  11. Dedupe + rank (lib/hiring-team-rank.js)
+//  12. Write cache (team or empty sentinel)
+//  13. Return structured response
 
 const { searchTeamParallel, buildTeamQueries } = require('../lib/firecrawl-client');
 const {
@@ -27,25 +40,24 @@ const { rankTeam } = require('../lib/hiring-team-rank');
 // ---- Config --------------------------------------------------------------
 
 const ALLOWED_ROLES = ['recruiter', 'hm', 'peer', 'skip'];
-const MAX_REQ_PER_HOUR = 10;          // per-IP, in-memory bucket
+const MAX_CACHE_MISS_PER_HOUR = 30;       // per-IP — counted ONLY on Firecrawl-bound requests
+const MAX_TOTAL_REQ_PER_HOUR = 200;       // per-IP — outer defense against runaway loops
 const HOUR_MS = 60 * 60 * 1000;
-const DAILY_FIRECRAWL_CEILING = 100;  // max unique team lookups per UTC day
-const MIN_SUCCESSFUL_QUERIES = 2;     // require >=2 of 4 to render team
+const DAILY_FIRECRAWL_CEILING = 200;      // total team lookups across all users per UTC day
+const MIN_SUCCESSFUL_QUERIES = 2;         // require >=2 of 4 to render team
 
 // Module-scope state. Resets on cold start. Phase 0 accepts cold-start reset
 // as imperfect rate-limit (each instance enforces its own bucket); Phase 1
-// upgrade is Vercel KV-backed limiter. Daily ceiling is also module-scope;
-// see RISK in spec for documented limitation.
-const ipBuckets = new Map();
+// upgrade is Vercel KV-backed limiter.
+const ipMissBuckets = new Map();          // per-IP cache-miss counter
+const ipTotalBuckets = new Map();         // per-IP total request counter
 let dailyTracker = { date: '', count: 0 };
 
 // ---- Lazy whitelist load -------------------------------------------------
-// Whitelist of canonical company names is derived from jobs-data.json.
-// We fetch jobs-data.json once per warm instance and cache the canonical set.
 
 let _whitelistMemo = null;
 let _whitelistFetchedAt = 0;
-const WHITELIST_TTL_MS = 5 * 60 * 1000; // refresh every 5 minutes per warm instance
+const WHITELIST_TTL_MS = 5 * 60 * 1000;
 
 async function loadWhitelist() {
   const now = Date.now();
@@ -54,7 +66,6 @@ async function loadWhitelist() {
   }
 
   try {
-    // jobs-data.json is in the same Vercel Blob bucket. We need its public URL.
     const { list } = require('@vercel/blob');
     const { blobs } = await list({ prefix: 'jobs-data.json', limit: 1 });
     if (!blobs || blobs.length === 0) {
@@ -79,10 +90,10 @@ async function loadWhitelist() {
     }
     _whitelistMemo = set;
     _whitelistFetchedAt = now;
+    console.log(`[hiring-team] whitelist loaded: ${set.size} canonical company names`);
     return set;
   } catch (err) {
     console.error('[hiring-team] whitelist load error:', err.message);
-    // Failed load — return cached if available, else empty (fail closed).
     return _whitelistMemo || new Set();
   }
 }
@@ -90,15 +101,14 @@ async function loadWhitelist() {
 // ---- Rate limiting -------------------------------------------------------
 
 function getClientIp(req) {
-  // Vercel sets x-forwarded-for; fall back to socket address.
   const xff = req.headers['x-forwarded-for'];
   if (xff) return xff.split(',')[0].trim();
   return req.headers['x-real-ip'] || req.socket?.remoteAddress || 'unknown';
 }
 
-function checkRateLimit(ip) {
+function checkAndBumpBucket(bucketsMap, ip, maxPerHour) {
   const now = Date.now();
-  const bucket = ipBuckets.get(ip) || { count: 0, windowStart: now };
+  const bucket = bucketsMap.get(ip) || { count: 0, windowStart: now };
 
   if ((now - bucket.windowStart) > HOUR_MS) {
     bucket.count = 1;
@@ -107,8 +117,16 @@ function checkRateLimit(ip) {
     bucket.count += 1;
   }
 
-  ipBuckets.set(ip, bucket);
-  return bucket.count <= MAX_REQ_PER_HOUR;
+  bucketsMap.set(ip, bucket);
+  return { ok: bucket.count <= maxPerHour, count: bucket.count };
+}
+
+function checkTotalRequestRate(ip) {
+  return checkAndBumpBucket(ipTotalBuckets, ip, MAX_TOTAL_REQ_PER_HOUR);
+}
+
+function checkCacheMissRate(ip) {
+  return checkAndBumpBucket(ipMissBuckets, ip, MAX_CACHE_MISS_PER_HOUR);
 }
 
 function checkDailyCeiling() {
@@ -130,8 +148,6 @@ function bumpDailyCeiling() {
 // ---- Response helpers ----------------------------------------------------
 
 function buildXrayUrl(company, role) {
-  // Mirrors the existing xrayUrl() in index.html — kept here to avoid
-  // depending on client code from the server.
   const co = encodeURIComponent(`"${company}"`);
   let q;
   switch (role) {
@@ -166,45 +182,56 @@ function send(res, status, payload) {
 // ---- Main handler --------------------------------------------------------
 
 module.exports = async function handler(req, res) {
+  const startMs = Date.now();
+
   // Method check
   if (req.method !== 'GET') {
+    console.log('[hiring-team] reject method', req.method);
     return send(res, 405, { error: 'method_not_allowed' });
   }
 
-  // Parse query params (Vercel parses for us at req.query for Node runtime)
+  // Parse query params
   const url = new URL(req.url, 'http://localhost');
   const company = (req.query?.company || url.searchParams.get('company') || '').trim();
   const jobFunction = (req.query?.jobFunction || url.searchParams.get('jobFunction') || 'engineering').trim();
 
   if (!company) {
+    console.log('[hiring-team] reject missing company');
     return send(res, 400, { error: 'missing_company' });
   }
   if (company.length > 200) {
+    console.log('[hiring-team] reject company_too_long', company.length);
     return send(res, 400, { error: 'company_too_long' });
   }
   if (jobFunction.length > 100) {
+    console.log('[hiring-team] reject jobFunction_too_long', jobFunction.length);
     return send(res, 400, { error: 'jobFunction_too_long' });
   }
 
-  // Whitelist check — company must exist in Ascent corpus (zero-cost rejection)
+  // Whitelist check (zero-cost rejection)
   const canonical = canonicalizeCompany(company);
   if (!canonical) {
+    console.log('[hiring-team] reject company_invalid', JSON.stringify(company));
     return send(res, 400, { error: 'company_invalid' });
   }
   const whitelist = await loadWhitelist();
   if (whitelist.size > 0 && !whitelist.has(canonical)) {
+    console.log(`[hiring-team] reject company_not_in_corpus: "${company}" -> "${canonical}"`);
     return send(res, 400, { error: 'company_not_in_corpus' });
   }
 
-  // Per-IP rate limit
+  // Outer per-IP TOTAL rate limit (catches runaway clients only — generous)
   const ip = getClientIp(req);
-  if (!checkRateLimit(ip)) {
-    return send(res, 429, { error: 'rate_limit_exceeded', retryAfterSeconds: 3600 });
+  const totalCheck = checkTotalRequestRate(ip);
+  if (!totalCheck.ok) {
+    console.warn(`[hiring-team] reject total_rate_limit ip=${ip} count=${totalCheck.count}/${MAX_TOTAL_REQ_PER_HOUR}`);
+    return send(res, 429, { error: 'rate_limit_exceeded', message: 'Too many requests. Try again in a few minutes.', retryAfterSeconds: 600 });
   }
 
-  // Empty-sentinel cache — if recently confirmed empty, skip everything
+  // Empty-sentinel cache — recently confirmed empty, skip everything
   const emptyCheck = await getEmptyEntry(canonical);
   if (emptyCheck.hit && emptyCheck.fresh) {
+    console.log(`[hiring-team] cache_hit_empty company=${canonical} verifiedAt=${emptyCheck.entry.verifiedAt}`);
     const xrayUrl = buildXrayUrl(company, 'all');
     return send(res, 200, {
       source: 'cache',
@@ -222,6 +249,8 @@ module.exports = async function handler(req, res) {
   const teamCheck = await getTeamEntry(canonical);
   if (teamCheck.hit && teamCheck.fresh) {
     const days = daysSince(teamCheck.entry.verifiedAt);
+    const teamCount = (teamCheck.entry.team || []).length;
+    console.log(`[hiring-team] cache_hit_team company=${canonical} verifiedAt=${teamCheck.entry.verifiedAt} ageDays=${days} teamCount=${teamCount} elapsedMs=${Date.now() - startMs}`);
     return send(res, 200, {
       source: 'cache',
       company,
@@ -234,12 +263,21 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  // Cache miss or stale → need to fetch. Daily ceiling check (circuit breaker).
+  // Cache miss — now check the cache-miss-specific rate limit
+  // This is the limit that protects Firecrawl. Cache hits did NOT increment it.
+  const missCheck = checkCacheMissRate(ip);
+  if (!missCheck.ok) {
+    console.warn(`[hiring-team] reject cache_miss_rate_limit ip=${ip} count=${missCheck.count}/${MAX_CACHE_MISS_PER_HOUR}`);
+    return send(res, 429, { error: 'rate_limit_exceeded', message: 'Search limit reached. Try a different company or wait a few minutes.', retryAfterSeconds: 600 });
+  }
+
+  // Daily ceiling check (circuit breaker — process-global)
   if (!checkDailyCeiling()) {
+    console.warn(`[hiring-team] reject daily_ceiling count=${dailyTracker.count}/${DAILY_FIRECRAWL_CEILING}`);
     return send(res, 200, fallbackPayload(company, jobFunction, 'Daily search budget reached. Search LinkedIn directly →'));
   }
 
-  // API key check — no Firecrawl call possible without it
+  // API key check
   const apiKey = process.env.FIRECRAWL_API_KEY;
   if (!apiKey) {
     console.error('[hiring-team] FIRECRAWL_API_KEY missing in env');
@@ -248,6 +286,7 @@ module.exports = async function handler(req, res) {
 
   // Build queries and fan out
   const queries = buildTeamQueries(company, jobFunction);
+  console.log(`[hiring-team] firecrawl_fanout company=${canonical} queries=4 ip=${ip}`);
   let fanout;
   try {
     fanout = await searchTeamParallel({
@@ -261,11 +300,13 @@ module.exports = async function handler(req, res) {
     return send(res, 200, fallbackPayload(company, jobFunction, 'Search service is having trouble. Search LinkedIn directly →'));
   }
 
-  // Bump daily counter regardless of success — credits were spent on attempt
+  // Bump daily counter — credits were spent on the attempt
   bumpDailyCeiling();
+  console.log(`[hiring-team] firecrawl_complete company=${canonical} successCount=${fanout.successCount}/4 creditsUsed=${fanout.totalCreditsUsed}`);
 
   // Need at least MIN_SUCCESSFUL_QUERIES to render team UI
   if (fanout.successCount < MIN_SUCCESSFUL_QUERIES) {
+    console.warn(`[hiring-team] insufficient_queries company=${canonical} successCount=${fanout.successCount} (need ${MIN_SUCCESSFUL_QUERIES})`);
     return send(res, 200, fallbackPayload(
       company,
       jobFunction,
@@ -285,11 +326,13 @@ module.exports = async function handler(req, res) {
     companyName: company,
     totalQueries: 4
   });
+  console.log(`[hiring-team] ranked company=${canonical} totalPeople=${ranked.length} topThree=${ranked.filter(p => p.isTopThree).length}`);
 
   // Empty after ranking → write empty sentinel
   if (ranked.length === 0) {
     try {
       await writeEmptyEntry(canonical, 'all queries succeeded but 0 valid /in/ profiles after dedupe');
+      console.log(`[hiring-team] wrote_empty_sentinel company=${canonical}`);
     } catch (err) {
       console.error('[hiring-team] writeEmptyEntry failed:', err.message);
     }
@@ -313,15 +356,18 @@ module.exports = async function handler(req, res) {
       creditsUsed: fanout.totalCreditsUsed,
       successfulQueries: fanout.successCount
     });
+    console.log(`[hiring-team] wrote_team_cache company=${canonical} teamSize=${ranked.length}`);
   } catch (err) {
     console.error('[hiring-team] writeTeamEntry failed:', err.message);
-    // Continue — we can still return the result without caching
+    // Continue — return result even without caching
   }
 
   // Return response
   const message = fanout.successCount === 4
     ? 'Live results'
     : `Showing results from ${fanout.successCount} of 4 searches`;
+
+  console.log(`[hiring-team] success company=${canonical} elapsedMs=${Date.now() - startMs}`);
 
   return send(res, 200, {
     source: fanout.successCount === 4 ? 'firecrawl' : 'partial',

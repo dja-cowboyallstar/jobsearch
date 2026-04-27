@@ -1792,7 +1792,13 @@ function App(){
         .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, status:r.status, body:j}; }); })
         .then(function(res){
           if(!res.ok || !res.body){
-            setState({status:"error", team:[], message:(res.body && res.body.error)||"Search service unavailable.", partialQueryCount:0, verifiedAt:null, fallbackXrayUrl:xrayUrl(company,"recruiter"), source:"error", expanded:false});
+            var rawErr = (res.body && (res.body.message || res.body.error)) || "Search service unavailable.";
+            // Map known error codes to friendly messages
+            var friendly = rawErr;
+            if (rawErr === "rate_limit_exceeded") friendly = "Search limit reached. Try again in a few minutes.";
+            else if (rawErr === "company_not_in_corpus") friendly = "This company isn\u2019t indexed by Ascent yet.";
+            else if (rawErr === "missing_company") friendly = "Company name is required.";
+            setState({status:"error", team:[], message:friendly, partialQueryCount:0, verifiedAt:null, fallbackXrayUrl:xrayUrl(company,"recruiter"), source:"error", expanded:false});
             return;
           }
           var b = res.body;
@@ -1856,12 +1862,13 @@ function App(){
         state.expanded && rest.map(function(p,i){ return renderCard(p,"rest"+i); }),
         h("a",{href:state.fallbackXrayUrl||xrayUrl(company,"recruiter"),target:"_blank",rel:"noopener noreferrer",style:{font:"400 12px/1 var(--sans)",color:"var(--text-m)",textDecoration:"none",display:"inline-block",marginTop:6}},"Search LinkedIn directly \u2192")
       ),
-      state.status === "empty" && h("div",null,
-        h("p",{style:{font:"400 13px/1.5 var(--sans)",color:"var(--text-m)",margin:"6px 0"}},"We couldn\u2019t identify specific people for ",company,"."),
+      state.status === "empty" && h("div",{style:{padding:"10px 12px",background:"rgba(139,139,245,0.05)",border:"1px solid var(--border)",borderRadius:8,marginTop:6}},
+        h("div",{style:{font:"500 13px/1.4 var(--sans)",color:"var(--text-sec)",marginBottom:6}},"No specific people identified for ",company,"."),
+        h("p",{style:{font:"400 12px/1.4 var(--sans)",color:"var(--text-m)",margin:"0 0 6px 0"}},state.message||"Try LinkedIn directly for this company."),
         h("a",{href:state.fallbackXrayUrl||xrayUrl(company,"recruiter"),target:"_blank",rel:"noopener noreferrer",style:{font:"500 13px/1 var(--sans)",color:"var(--accent)",textDecoration:"none"}},"Search LinkedIn directly \u2192")
       ),
-      state.status === "error" && h("div",null,
-        h("p",{style:{font:"400 13px/1.5 var(--sans)",color:"var(--text-m)",margin:"6px 0"}},state.message||"Search service is having trouble."),
+      state.status === "error" && h("div",{style:{padding:"10px 12px",background:"rgba(245,158,77,0.08)",border:"1px solid rgba(245,158,77,0.25)",borderRadius:8,marginTop:6}},
+        h("div",{style:{font:"500 13px/1.4 var(--sans)",color:"rgba(245,158,77,0.95)",marginBottom:6}},state.message||"Search service is having trouble."),
         h("a",{href:state.fallbackXrayUrl||xrayUrl(company,"recruiter"),target:"_blank",rel:"noopener noreferrer",style:{font:"500 13px/1 var(--sans)",color:"var(--accent)",textDecoration:"none"}},"Search LinkedIn directly \u2192")
       )
     );
