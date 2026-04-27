@@ -519,6 +519,7 @@ return"Other";}
 function getWorkType(j){var t=(j.job_title||"")+" "+(j.job_description||"")+" "+(j.job_city||"");t=t.toLowerCase();if(j.job_is_remote===true)return"Remote";if(/\bremote\b/.test(t)&&!/\bnot\s+remote\b/.test(t))return"Remote";if(/\bhybrid\b/.test(t))return"Hybrid";return"On-site";}
 function formatLocation(j){return[j.job_city,j.job_state,j.job_country].filter(Boolean).join(", ")||j._loc||"";}
 function cityMatches(jobCity,selectedCity){var jc=(jobCity||"").toLowerCase(),sc=(selectedCity||"").toLowerCase();return jc&&sc&&(jc.indexOf(sc)>-1||sc.indexOf(jc)>-1);}
+function locationMatches(j,selected){if(selected==="Remote (anywhere)")return j._city==="Remote"||!!j._remote_region;if(selected.indexOf("Remote (")===0){var region=selected.slice(8,-1);return j._remote_region===region;}return cityMatches(j._city||j.job_city,selected);}
 function mapJob(j){var cn=(j._company||j.employer_name||"").toLowerCase().replace(/[^a-z0-9]/g,"");var co=null;for(var i=0;i<ST.length;i++){var sn=ST[i].n.toLowerCase().replace(/[^a-z0-9]/g,"");if(sn.indexOf(cn)>-1||cn.indexOf(sn)>-1){co=ST[i];break;}}return Object.assign({},j,{_co:co,_cat:classifyJobFunction(j.job_title),_wt:getWorkType(j),_loc:formatLocation(j)});}
 
 function Bdg(p){var aw=p.aw;if(!aw||!aw.length)return null;return h("div",{className:"cd-aw"},aw.map(function(a){var m=AW[a];if(!m)return null;return h("span",{key:a,className:"cd-ab",title:m.f,style:{background:m.c+"15",color:m.c}},m.lb);}));}
@@ -1084,8 +1085,10 @@ function App(){
     {label:"US Central & South",cities:["Austin","Dallas","Chicago","Atlanta"]},
     {label:"US East",cities:["New York","Boston","Washington DC"]},
     {label:"Europe",cities:["London","Paris","Berlin","Dublin","Amsterdam","Munich","Stockholm","Madrid","Warsaw","Zurich"]},
+    {label:"Middle East",cities:["Tel Aviv"]},
     {label:"Asia Pacific",cities:["Tokyo","Singapore","Bangalore","Delhi","Seoul","Sydney"]},
-    {label:"Americas",cities:["Toronto","Montreal","São Paulo"]}
+    {label:"Americas",cities:["Toronto","Montreal","São Paulo"]},
+    {label:"Remote roles",cities:["Remote (anywhere)","Remote (US)","Remote (EU)","Remote (APAC)","Remote (LATAM)","Remote (Global)"]}
   ];
   var locationIsDisabled=directoryWorkTypeFilter.length>0&&directoryWorkTypeFilter.indexOf("Remote")>-1&&directoryWorkTypeFilter.indexOf("Hybrid")===-1&&directoryWorkTypeFilter.indexOf("On-site")===-1;
 
@@ -1130,7 +1133,7 @@ function App(){
       r=r.filter(function(c){
         var coJobs=cardJobs[c.n]||jobs.filter(function(j){return j._co&&j._co.n===c.n});
         if(coJobs.length===0)return false;
-        return coJobs.some(function(j){return directoryLocationFilter.some(function(loc){return cityMatches(j._city||j.job_city,loc);})});
+        return coJobs.some(function(j){return directoryLocationFilter.some(function(loc){return locationMatches(j,loc);})});
       });
     }
 
@@ -1165,7 +1168,7 @@ function App(){
     function companyJobs(c){return cardJobs[c.n]||jobs.filter(function(j){return j._co&&j._co.n===c.n});}
     function hasFn(c,fn){return companyJobs(c).some(function(j){return (j._cat||classifyJobFunction(j.job_title))===fn;});}
     function hasWt(c,wt){return companyJobs(c).some(function(j){return (j._wt||getWorkType(j))===wt;});}
-    function hasCity(c,city){return companyJobs(c).some(function(j){return cityMatches(j._city||j.job_city,city);});}
+    function hasCity(c,city){return companyJobs(c).some(function(j){return locationMatches(j,city);});}
     function passOthers(c,exclude){
       if(exclude!=="function"&&directoryFunctionFilter.length&&!directoryFunctionFilter.some(function(fn){return hasFn(c,fn);}))return false;
       if(exclude!=="workType"&&directoryWorkTypeFilter.length&&!directoryWorkTypeFilter.some(function(w){return hasWt(c,w);}))return false;
