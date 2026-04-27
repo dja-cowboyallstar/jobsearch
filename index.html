@@ -1979,11 +1979,6 @@ function App(){
   ];
   var locationIsDisabled=directoryWorkTypeFilter.length>0&&directoryWorkTypeFilter.indexOf("Remote")>-1&&directoryWorkTypeFilter.indexOf("Hybrid")===-1&&directoryWorkTypeFilter.indexOf("On-site")===-1;
 
-  // Rotating hero text
-  var _heroIdx=us(0),heroIndex=_heroIdx[0],setHeroIndex=_heroIdx[1];
-  var HERO_PHRASES=["High-growth","Venture-backed","Category-defining","Breakout","Scalable","Transformative","Mission-driven","Product-led","AI-native","Platform-scale","Series A to pre-IPO","Cloud-first","Enterprise-ready","Developer-loved","Market-moving"];
-  ue(function(){var t=setInterval(function(){setHeroIndex(function(i){return(i+1)%HERO_PHRASES.length})},3000);return function(){clearInterval(t)}},[]);
-
   // Smart filter: companies filtered by search, region, recognition, and job-level filters
   var dirFiltered=um(function(){
     var r=ST.slice();
