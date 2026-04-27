@@ -424,7 +424,7 @@ body.modal-open{overflow:hidden}
 .fyf-top-match-row:last-child{border-bottom:none}
 .fyf-top-match-co{font:600 13px/1.2 var(--sans);color:var(--text);flex:1}
 .fyf-top-match-meta{font:400 11px/1.4 var(--sans);color:var(--text-m)}
-.fyf-top-match-score{font:600 12px/1 var(--sans);color:var(--accent);min-width:40px;text-align:right}
+/* Slice 3.5: .fyf-top-match-score removed (score hidden from UI; see find-your-fit-design-v2.md and Slice 3.5 design) */
 .fyf-empty{padding:14px;background:rgba(212,160,107,0.06);border:1px solid rgba(212,160,107,0.20);border-radius:8px;margin-top:10px}
 .fyf-empty-h{font:600 13px/1.4 var(--sans);color:var(--text);margin:0 0 6px}
 .fyf-empty-sub{font:400 12px/1.5 var(--sans);color:var(--text-sec);margin:0 0 10px}
@@ -436,6 +436,29 @@ body.modal-open{overflow:hidden}
 .fyf-badge-strong{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:rgba(78,173,107,0.12);color:#4ead6b;border:1px solid rgba(78,173,107,0.30);border-radius:10px;font:600 11px/1.2 var(--sans);cursor:default}
 .fyf-badge-partial{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:rgba(212,160,107,0.10);color:#d4a06b;border:1px solid rgba(212,160,107,0.30);border-radius:10px;font:600 11px/1.2 var(--sans);cursor:default}
 .fyf-chip.on{background:rgba(91,148,207,0.20);border-color:var(--accent);color:var(--text)}
+/* Slice 3.5: tooltip on Find your fit toggle (CSS-only, hover + focus-visible) */
+.fyf-toggle-wrap{position:relative;display:inline-block}
+.fyf-toggle-tooltip{position:absolute;bottom:calc(100% + 8px);left:0;max-width:min(280px,calc(100vw - 32px));padding:10px 12px;background:#0f1217;border:1px solid var(--border);border-radius:8px;color:var(--text);font:400 12px/1.5 var(--sans);box-shadow:0 4px 16px rgba(0,0,0,0.4);opacity:0;pointer-events:none;transition:opacity .15s;z-index:50}
+.fyf-toggle-wrap:hover .fyf-toggle-tooltip,.fyf-toggle:focus-visible+.fyf-toggle-tooltip{opacity:1}
+.fyf-toggle-tooltip::after{content:"";position:absolute;top:100%;left:24px;border:5px solid transparent;border-top-color:var(--border)}
+/* Slice 3.5: TOP MATCHES row redesign — confidence dot, matched credentials, expandable detail */
+.fyf-top-match-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:background .12s}
+.fyf-top-match-row:hover{background:rgba(255,255,255,0.02)}
+.fyf-top-match-row:last-child{border-bottom:none}
+.fyf-top-match-chevron{color:var(--text-m);font:400 11px/1 var(--sans);transition:transform .15s;display:inline-block;width:10px}
+.fyf-top-match-chevron.on{transform:rotate(90deg)}
+.fyf-top-match-co{font:600 13px/1.3 var(--sans);color:var(--text);flex:1;min-width:0}
+.fyf-top-match-creds{font:400 11px/1.4 var(--sans);color:var(--text-m);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fyf-dot-strong{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ead6b;flex-shrink:0}
+.fyf-dot-partial{display:inline-block;width:8px;height:8px;border-radius:50%;background:#d4a06b;flex-shrink:0}
+.fyf-top-match-meta{font:400 11px/1.4 var(--sans);color:var(--text-m);flex-shrink:0}
+.fyf-top-match-detail{padding:8px 0 12px 22px;border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.015)}
+.fyf-top-match-job{display:flex;align-items:center;gap:10px;padding:6px 0;flex-wrap:wrap}
+.fyf-top-match-job-title{font:500 12px/1.4 var(--sans);color:var(--text);flex:1;min-width:200px}
+.fyf-top-match-job-meta{font:400 11px/1.4 var(--sans);color:var(--text-m);display:flex;gap:8px;flex-wrap:wrap}
+.fyf-top-match-job-apply{font:600 11px/1 var(--sans);color:var(--accent);text-decoration:none;white-space:nowrap}
+.fyf-top-match-job-apply:hover{text-decoration:underline}
+.fyf-top-match-job-empty{font:400 11px/1.4 var(--sans);color:var(--text-m);font-style:italic;padding:6px 0}
 </style>
 </head>
 <body>
@@ -1616,7 +1639,9 @@ function App(){
       if(r.score>0){
         var coName=(j._co&&j._co.n)||j.employer_name||"Unknown";
         if(!byCompanyMap[coName])byCompanyMap[coName]={company:coName,bestScore:0,jobs:[]};
-        byCompanyMap[coName].jobs.push({jobId:j.job_id,title:j.job_title,score:r.score,hits:r.hits});
+        // Slice 3.5: enriched job record — apply_link, work type, salary added for inline expansion
+        // schemaVersion stays 1: additive change, no fields removed.
+        byCompanyMap[coName].jobs.push({jobId:j.job_id,title:j.job_title,score:r.score,hits:r.hits,apply_link:j.job_apply_link||null,work_type:j._wt||null,min_salary:j.job_min_salary||null,max_salary:j.job_max_salary||null});
         if(r.score>byCompanyMap[coName].bestScore)byCompanyMap[coName].bestScore=r.score;
         r.hits.forEach(function(h){
           if(credCount[h.token]){
@@ -1627,7 +1652,13 @@ function App(){
         });
       }
     });
-    var byCompany=Object.values(byCompanyMap).sort(function(a,b){return b.bestScore-a.bestScore});
+    var byCompany=Object.values(byCompanyMap).sort(function(a,b){
+      // Slice 3.5: tiebreaker — when bestScore ties (common; 100 and 60 are dominant buckets),
+      // sort by job count desc (volume of opportunity), then by company name.
+      if(a.bestScore!==b.bestScore)return b.bestScore-a.bestScore;
+      if(a.jobs.length!==b.jobs.length)return b.jobs.length-a.jobs.length;
+      return a.company.localeCompare(b.company);
+    });
     var totalMatches=byCompany.reduce(function(s,c){return s+c.jobs.length},0);
     var t1=(typeof performance!=="undefined"&&performance.now)?performance.now():Date.now();
     return {schemaVersion:1,query:matchQuery,byCompany:byCompany,byCredential:Object.values(credCount),totalMatches:totalMatches,searchedJobs:searched,totalJobs:jobs.length,coverage:jobs.length>0?searched/jobs.length:0,elapsedMs:Math.round((t1-t0)*10)/10};
@@ -1640,6 +1671,10 @@ function App(){
   var _fpo=us(false),fyfPanelOpen=_fpo[0],setFyfPanelOpen=_fpo[1];
   var _fpi=us(""),fyfPanelInput=_fpi[0],setFyfPanelInput=_fpi[1];
   var _ffa=us(false),fyfFilterActive=_ffa[0],setFyfFilterActive=_ffa[1];
+  // Slice 3.5: tracks which TOP MATCHES row is expanded inline. null = all collapsed.
+  var _fexp=us(null),fyfExpandedMatchIdx=_fexp[0],setFyfExpandedMatchIdx=_fexp[1];
+  // When matchQuery changes (new search, cleared, etc.), collapse any expanded row.
+  ue(function(){setFyfExpandedMatchIdx(null)},[matchQuery]);
   // Set of company names with at least one match — O(1) membership check during directory render
   var fyfMatchedCompanies=um(function(){
     var s={};
@@ -2068,7 +2103,10 @@ function App(){
         ),
         h(FilterBar,{openPopover:openPopover,setOpenPopover:setOpenPopover,selectedCategories:directoryFunctionFilter,setSelectedCategories:setDirectoryFunctionFilter,selectedWorkTypes:directoryWorkTypeFilter,setSelectedWorkTypes:setDirectoryWorkTypeFilter,selectedLocations:directoryLocationFilter,setSelectedLocations:setDirectoryLocationFilter,facetCounts:dirFacetCounts,filteredJobsCount:dirFiltered.length,activeFilterCount:directoryFunctionFilter.length+directoryWorkTypeFilter.length+directoryLocationFilter.length,clearAllFilters:clearDirFilters,fbSearch:fbSearch,setFbSearch:setFbSearch,cityGroups:CITY_GROUPS,CATS:CATS,toggleFilter:toggleFilter,resultsLabel:"companies",extraChips:(IS_PREVIEW&&matchResults&&matchResults.totalMatches>0)?[{key:"fyf-fit",label:"Match: top fits",active:fyfFilterActive,onClick:function(){setFyfFilterActive(!fyfFilterActive)},onRemove:function(){setFyfFilterActive(false);setMatchQuery(null);setFyfPanelInput("")}}]:[]}),
         // ─── FYF (Find Your Fit) toggle + panel — Slice 3, IS_PREVIEW only ───
-        IS_PREVIEW&&h("button",{className:"fyf-toggle"+(fyfPanelOpen?" on":""),onClick:function(){setFyfPanelOpen(!fyfPanelOpen)}},"\u2728 Find your fit",matchResults&&matchResults.totalMatches>0?h("span",{className:"fyf-toggle-count"},matchResults.totalMatches," matches"):null,!fyfPanelOpen&&matchResults&&matchResults.totalMatches>0?h("span",{className:"fyf-toggle-dot"}):null),
+        IS_PREVIEW&&h("div",{className:"fyf-toggle-wrap"},
+          h("button",{className:"fyf-toggle"+(fyfPanelOpen?" on":""),onClick:function(){setFyfPanelOpen(!fyfPanelOpen)},"aria-describedby":"fyf-toggle-tt"},"Find your fit",matchResults&&matchResults.totalMatches>0?h("span",{className:"fyf-toggle-count"},matchResults.totalMatches," matches"):null,!fyfPanelOpen&&matchResults&&matchResults.totalMatches>0?h("span",{className:"fyf-toggle-dot"}):null),
+          h("span",{id:"fyf-toggle-tt",className:"fyf-toggle-tooltip",role:"tooltip"},"Type your skills or credentials. We'll show you which companies are hiring for them right now.")
+        ),
         IS_PREVIEW&&fyfPanelOpen&&h("div",{className:"fyf-panel"},
           h("div",{className:"fyf-panel-h"},"Find your fit"),
           h("p",{className:"fyf-panel-sub"},"Type credentials, skills, or certifications to see which companies are hiring for them right now."),
@@ -2077,17 +2115,51 @@ function App(){
             h("button",{className:"fyf-btn",disabled:!fyfPanelInput.trim(),onClick:function(){var creds=extractFromTokens(fyfPanelInput);if(creds.length>0)setMatchQuery({source:"credentials",raw:fyfPanelInput,credentials:creds,meta:{extractedBy:"user",extractedAt:Date.now()}})}},"Score"),
             h("button",{className:"fyf-btn-sec",onClick:function(){setMatchQuery(null);setFyfPanelInput("");setFyfFilterActive(false)}},"Clear")
           ),
-          matchResults&&h("div",{className:"fyf-coverage"},"Searching ",(matchResults.coverage*100).toFixed(0),"% of roles whose qualifications have been parsed (",matchResults.searchedJobs," of ",matchResults.totalJobs," jobs). Coverage improves as we add more roles."),
-          // Top matches preview (Q5 — show headline result inline so user doesn't have to scroll)
+          // Slice 3.5 coverage copy: show count, not percentage. The previous percentage
+          // mixed verified parser data (~17%) with JSearch aggregator data (variable quality);
+          // see find-your-fit-design-v2.md and Slice 3.5 design for the rationale.
+          // Caveat (engineering): hasStructured() counts a job as "scannable" if any of
+          // _must, _nice, job_required_skills, or job_highlights.qual is populated.
+          // This blends Ascent's verified parser output with aggregator-supplied tags.
+          // Reweighting by source-confidence is deferred to a future slice.
+          matchResults&&h("div",{className:"fyf-coverage"},"Searching ",matchResults.searchedJobs.toLocaleString()," jobs across ",matchResults.byCompany.length||"all"," companies."),
+          // Top matches — expandable rows (Slice 3.5)
           matchResults&&matchResults.totalMatches>0&&h("div",{className:"fyf-top-matches"},
             h("div",{className:"fyf-top-matches-h"},"Top matches"),
             matchResults.byCompany.slice(0,3).map(function(c,i){
-              var topJob=c.jobs[0];
-              var topHits=topJob&&topJob.hits?topJob.hits.map(function(h){return h.token}).join(", "):"";
-              return h("div",{key:i,className:"fyf-top-match-row"},
-                h("span",{className:"fyf-top-match-co"},c.company),
-                h("span",{className:"fyf-top-match-meta"},c.jobs.length+" role"+(c.jobs.length!==1?"s":"")+(topHits?" \u00b7 "+topHits:"")),
-                h("span",{className:"fyf-top-match-score"},c.bestScore)
+              var hasHigh=c.jobs.some(function(j){return j.hits&&j.hits.some(function(h){return h.confidence==="high"})});
+              var matchedSet={};
+              c.jobs.forEach(function(j){if(j.hits)j.hits.forEach(function(h){matchedSet[h.token]=true})});
+              var matchedTokens=Object.keys(matchedSet);
+              var isExpanded=fyfExpandedMatchIdx===i;
+              var dotClass=hasHigh?"fyf-dot-strong":"fyf-dot-partial";
+              var dotTitle=hasHigh?"Strong match — credential appears in required qualifications":"Partial match — credential appears in preferred qualifications only";
+              return h("div",{key:i},
+                h("div",{className:"fyf-top-match-row",onClick:function(){setFyfExpandedMatchIdx(isExpanded?null:i)},role:"button",tabIndex:0,"aria-expanded":isExpanded,onKeyDown:function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();setFyfExpandedMatchIdx(isExpanded?null:i)}}},
+                  h("span",{className:"fyf-top-match-chevron"+(isExpanded?" on":"")},"\u25B8"),
+                  h("span",{className:dotClass,title:dotTitle}),
+                  h("div",{className:"fyf-top-match-co"},c.company,
+                    h("div",{className:"fyf-top-match-creds"},matchedTokens.join(", "))
+                  ),
+                  h("span",{className:"fyf-top-match-meta"},c.jobs.length+" role"+(c.jobs.length!==1?"s":""))
+                ),
+                isExpanded&&h("div",{className:"fyf-top-match-detail"},
+                  c.jobs.length===0?h("div",{className:"fyf-top-match-job-empty"},"No role details available."):c.jobs.slice(0,8).map(function(j,jj){
+                    var salaryStr="";
+                    if(j.min_salary&&j.max_salary)salaryStr="$"+Math.round(j.min_salary/1000)+"k\u2013$"+Math.round(j.max_salary/1000)+"k";
+                    else if(j.min_salary)salaryStr="From $"+Math.round(j.min_salary/1000)+"k";
+                    else if(j.max_salary)salaryStr="Up to $"+Math.round(j.max_salary/1000)+"k";
+                    return h("div",{key:jj,className:"fyf-top-match-job"},
+                      h("span",{className:"fyf-top-match-job-title"},j.title||"Untitled role"),
+                      h("span",{className:"fyf-top-match-job-meta"},
+                        j.work_type&&h("span",null,j.work_type),
+                        salaryStr&&h("span",null,salaryStr)
+                      ),
+                      j.apply_link&&h("a",{className:"fyf-top-match-job-apply",href:j.apply_link,target:"_blank",rel:"noopener noreferrer",onClick:function(e){e.stopPropagation()}},"Apply \u2192")
+                    );
+                  }),
+                  c.jobs.length>8&&h("div",{className:"fyf-top-match-job-empty"},"\u2026 and ",(c.jobs.length-8)," more role"+(c.jobs.length-8!==1?"s":"")+" at "+c.company+". Click the company in the directory below for the full list.")
+                )
               );
             })
           ),
