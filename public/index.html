@@ -1266,10 +1266,7 @@ function App(){
   var _ss=us([]),selectedSectors=_ss[0],setSelectedSectors=_ss[1];
   var _sa=us([]),selectedAwards=_sa[0],setSelectedAwards=_sa[1];
   var _ao=us(false),filterAwardedOnly=_ao[0],setFilterAwardedOnly=_ao[1];
-  var _lu=us(""),lastUpdated=_lu[0],setLastUpdated=_lu[1];
-  var _ar=us(null),aiMatchResult=_ar[0],setAiMatchResult=_ar[1];
-  var _al=us(false),aiMatchLoading=_al[0],setAiMatchLoading=_al[1];
-  var _sai=us(false),showAiPanel=_sai[0],setShowAiPanel=_sai[1];
+  // Slice 1: removed lastUpdated, aiMatchResult, aiMatchLoading, showAiPanel (all referenced only by removed AI Match panel)
   var _pg=us(1),currentPage=_pg[0],setCurrentPage=_pg[1];
   var _sj=us(null),selectedJob=_sj[0],setSelectedJob=_sj[1];
   var _sf=us(false),showFilters=_sf[0],setShowFilters=_sf[1];
@@ -1426,70 +1423,14 @@ function App(){
   function clearAllFilters(){setSelectedCategories([]);setSelectedSectors([]);setSelectedWorkType("all");setSelectedWorkTypes([]);setSelectedLocations([]);setSelectedAwards([]);setFilterAwardedOnly(false);setNetSuiteFilterActive(false);setOpenPopover(null);setFbSearch("");}
   function toggleFilter(a,s,v){s(function(p){return p.indexOf(v)>-1?p.filter(function(x){return x!==v}):p.concat([v])})}
 
-  // Oracle/NetSuite Alumni Tracker
-  var _shNS=us(false),showNetSuiteTracker=_shNS[0],setShowNetSuiteTracker=_shNS[1];
+  // Slice 1: showNetSuiteTracker, NS_RX, NS_CURATED removed.
+  // netSuiteFilterActive state retained because filteredJobs filter clause references it (will be removed in Slice 3).
   var _nsF=us(false),netSuiteFilterActive=_nsF[0],setNetSuiteFilterActive=_nsF[1];
-  var NS_RX=/\b(netsuite|oracle|suitescript|suiteql|suiteanalytics|suitelet|restlet|saved\s*search|oracle\s*(erp|cloud|financials|epm|fusion|hyperion|pbcs|hcm)|netsuite\s*(admin|developer|consultant|implementation|certification|erp))\b/i;
 
-  // Curated: companies known to actively recruit Oracle/NetSuite talent
-  // cf: hi = NetSuite qualifier (product competes with or directly integrates NetSuite)
-  //     md = ex-NetSuite talent destination (finance/ops teams actively recruit from Oracle ecosystem)
-  //     lo = domain overlap (product touches Oracle data but hiring is indirect)
-  var NS_CURATED={
-    // HIGH — NetSuite is a qualification. Product directly competes with or integrates NetSuite.
-    "Campfire":{why:"AI-native ERP directly replacing NetSuite. Migrates customers off NetSuite.",fns:["Finance","Operations","Customer Success","Sales"],cf:"hi"},
-    "DualEntry":{why:"AI-native ERP built to replace NetSuite for mid-market. $100M+ raised.",fns:["Finance","Operations","Customer Success","Sales"],cf:"hi"},
-    "Rillet":{why:"AI-native ERP replacing NetSuite. Backed by a16z and Sequoia.",fns:["Finance","Operations","Customer Success"],cf:"hi"},
-    "Light":{why:"AI-native ERP for multinationals replacing NetSuite. $43M raised.",fns:["Finance","Operations","Customer Success"],cf:"hi"},
-    "FloQast":{why:"Close management. Native NetSuite and Oracle integration. NetSuite admin experience valued.",fns:["Finance","Operations","Customer Success"],cf:"hi"},
-    "BlackLine":{why:"Financial close platform. Core NetSuite and Oracle connector. Hires certified NS admins.",fns:["Finance","Operations","Customer Success","Sales"],cf:"hi"},
-    "Numeric":{why:"AI close automation with native NetSuite integration. Customers include Brex, Plaid.",fns:["Finance","Operations"],cf:"hi"},
-    "Nominal":{why:"AI accounting automation. 20 ERP integrations including NetSuite.",fns:["Finance","Operations"],cf:"hi"},
-    "Tabs":{why:"AI revenue automation. Integrates with NetSuite and QuickBooks.",fns:["Finance","Operations","Customer Success"],cf:"hi"},
-    // MEDIUM — Ex-NetSuite talent destination. Finance/ops teams recruit from Oracle ecosystem.
-    "Ramp":{why:"Spend management. Core NetSuite integration. Finance team has ex-Oracle/NS consultants.",fns:["Finance","Operations","Product","Sales"],cf:"md"},
-    "Brex":{why:"Spend management with NetSuite integration. Finance team has Oracle alumni.",fns:["Finance","Operations","Product"],cf:"md"},
-    "Navan":{why:"Expense management with NetSuite sync. Hires NetSuite admins for implementations.",fns:["Finance","Operations"],cf:"md"},
-    "Stripe":{why:"Revenue recognition team needs ERP expertise. NetSuite is top integration partner.",fns:["Finance","Product"],cf:"md"},
-    "Zip":{why:"Procurement platform. Core integration is NetSuite. Customer-facing roles need NS knowledge.",fns:["Product","Sales","Operations"],cf:"md"},
-    "Vanta":{why:"Compliance automation. Runs NetSuite internally for finance and ops.",fns:["Finance","Operations"],cf:"md"},
-    "Deel":{why:"Global payroll. NetSuite is their most common customer ERP. Implementation team needs NS experience.",fns:["Finance","Operations","Customer Success"],cf:"md"},
-    "Anaplan":{why:"EPM platform. Heavy Oracle/NetSuite customer overlap. Consultants often ex-Oracle.",fns:["Finance","Sales","Customer Success"],cf:"md"},
-    "OneStream":{why:"EPM platform. Customers migrate from Oracle EPM. Hires ex-Oracle consultants.",fns:["Finance","Sales","Customer Success"],cf:"md"},
-    "Planful":{why:"FP&A platform. Integrates with NetSuite. Customer success team needs NS domain knowledge.",fns:["Finance","Customer Success","Sales"],cf:"md"},
-    "Pigment":{why:"AI-native FP&A. Competes in Oracle EPM market. Hires from Oracle ecosystem.",fns:["Finance","Sales","Product"],cf:"md"},
-    // SIGNAL — Domain overlaps with Oracle ecosystem
-    "ServiceNow":{why:"Enterprise platform with Oracle integration practice. Hires ex-Oracle consultants.",fns:["Sales","Customer Success","Operations"],cf:"lo"},
-    "HubSpot":{why:"CRM-to-ERP integration. NetSuite is their #1 ERP partner for mid-market.",fns:["Product","Sales"],cf:"lo"},
-    "Celonis":{why:"Process mining across ERP systems. Oracle/NetSuite are primary data sources.",fns:["Data Science","Sales"],cf:"lo"},
-    "ThoughtSpot":{why:"AI analytics. Oracle and NetSuite are common customer data sources.",fns:["Data Science","Sales"],cf:"lo"},
-  };
-
-  // Live scan: count jobs mentioning Oracle/NetSuite in descriptions, titles, skills, qualifications
-  var nsLive=um(function(){
-    if(jobs.length===0)return{total:0,byCompany:[],byFunction:{},matchingJobs:[]};
-    var byCompany={},byFunction={},total=0,matchingJobs=[];
-    jobs.forEach(function(j){
-      // Scan title + description + highlights (qual, resp, bene) + skills
-      var blob=(j.job_title||"")+" "+(j.job_description||"");
-      if(j.job_highlights){
-        if(j.job_highlights.qual)blob+=" "+j.job_highlights.qual.join(" ");
-        if(j.job_highlights.resp)blob+=" "+j.job_highlights.resp.join(" ");
-        if(j.job_highlights.bene)blob+=" "+j.job_highlights.bene.join(" ");
-      }
-      if(j.job_required_skills)blob+=" "+j.job_required_skills.join(" ");
-      if(NS_RX.test(blob)){
-        total++;
-        if(!j._co)return; // Skip unmatched companies — no "Unknown"
-        var co=j._co.n;
-        byCompany[co]=(byCompany[co]||0)+1;
-        byFunction[j._cat]=(byFunction[j._cat]||0)+1;
-        matchingJobs.push(j);
-      }
-    });
-    var sorted=Object.entries(byCompany).sort(function(a,b){return b[1]-a[1]});
-    return{total:total,byCompany:sorted,byFunction:byFunction,matchingJobs:matchingJobs};
-  },[jobs]);
+  // Slice 1: nsLive scanner removed (was Oracle/NetSuite live scan). Stub kept because
+  // filteredJobs at line ~1388 references nsLive.matchingJobs in a filter clause that's
+  // now unreachable (toggle removed). Slice 3 will remove this stub and the dead filter clause.
+  var nsLive={total:0,byCompany:[],byFunction:{},matchingJobs:[]};
   // Companies Directory state
   var _dq=us(""),directorySearch=_dq[0],setDirectorySearch=_dq[1];
   var _dqi=us(""),directorySearchInput=_dqi[0],setDirectorySearchInput=_dqi[1];
@@ -1808,64 +1749,11 @@ function App(){
 
           // RIGHT CONTENT
           h("div",{className:"job-right",style:{maxHeight:"none",overflow:"visible",paddingRight:0}},
-            // AI Match + NS Tracker toggles
+            // Job count row (Slice 1: AI Match + Oracle/NetSuite toggles removed; will be re-homed on Companies tab in Slice 3)
             h("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:14,flexWrap:"wrap"}},
-              h("button",{className:"ft"+(showAiPanel?" on":""),onClick:function(){setShowAiPanel(!showAiPanel)}},"AI Match"),
-              h("button",{className:"ft"+(showNetSuiteTracker?" on":""),onClick:function(){setShowNetSuiteTracker(!showNetSuiteTracker)}},"\u{1F50D} Oracle / NetSuite"),
               h("p",{className:"rc",style:{marginLeft:"auto"},"aria-live":"polite","aria-atomic":"true"},h("b",null,filteredJobs.length)," roles",searchQuery&&h("span",null," matching \u201C",searchQuery,"\u201D"),netSuiteFilterActive&&h("span",{style:{color:"var(--accent)",cursor:"pointer"},onClick:function(){setNetSuiteFilterActive(false)}}," \u00b7 Oracle/NetSuite filter \u2715"))
             ),
 
-            showAiPanel&&h("div",{className:"ap fi"},h("div",{style:{display:"flex",gap:"10px"}},h("input",{className:"ai-in",type:"text",placeholder:"Paste LinkedIn URL\u2026",value:lastUpdated,onChange:function(e){setLastUpdated(e.target.value)}}),h("button",{className:"btn bp",disabled:aiMatchLoading||!lastUpdated.trim()||filteredJobs.length===0,onClick:function(){if(!lastUpdated.trim()||filteredJobs.length===0)return;setAiMatchLoading(true);setAiMatchResult(null);var sample=filteredJobs.slice(0,30).map(function(j){return{title:j.job_title,company:j.employer_name,category:j._cat,workType:j._wt,awards:(j._co&&j._co.aw||[]).map(function(a){return AW[a]?AW[a].lb:""})}});fetch("/api/ai-match",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({linkedin_url:lastUpdated,jobs:sample})}).then(function(r){return r.json()}).then(function(d){if(d.error){setAiMatchResult({error:d.error})}else{setAiMatchResult(d)}}).catch(function(){setAiMatchResult({error:"Could not analyze. Try a public LinkedIn URL."})}).finally(function(){setAiMatchLoading(false)})}},aiMatchLoading?"Analyzing\u2026":"Match me")),h("p",{className:"ah"},"AI recommends best-fit roles, prioritizing recognized companies"),aiMatchResult&&!aiMatchResult.error&&h("div",null,h("div",{className:"as"},h("div",{className:"ast"},"Top matches"),(aiMatchResult.top_matches||[]).map(function(m,i){return h("div",{key:i,className:"amr"},h("span",{className:"ark"},"#"+(i+1)),h("div",null,h("span",{style:{font:"500 13px/1.2 var(--sans)",color:"var(--text)"}},m.title)," ",h("span",{style:{font:"400 12px/1 var(--sans)",color:"var(--text-m)"}},"at "+m.company),h("p",{style:{font:"400 11px/1.4 var(--sans)",color:"var(--text-sec)",marginTop:"2px"}},m.reason)))})),aiMatchResult.award_insight&&h("div",{className:"as"},h("div",{className:"ast"},"Insight"),h("p",{style:{fontSize:"12px",color:"var(--text-sec)",lineHeight:"1.5",margin:0}},aiMatchResult.award_insight))),aiMatchResult&&aiMatchResult.error&&h("p",{style:{color:"var(--accent)",marginTop:"10px",fontSize:"12px"}},aiMatchResult.error)),
-
-            // Oracle/NetSuite Tracker Panel
-            showNetSuiteTracker&&h("div",{className:"ap fi"},
-              h("div",{style:{marginBottom:16}},
-                h("div",{style:{font:"600 14px/1 var(--sans)",color:"var(--text)",marginBottom:6}},"Where do Oracle & NetSuite people end up?"),
-                h("p",{style:{font:"400 13px/1.5 var(--sans)",color:"var(--text-sec)",margin:0}},"Two signals: which companies mention Oracle/NetSuite in job postings right now, and which companies are known to actively recruit from the Oracle ecosystem.")
-              ),
-              // Live scan results
-              nsLive.total>0&&h("div",{className:"as"},
-                h("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center"}},
-                  h("div",{className:"ast"},"Live: "+nsLive.total+" job postings mention Oracle or NetSuite"),
-                  h("button",{className:"btn bs"+(netSuiteFilterActive?" on":""),style:{fontSize:12,padding:"5px 12px"},onClick:function(){setNetSuiteFilterActive(!netSuiteFilterActive);if(!netSuiteFilterActive)setSearch("")}},netSuiteFilterActive?"\u2715 Clear filter":"\u{1F50D} Show these jobs")
-                ),
-                nsLive.byCompany.slice(0,12).map(function(entry){
-                  return h("div",{key:entry[0],style:{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"6px 0",borderBottom:"1px solid var(--border)",cursor:"pointer"},onClick:function(){setNetSuiteFilterActive(true);setSearch(entry[0])}},
-                    h("span",{style:{font:"500 13px/1 var(--sans)",color:"var(--text)"}},entry[0]),
-                    h("span",{style:{font:"600 12px/1 var(--sans)",color:"var(--accent)"}},entry[1]," role"+(entry[1]>1?"s":""))
-                  )
-                }),
-                Object.keys(nsLive.byFunction).length>0&&h("div",{style:{marginTop:14,display:"flex",flexWrap:"wrap",gap:6}},
-                  Object.entries(nsLive.byFunction).sort(function(a,b){return b[1]-a[1]}).map(function(f){
-                    return h("span",{key:f[0],className:"mt",style:{fontSize:12}},f[0]+": "+f[1])
-                  })
-                )
-              ),
-              nsLive.total===0&&jobs.length>0&&h("div",{className:"as"},h("p",{style:{font:"400 13px/1.5 var(--sans)",color:"var(--text-m)",margin:0}},"No live job postings currently mention Oracle or NetSuite in their descriptions, qualifications, or required skills. Check back after the next data refresh.")),
-              // Curated list with confidence levels
-              h("div",{className:"as",style:{marginTop:12}},
-                h("div",{className:"ast"},"Curated: Where Oracle & NetSuite people go next"),
-                h("div",{style:{display:"flex",gap:12,marginBottom:10,flexDirection:"column",font:"400 11px/1.4 var(--sans)",color:"var(--text-m)"}},
-                  h("span",null,"\u{1F7E2} High \u2014 NetSuite is a qualification. Product competes with or integrates NetSuite."),
-                  h("span",null,"\u{1F7E1} Medium \u2014 Ex-NetSuite destination. Finance/ops teams actively recruit from the Oracle ecosystem."),
-                  h("span",null,"\u26AA Signal \u2014 Domain overlaps. Product touches Oracle data.")
-                ),
-                Object.entries(NS_CURATED).map(function(entry){
-                  var co=entry[0],info=entry[1];
-                  var stData=null;for(var i=0;i<ST.length;i++){if(ST[i].n===co){stData=ST[i];break;}}
-                  var cfIcon=info.cf==="hi"?"\u{1F7E2}":info.cf==="md"?"\u{1F7E1}":"\u26AA";
-                  return h("div",{key:co,style:{padding:"10px 0",borderBottom:"1px solid var(--border)"}},
-                    h("div",{style:{display:"flex",alignItems:"center",gap:8,marginBottom:4}},
-                      h("span",{style:{fontSize:11}},cfIcon),
-                      stData&&stData.d?h(CoLogo,{d:stData.d,em:stData.l||"\u{1F3E2}",sz:20,r:4}):null,
-                      h("span",{style:{font:"600 14px/1 var(--sans)",color:"var(--text)",cursor:"pointer"},onClick:function(){setSearch(co)}},co)
-                    ),
-                    h("p",{style:{font:"400 12px/1.5 var(--sans)",color:"var(--text-sec)",margin:"0 0 6px"}},info.why),
-                    h("div",{style:{display:"flex",gap:4,flexWrap:"wrap"}},info.fns.map(function(fn){return h("span",{key:fn,className:"mt",style:{fontSize:11}},fn)}))
-                  )
-                })
-              )
-            ),
 
             // Job cards
             pageData.length>0&&h("div",null,h("div",{className:"gd"},pageData.map(function(j,i){return h("div",{key:j.job_id||i,className:"cd fu d"+(i%6+1),onClick:function(){setSelectedJob(j)},tabIndex:0,role:"button","aria-label":j.job_title+" at "+j.employer_name,onKeyDown:function(e){if(e.key==="Enter")setSelectedJob(j)}},h("div",null,h("div",{className:"cc-r"},j._co&&j._co.d?h(CoLogo,{d:j._co.d,em:j._co?j._co.l:"\u{1F3E2}",sz:32,r:6}):h("span",{className:"cc-em"},j._co?j._co.l:"\u{1F3E2}"),h("div",{className:"cc-inf"},h("span",{className:"cc-nm"},j.employer_name),h("span",{className:"cc-sec"},j._co?j._co.s:""))),j._co&&j._co.aw.length>0&&h(Bdg,{aw:j._co.aw}),h("h3",{className:"cd-t"},j.job_title),(j.job_min_salary||j.job_max_salary)&&h("div",{style:{font:"500 12px/1 var(--sans)",color:"var(--green)",marginTop:4}},j.job_min_salary&&j.job_max_salary?"$"+Math.round(j.job_min_salary).toLocaleString()+" \u2013 $"+Math.round(j.job_max_salary).toLocaleString():j.job_min_salary?"From $"+Math.round(j.job_min_salary).toLocaleString():"Up to $"+Math.round(j.job_max_salary).toLocaleString())),h("div",{className:"cd-m"},h("span",{className:"mt"},j._cat),h("span",{className:"mt"+(j._wt==="Remote"?" rm":"")},j._wt),j._loc&&h("span",{className:"cd-loc"},j._loc),j.job_apply_link&&h("a",{href:j.job_apply_link,target:"_blank",rel:"noopener noreferrer",onClick:function(e){e.stopPropagation()},style:{font:"500 11px/1 var(--sans)",color:"var(--accent)",textDecoration:"none",marginLeft:"auto",whiteSpace:"nowrap"}},"Apply \u2192")))}))
