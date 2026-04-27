@@ -325,6 +325,7 @@ body.modal-open{overflow:hidden}
 .fbar-pop-item.disabled{opacity:.35;cursor:not-allowed}
 .fbar-pop-item.disabled:hover{background:transparent}
 .fbar-pop-item-cnt{font:400 11px/1 var(--sans);color:var(--text-m);flex-shrink:0}
+.fbar-pop-group{font:600 10px/1 var(--sans);text-transform:uppercase;letter-spacing:.08em;color:var(--text-m);padding:10px 10px 6px 10px}
 @media(max-width:720px){.fbar{padding:10px 0 8px}.fbar-btn{padding:6px 10px;font-size:12px}.fbar-results{width:100%;order:10;margin-left:0;margin-top:4px}.fbar-pop{min-width:220px;max-width:calc(100vw - 40px)}}
 </style>
 </head>
@@ -517,7 +518,8 @@ if(/buyer|purchas|vendor/.test(t))return"Operations";
 return"Other";}
 function getWorkType(j){var t=(j.job_title||"")+" "+(j.job_description||"")+" "+(j.job_city||"");t=t.toLowerCase();if(j.job_is_remote===true)return"Remote";if(/\bremote\b/.test(t)&&!/\bnot\s+remote\b/.test(t))return"Remote";if(/\bhybrid\b/.test(t))return"Hybrid";return"On-site";}
 function formatLocation(j){return[j.job_city,j.job_state,j.job_country].filter(Boolean).join(", ")||j._loc||"";}
-function mapJob(j){var cn=(j._company||j.employer_name||"").toLowerCase().replace(/[^a-z0-9]/g,"");var co=null;for(var i=0;i<ST.length;i++){var sn=ST[i].n.toLowerCase().replace(/[^a-z0-9]/g,"");if(sn.indexOf(cn)>-1||cn.indexOf(sn)>-1){co=ST[i];break;}}return Object.assign({},j,{_co:co,_cat:classifyJobFunction(j.job_title),_wt:getWorkType(j),_loc:formatLocation(j)});}
+function cityMatches(jobCity,selectedCity){var jc=(jobCity||"").toLowerCase(),sc=(selectedCity||"").toLowerCase();return jc&&sc&&(jc.indexOf(sc)>-1||sc.indexOf(jc)>-1);}
+function mapJob(j){var cn=(j._company||j.employer_name||"").toLowerCase().replace(/[^a-z0-9]/g,"");var co=null;for(var i=0;i<ST.length;i++){var sn=ST[i].n.toLowerCase().replace(/[^a-z0-9]/g,"");if(sn.indexOf(cn)>-1||cn.indexOf(sn)>-1){co=ST[i];break;}}return Object.assign({},j,{_co:co,_cat:classifyJobFunction(j.job_title),_wt:getWorkType(j),_loc:formatLocation(j),_city:j.job_city||""});}
 
 function Bdg(p){var aw=p.aw;if(!aw||!aw.length)return null;return h("div",{className:"cd-aw"},aw.map(function(a){var m=AW[a];if(!m)return null;return h("span",{key:a,className:"cd-ab",title:m.f,style:{background:m.c+"15",color:m.c}},m.lb);}));}
 function CoLogo(p){var d=p.d,em=p.em||"\u{1F3E2}",sz=p.sz||36,r=p.r||8;if(!d)return h("span",{className:"cc-em",style:{fontSize:sz*0.65,width:sz,height:sz,display:"inline-flex",alignItems:"center",justifyContent:"center"}},em);return h("div",{style:{width:sz,height:sz,flexShrink:0,position:"relative"}},h("img",{src:"https://logo.clearbit.com/"+d+"?size="+Math.max(sz*3,128),alt:"",style:{width:sz,height:sz,borderRadius:r,objectFit:"contain",background:"rgba(255,255,255,0.06)"},onError:function(e){e.target.src="https://www.google.com/s2/favicons?domain="+d+"&sz=128";e.target.onerror=function(){e.target.style.display="none";var fb=e.target.nextSibling;if(fb)fb.style.display="flex"}}}),h("div",{style:{display:"none",width:sz,height:sz,alignItems:"center",justifyContent:"center",borderRadius:r,background:"rgba(255,255,255,0.06)",fontSize:sz*0.55,position:"absolute",top:0,left:0}},em));}
@@ -530,13 +532,15 @@ function FilterBar(p){
   var locs=p.selectedLocations,setLocs=p.setSelectedLocations;
   var fc=p.facetCounts,afc=p.activeFilterCount;
   var fbSearch=p.fbSearch,setFbSearch=p.setFbSearch;
-  var uniqueLocations=p.uniqueLocations,CATS=p.CATS,toggleFilter=p.toggleFilter;
+  var uniqueLocations=p.uniqueLocations||[],CATS=p.CATS,toggleFilter=p.toggleFilter;
+  var cityGroups=p.cityGroups,resultsLabel=p.resultsLabel||"roles";
   function togglePop(which){if(openPop===which){setOpenPop(null);setFbSearch("");}else{setOpenPop(which);setFbSearch("");}}
   function removeChip(arr,set,v){set(arr.filter(function(x){return x!==v}));}
   var wtValues=["Remote","Hybrid","On-site"];
   var fnList=CATS.filter(function(c){return (fc.fn[c]||0)>0||cats.indexOf(c)>-1;}).filter(function(c){return !fbSearch||c.toLowerCase().indexOf(fbSearch.toLowerCase())>-1;});
   var locList=uniqueLocations.filter(function(L){return (fc.loc[L]||0)>0||locs.indexOf(L)>-1;}).filter(function(L){return !fbSearch||L.toLowerCase().indexOf(fbSearch.toLowerCase())>-1;});
   function popItem(label,cnt,on,onClick){var disabled=!on&&cnt===0;return h("div",{className:"fbar-pop-item"+(on?" on":"")+(disabled?" disabled":""),onClick:disabled?null:onClick},h("span",{style:{flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},label),h("span",{className:"fbar-pop-item-cnt"},cnt));}
+  function renderGroupedLocation(){var q=(fbSearch||"").toLowerCase();return cityGroups.map(function(g){var matches=g.cities.filter(function(city){return !q||city.toLowerCase().indexOf(q)>-1||g.label.toLowerCase().indexOf(q)>-1;});if(matches.length===0)return null;return h("div",{key:g.label},h("div",{className:"fbar-pop-group"},g.label),matches.map(function(city){return h("div",{key:city},popItem(city,fc.loc[city]||0,locs.indexOf(city)>-1,function(){toggleFilter(locs,setLocs,city);}));}));});}
   function popBtn(label,selCount,popKey){
     return h("div",{className:"fbar-btn-wrap"},
       h("button",{className:"fbar-btn"+(selCount>0?" on":""),onClick:function(e){e.stopPropagation();togglePop(popKey);}},label,selCount>0&&h("span",{className:"fbar-btn-cnt"},selCount),h("span",{className:"fbar-caret"})),
@@ -546,7 +550,7 @@ function FilterBar(p){
         h("div",{className:"fbar-pop-list"},
           popKey==="function"&&fnList.map(function(c){return h("div",{key:c},popItem(c,fc.fn[c]||0,cats.indexOf(c)>-1,function(){toggleFilter(cats,setCats,c);}));}),
           popKey==="workType"&&wtValues.map(function(w){return h("div",{key:w},popItem(w,fc.wt[w]||0,wts.indexOf(w)>-1,function(){toggleFilter(wts,setWts,w);}));}),
-          popKey==="location"&&locList.slice(0,250).map(function(L){return h("div",{key:L},popItem(L,fc.loc[L]||0,locs.indexOf(L)>-1,function(){toggleFilter(locs,setLocs,L);}));})
+          popKey==="location"&&(cityGroups?renderGroupedLocation():locList.slice(0,250).map(function(L){return h("div",{key:L},popItem(L,fc.loc[L]||0,locs.indexOf(L)>-1,function(){toggleFilter(locs,setLocs,L);}));}))
         )
       )
     );
@@ -556,7 +560,7 @@ function FilterBar(p){
       popBtn("Function",cats.length,"function"),
       popBtn("Work Type",wts.length,"workType"),
       popBtn("Location",locs.length,"location"),
-      h("p",{className:"fbar-results","aria-live":"polite"},h("b",null,p.filteredJobsCount)," roles"),
+      h("p",{className:"fbar-results","aria-live":"polite"},h("b",null,p.filteredJobsCount)," ",resultsLabel),
       afc>0&&h("button",{className:"fbar-clear",onClick:p.clearAllFilters},"Clear all")
     ),
     afc>0&&h("div",{className:"fbar-chips"},
@@ -1124,7 +1128,7 @@ function App(){
       r=r.filter(function(c){
         var coJobs=cardJobs[c.n]||jobs.filter(function(j){return j._co&&j._co.n===c.n});
         if(coJobs.length===0)return false;
-        return coJobs.some(function(j){return directoryLocationFilter.indexOf(j._city)>-1});
+        return coJobs.some(function(j){return directoryLocationFilter.some(function(loc){return cityMatches(j._city||j.job_city,loc);})});
       });
     }
 
@@ -1153,6 +1157,27 @@ function App(){
     r.sort(function(a,b){return a.n.localeCompare(b.n)});
     return r;
   },[directorySearch,directoryAwardFilter,directoryFunctionFilter,directoryWorkTypeFilter,directoryLocationFilter,jobs,cardJobs]);
+
+  // Intersection-aware facet counts for the FilterBar (companies, not jobs)
+  var dirFacetCounts=um(function(){
+    function companyJobs(c){return cardJobs[c.n]||jobs.filter(function(j){return j._co&&j._co.n===c.n});}
+    function hasFn(c,fn){return companyJobs(c).some(function(j){return (j._cat||classifyJobFunction(j.job_title))===fn;});}
+    function hasWt(c,wt){return companyJobs(c).some(function(j){return (j._wt||getWorkType(j))===wt;});}
+    function hasCity(c,city){return companyJobs(c).some(function(j){return cityMatches(j._city||j.job_city,city);});}
+    function passOthers(c,exclude){
+      if(exclude!=="function"&&directoryFunctionFilter.length&&!directoryFunctionFilter.some(function(fn){return hasFn(c,fn);}))return false;
+      if(exclude!=="workType"&&directoryWorkTypeFilter.length&&!directoryWorkTypeFilter.some(function(w){return hasWt(c,w);}))return false;
+      if(exclude!=="location"&&directoryLocationFilter.length&&!directoryLocationFilter.some(function(L){return hasCity(c,L);}))return false;
+      return true;
+    }
+    var fn={},wt={},loc={};
+    ST.forEach(function(c){
+      if(passOthers(c,"function"))CATS.forEach(function(cat){if(hasFn(c,cat))fn[cat]=(fn[cat]||0)+1;});
+      if(passOthers(c,"workType"))["Remote","Hybrid","On-site"].forEach(function(w){if(hasWt(c,w))wt[w]=(wt[w]||0)+1;});
+      if(passOthers(c,"location"))CITY_GROUPS.forEach(function(g){g.cities.forEach(function(city){if(hasCity(c,city))loc[city]=(loc[city]||0)+1;});});
+    });
+    return {fn:fn,wt:wt,loc:loc};
+  },[jobs,cardJobs,directoryFunctionFilter,directoryWorkTypeFilter,directoryLocationFilter]);
 
   // Get matching jobs for a company filtered by current search + function + work type
   function getFilteredJobs(companyName){
@@ -1206,7 +1231,6 @@ function App(){
     // TABS
     h("div",{className:"tabs"},h("div",{className:"tabs-in"},
       h("button",{className:"tab"+(tab==="companies"?" on":""),onClick:function(){setTab("companies")}},"Companies"),
-      h("button",{className:"tab"+(tab==="jobs"?" on":""),onClick:function(){setTab("jobs")}},"Jobs"),
       IS_PREVIEW&&h("button",{className:"tab"+(tab==="foryou"?" on":""),onClick:function(){setTab("foryou")}},"For You",h("span",{className:"new-pill"},"new")),
       h("span",{className:"tab-sep"}),
       h("button",{className:"tab"+(tab==="learn"?" on":""),onClick:function(){setTab("learn")}},"AI Learning"),
@@ -1225,61 +1249,7 @@ function App(){
         h("div",{className:"dir-search"},
           h("div",{className:"sb",style:{flex:1}},SI,h("input",{className:"si",type:"text",placeholder:"Search by function, company, or role title\u2026",value:directorySearchInput,onChange:function(e){onDirSearch(e.target.value)},"aria-label":"Search companies and roles"})),
         ),
-        h("div",{className:"dir-filterbar"},
-          h("div",{className:"dir-fb-row"},
-            h("span",{className:"dir-fb-label"},"Function"),
-            h("div",{className:"dir-fb-pills"},
-              ["Sales","Customer Success","Finance","Operations","Marketing","Product","Design","Data Science","Engineering","HR & People","Executive","Research","Legal","Security","DevOps & Infra"].map(function(fn){
-                var isOn=directoryFunctionFilter.indexOf(fn)>-1;
-                return h("span",{key:fn,className:"dir-fb-pill"+(isOn?" on":""),onClick:function(){setDirectoryFunctionFilter(isOn?directoryFunctionFilter.filter(function(f){return f!==fn}):directoryFunctionFilter.concat([fn]))}},fn)
-              })
-            )
-          ),
-          h("div",{className:"dir-fb-row"},
-            h("span",{className:"dir-fb-label"},"Type"),
-            h("div",{className:"dir-fb-pills"},
-              ["Remote","Hybrid","On-site"].map(function(wt){
-                var isOn=directoryWorkTypeFilter.indexOf(wt)>-1;
-                return h("span",{key:wt,className:"dir-fb-pill"+(isOn?" on":""),onClick:function(){setDirectoryWorkTypeFilter(isOn?directoryWorkTypeFilter.filter(function(w){return w!==wt}):directoryWorkTypeFilter.concat([wt]))}},wt)
-              })
-            ),
-            h("span",{className:"dir-fb-div"}),
-            h("span",{className:"dir-fb-label"+(locationIsDisabled?" off":"")},"Location"),
-            locationIsDisabled?h("span",{className:"dir-fb-muted"},"Showing remote roles across all regions"):
-            h("div",{className:"dir-fb-pills",style:{alignItems:"center"}},
-              directoryLocationFilter.map(function(loc){
-                return h("span",{key:loc,className:"dir-loc-chip",onClick:function(){setDirectoryLocationFilter(directoryLocationFilter.filter(function(l){return l!==loc}))}},loc," \u00D7")
-              }),
-              h("div",{className:"dir-loc-dd-wrap"},
-                h("span",{className:"dir-fb-pill dir-loc-trigger",onClick:function(e){e.stopPropagation();setLocationDropdownOpen(!locationDropdownOpen);setLocationSearch("")}},directoryLocationFilter.length>0?"+ Add":"Select location",h("span",{className:"dir-loc-caret"})),
-                locationDropdownOpen&&h("div",{className:"dir-loc-panel",onClick:function(e){e.stopPropagation()}},
-                  h("input",{className:"dir-loc-search",type:"text",placeholder:"Search cities\u2026",value:locationSearch,onChange:function(e){setLocationSearch(e.target.value)},autoFocus:true}),
-                  h("div",{className:"dir-loc-list"},
-                    CITY_GROUPS.map(function(g){
-                      var filtered=g.cities.filter(function(c){return !locationSearch||c.toLowerCase().indexOf(locationSearch.toLowerCase())>-1});
-                      if(filtered.length===0)return null;
-                      return h("div",{key:g.label},
-                        h("div",{className:"dir-loc-grp"},g.label),
-                        filtered.map(function(c){
-                          var isOn=directoryLocationFilter.indexOf(c)>-1;
-                          return h("div",{key:c,className:"dir-loc-item"+(isOn?" on":""),onClick:function(){setDirectoryLocationFilter(isOn?directoryLocationFilter.filter(function(l){return l!==c}):directoryLocationFilter.concat([c]))}},
-                            h("span",{className:"dir-loc-check"+(isOn?" on":"")}),c)
-                        })
-                      )
-                    })
-                  )
-                )
-              )
-            ),
-            h("span",{className:"dir-fb-div"}),
-            h("span",{className:"dir-fb-label"},"Verified"),
-            h("div",{className:"dir-fb-pills"},
-              h("span",{className:"dir-fb-pill"+(directoryAwardFilter==="emp"?" green":""),onClick:function(){setDirectoryAwardFilter(directoryAwardFilter==="emp"?"all":"emp")},title:"Ranked by employees through anonymous reviews"},"By employees"),
-              h("span",{className:"dir-fb-pill"+(directoryAwardFilter==="med"?" on":""),onClick:function(){setDirectoryAwardFilter(directoryAwardFilter==="med"?"all":"med")},title:"Selected by journalists, analysts, or top-tier VCs"},"By media")
-            ),
-            dirHasFilters&&h("span",{className:"dir-fb-clear",onClick:clearDirFilters},"\u2715 Clear all")
-          )
-        ),
+        h(FilterBar,{openPopover:openPopover,setOpenPopover:setOpenPopover,selectedCategories:directoryFunctionFilter,setSelectedCategories:setDirectoryFunctionFilter,selectedWorkTypes:directoryWorkTypeFilter,setSelectedWorkTypes:setDirectoryWorkTypeFilter,selectedLocations:directoryLocationFilter,setSelectedLocations:setDirectoryLocationFilter,facetCounts:dirFacetCounts,filteredJobsCount:dirFiltered.length,activeFilterCount:directoryFunctionFilter.length+directoryWorkTypeFilter.length+directoryLocationFilter.length,clearAllFilters:clearDirFilters,fbSearch:fbSearch,setFbSearch:setFbSearch,cityGroups:CITY_GROUPS,CATS:CATS,toggleFilter:toggleFilter,resultsLabel:"companies"}),
         h("p",{className:"dir-count","aria-live":"polite"},h("b",null,dirFiltered.length)," companies",directorySearch&&h("span",null," matching \u201C",directorySearch,"\u201D"),directoryFunctionFilter.length>0&&h("span",null," \u00b7 ",directoryFunctionFilter.join(", ")),directoryWorkTypeFilter.length>0&&h("span",null," \u00b7 ",directoryWorkTypeFilter.join(", ")),directoryLocationFilter.length>0&&h("span",null," \u00b7 ",directoryLocationFilter.join(", "))),
         h("div",{className:"dir-grid"},dirFiltered.flatMap(function(c){
           var isExp=expandedCompany===c.n;
