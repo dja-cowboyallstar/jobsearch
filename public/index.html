@@ -1775,6 +1775,98 @@ function App(){
     return base + encodeURIComponent(site + " " + company);
   }
 
+  // ── HIRING TEAM SECTION (Phase 0 v2) — IS_PREVIEW gated ──
+  // Calls /api/hiring-team for structured Firecrawl-backed results, with
+  // graceful fallback to xrayUrl-style Google search if the endpoint or
+  // upstream provider is unavailable. See ascent-hiring-team-phase0-spec-v2.
+  function HiringTeamSection(props){
+    var company = props.company || "";
+    var jobFunction = props.jobFunction || "Engineering";
+    var _state = us({status:"idle", team:[], message:"", partialQueryCount:0, verifiedAt:null, fallbackXrayUrl:null, source:null, expanded:false});
+    var state = _state[0], setState = _state[1];
+
+    function fetchTeam(){
+      setState({status:"loading", team:[], message:"", partialQueryCount:0, verifiedAt:null, fallbackXrayUrl:null, source:null, expanded:false});
+      var url = "/api/hiring-team?company=" + encodeURIComponent(company) + "&jobFunction=" + encodeURIComponent(jobFunction);
+      fetch(url, {method:"GET", headers:{"Accept":"application/json"}})
+        .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, status:r.status, body:j}; }); })
+        .then(function(res){
+          if(!res.ok || !res.body){
+            setState({status:"error", team:[], message:(res.body && res.body.error)||"Search service unavailable.", partialQueryCount:0, verifiedAt:null, fallbackXrayUrl:xrayUrl(company,"recruiter"), source:"error", expanded:false});
+            return;
+          }
+          var b = res.body;
+          var hasTeam = Array.isArray(b.team) && b.team.length > 0;
+          setState({
+            status: hasTeam ? "success" : "empty",
+            team: b.team || [],
+            message: b.message || "",
+            partialQueryCount: b.partialQueryCount || 0,
+            verifiedAt: b.verifiedAt || null,
+            fallbackXrayUrl: b.fallbackXrayUrl || xrayUrl(company,"recruiter"),
+            source: b.source || null,
+            expanded: false
+          });
+        })
+        .catch(function(err){
+          setState({status:"error", team:[], message:"Network error reaching search service.", partialQueryCount:0, verifiedAt:null, fallbackXrayUrl:xrayUrl(company,"recruiter"), source:"error", expanded:false});
+        });
+    }
+
+    function renderCard(p, key){
+      var roleColor = p.role === "Hiring manager" ? "rgba(245,158,77,0.85)"
+                    : p.role === "Director+"      ? "rgba(212,175,55,0.85)"
+                    : p.role === "Recruiter"      ? "rgba(52,211,153,0.85)"
+                                                  : "rgba(139,139,245,0.75)";
+      var roleBg    = p.role === "Hiring manager" ? "rgba(245,158,77,0.10)"
+                    : p.role === "Director+"      ? "rgba(212,175,55,0.10)"
+                    : p.role === "Recruiter"      ? "rgba(52,211,153,0.10)"
+                                                  : "rgba(139,139,245,0.10)";
+      return h("div",{key:key,style:{padding:"10px 12px",border:"1px solid var(--border)",borderRadius:8,marginBottom:6,background:"rgba(255,255,255,0.01)"}},
+        h("div",{style:{display:"flex",alignItems:"center",gap:8,marginBottom:4}},
+          h("span",{style:{font:"600 10px/1 var(--sans)",textTransform:"uppercase",letterSpacing:".06em",color:roleColor,background:roleBg,padding:"3px 7px",borderRadius:4}},p.role||"Match"),
+          p.isTopThree ? null : h("span",{style:{font:"400 11px/1 var(--sans)",color:"var(--text-m)"}},"more")
+        ),
+        h("div",{style:{font:"500 13px/1.4 var(--sans)",color:"var(--text)",marginBottom:3,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},p.title||""),
+        p.description ? h("div",{style:{font:"400 12px/1.5 var(--sans)",color:"var(--text-m)",marginBottom:6,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}},p.description) : null,
+        p.whyLine ? h("div",{style:{font:"italic 400 11px/1.4 var(--sans)",color:"var(--text-m)",marginBottom:6}},p.whyLine) : null,
+        h("a",{href:p.url,target:"_blank",rel:"noopener noreferrer",style:{font:"500 12px/1 var(--sans)",color:"var(--accent)",textDecoration:"none"}},"View profile \u2192")
+      );
+    }
+
+    var topThree = state.team.filter(function(p){ return p.isTopThree; });
+    var rest = state.team.filter(function(p){ return !p.isTopThree; });
+    var ageDays = state.verifiedAt ? Math.floor((Date.now() - Date.parse(state.verifiedAt))/(24*60*60*1000)) : null;
+
+    return h("div",{className:"dir-hiring"},
+      h("div",{className:"dir-hiring-title"},"Hiring team",h("span",{className:"new-pill"},"new")),
+      state.status === "idle" && h("button",{className:"btn",onClick:fetchTeam,style:{font:"500 13px/1 var(--sans)",padding:"8px 14px",marginTop:6,cursor:"pointer"}},"Find the hiring team"),
+      state.status === "loading" && h("div",{style:{padding:"8px 0"}},
+        h("div",{style:{font:"400 12px/1.4 var(--sans)",color:"var(--text-m)",marginBottom:8}},"Identifying recruiters \u00b7 hiring managers \u00b7 team \u00b7 leadership\u2026"),
+        [0,1,2].map(function(i){ return h("div",{key:"sk"+i,style:{padding:"10px 12px",border:"1px solid var(--border)",borderRadius:8,marginBottom:6,background:"rgba(255,255,255,0.01)",height:64,opacity:0.5}}); })
+      ),
+      state.status === "success" && h("div",null,
+        h("div",{style:{font:"400 11px/1.4 var(--sans)",color:"var(--text-m)",marginBottom:8}},
+          state.source === "cache" ? (ageDays === 0 ? "Verified today" : "Verified " + ageDays + " day" + (ageDays === 1 ? "" : "s") + " ago")
+            : state.partialQueryCount === 4 ? "Live results"
+            : "Showing results from " + state.partialQueryCount + " of 4 searches"
+        ),
+        topThree.map(function(p,i){ return renderCard(p,"top"+i); }),
+        rest.length > 0 && h("button",{className:"btn bs",onClick:function(){ setState(Object.assign({},state,{expanded:!state.expanded})); },style:{font:"400 12px/1 var(--sans)",padding:"6px 10px",marginTop:4,marginBottom:6,cursor:"pointer"}},state.expanded ? "Show fewer" : ("Show all " + state.team.length + " team members")),
+        state.expanded && rest.map(function(p,i){ return renderCard(p,"rest"+i); }),
+        h("a",{href:state.fallbackXrayUrl||xrayUrl(company,"recruiter"),target:"_blank",rel:"noopener noreferrer",style:{font:"400 12px/1 var(--sans)",color:"var(--text-m)",textDecoration:"none",display:"inline-block",marginTop:6}},"Search LinkedIn directly \u2192")
+      ),
+      state.status === "empty" && h("div",null,
+        h("p",{style:{font:"400 13px/1.5 var(--sans)",color:"var(--text-m)",margin:"6px 0"}},"We couldn\u2019t identify specific people for ",company,"."),
+        h("a",{href:state.fallbackXrayUrl||xrayUrl(company,"recruiter"),target:"_blank",rel:"noopener noreferrer",style:{font:"500 13px/1 var(--sans)",color:"var(--accent)",textDecoration:"none"}},"Search LinkedIn directly \u2192")
+      ),
+      state.status === "error" && h("div",null,
+        h("p",{style:{font:"400 13px/1.5 var(--sans)",color:"var(--text-m)",margin:"6px 0"}},state.message||"Search service is having trouble."),
+        h("a",{href:state.fallbackXrayUrl||xrayUrl(company,"recruiter"),target:"_blank",rel:"noopener noreferrer",style:{font:"500 13px/1 var(--sans)",color:"var(--accent)",textDecoration:"none"}},"Search LinkedIn directly \u2192")
+      )
+    );
+  }
+
   // Determine the dominant function for a company's loaded jobs
   function dominantFunction(companyName) {
     var companyJobs = cardJobs[companyName] || jobs.filter(function(j) { return j._co && j._co.n === companyName; });
@@ -2234,15 +2326,17 @@ function App(){
                 ),
               ),
               h("p",{className:"dir-desc"},c.s+" company based in "+c.hq+". Recognized by "+c.src+"."),
-              // Find the hiring team — X-ray search links
-              h("div",{className:"dir-hiring"},
-                h("div",{className:"dir-hiring-title"},"Find the hiring team",h("span",{className:"new-pill"},"new")),
-                h("div",{className:"dir-hiring-links"},
-                  h("a",{href:xrayUrl(c.n,"recruiter"),target:"_blank",rel:"noopener noreferrer",className:"dir-hiring-link"},"Recruiters"),
-                  h("a",{href:xrayUrl(c.n,"manager",dominantFunction(c.n)||"Engineering"),target:"_blank",rel:"noopener noreferrer",className:"dir-hiring-link"},"Hiring Managers"),
-                  h("a",{href:xrayUrl(c.n,"hiring"),target:"_blank",rel:"noopener noreferrer",className:"dir-hiring-link"},"People with #Hiring"),
-                ),
-              ),
+              // Find the hiring team — IS_PREVIEW gets HiringTeamSection (Firecrawl-backed); production keeps X-ray fallback
+              IS_PREVIEW
+                ? h(HiringTeamSection,{key:c.n+"_team",company:c.n,jobFunction:dominantFunction(c.n)||"Engineering"})
+                : h("div",{className:"dir-hiring"},
+                    h("div",{className:"dir-hiring-title"},"Find the hiring team",h("span",{className:"new-pill"},"new")),
+                    h("div",{className:"dir-hiring-links"},
+                      h("a",{href:xrayUrl(c.n,"recruiter"),target:"_blank",rel:"noopener noreferrer",className:"dir-hiring-link"},"Recruiters"),
+                      h("a",{href:xrayUrl(c.n,"manager",dominantFunction(c.n)||"Engineering"),target:"_blank",rel:"noopener noreferrer",className:"dir-hiring-link"},"Hiring Managers"),
+                      h("a",{href:xrayUrl(c.n,"hiring"),target:"_blank",rel:"noopener noreferrer",className:"dir-hiring-link"},"People with #Hiring"),
+                    ),
+                  ),
               // Inline jobs
               h("div",{className:"dir-jobs"},
                 cardLoading[c.n]&&h("div",{className:"dir-jobs-loading"},
