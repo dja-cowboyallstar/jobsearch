@@ -545,7 +545,6 @@ function FilterBar(p){
     return h("div",{className:"fbar-btn-wrap"},
       h("button",{className:"fbar-btn"+(selCount>0?" on":""),onClick:function(e){e.stopPropagation();togglePop(popKey);}},label,selCount>0&&h("span",{className:"fbar-btn-cnt"},selCount),h("span",{className:"fbar-caret"})),
       openPop===popKey&&h("div",{className:"fbar-pop",onClick:function(e){e.stopPropagation();}},
-        popKey==="function"&&CATS.length>8&&h("input",{className:"fbar-pop-search",type:"text",placeholder:"Search functions\u2026",value:fbSearch,onChange:function(e){setFbSearch(e.target.value);},autoFocus:true}),
         popKey==="location"&&h("input",{className:"fbar-pop-search",type:"text",placeholder:"Search locations\u2026",value:fbSearch,onChange:function(e){setFbSearch(e.target.value);},autoFocus:true}),
         h("div",{className:"fbar-pop-list"},
           popKey==="function"&&fnList.map(function(c){return h("div",{key:c},popItem(c,fc.fn[c]||0,cats.indexOf(c)>-1,function(){toggleFilter(cats,setCats,c);}));}),
