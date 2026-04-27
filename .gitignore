@@ -1,4 +1,4 @@
-﻿# Backup files (timestamped local backups, never commit)
+# Backup files (timestamped local backups, never commit)
 *.bak.*
 *.backup
 *.bak
@@ -11,6 +11,7 @@ _strays.txt
 
 # Local working / experimental scripts (root level)
 ascent-*.js
+ascent-*.html
 ascent-*.ps1
 ascent-*.txt
 ascent-*.xlsx
