@@ -2,79 +2,223 @@
 /**
  * scripts/extract-must-corpus.js
  *
- * One-shot tool to seed the v2 skill taxonomy.
+ * Classifies _must phrases against a seed of known canonical AI-role skills
+ * (skills/seed-skills.json), producing a three-section report:
  *
- * Fetches live Ascent job data from the production Blob, extracts every parsed
- * _must qualification across all jobs, tokenizes them into skill candidates,
- * and outputs a frequency-sorted report.
+ *   1. SEED MATCHES: how often each seed skill (and which alias) appeared
+ *   2. UNRECOGNIZED LONG TAIL: high-frequency phrases NOT matched by any seed,
+ *      filtered through a beefed-up JD-prose stopword list
+ *   3. METADATA: corpus stats, redirect trail, freshness
  *
- * The output is INPUT to human curation -- it is not the taxonomy itself.
- * Dom reads the report, deduplicates variants, decides canonical names,
- * authors aliases, and commits the curated result to skills/taxonomy.json.
+ * Output is INPUT to taxonomy curation. It does NOT produce taxonomy.json
+ * automatically. Dom reviews the seed matches (which to keep, which to drop,
+ * which aliases to add) and the long tail (which entries to PROMOTE to seed).
  *
- * Why this script exists:
- * - V2_PLAN D4 says the taxonomy size must be derived from the actual _must
- *   corpus, not picked in advance. This script produces that corpus.
- * - V2_PLAN section 10 / V2_SPECS S5 explicitly rejected guessing skill counts.
- *
- * Why this script is NOT the taxonomy:
- * - Tokenizers don't know that "py torch" and "pytorch" are the same skill.
- * - Tokenizers don't know that "transformer architecture" is one skill, not two.
- * - Aliases (torch -> pytorch, ml -> machine-learning) require human judgment.
+ * Why seed-based vs raw frequency:
+ * - Raw frequency on 21K+ jobs produces 251K candidate phrases dominated by
+ *   recruiter prose. Unusable for curation.
+ * - Seed-based gives ~80 known signals immediately, plus a curated long-tail
+ *   bucket for finding what the seed missed.
  *
  * Usage:
  *   node scripts/extract-must-corpus.js > corpus-report.txt
- *
- * Output (stdout) is a frequency-sorted list of candidate skill phrases, plus
- * per-job _must text dumps for spot-checking. Progress is logged to stderr.
- *
- * Failure cases this script defends against:
- *  - Stale Blob: prints lastModified header so Dom sees data freshness
- *  - Empty _must coverage: counts and reports the parsed-vs-unparsed ratio
- *  - Tokenizer false-positives: outputs frequencies so Dom can prune
- *  - Network failure: explicit error with retry guidance
- *  - HTTP redirects: follows up to 5 hops, refuses non-HTTPS, prints final URL
- *  - Large payloads: progress reported every 5MB to stderr
- *  - Non-JSON response: preview first 200 chars on parse failure
  */
 
 'use strict';
 
+const fs = require('fs');
 const https = require('https');
+const path = require('path');
 const { URL } = require('url');
 
-// Production endpoint. The site reads from /api/jobs-data which proxies the
-// Blob. Vercel commonly redirects (HTTPS upgrade, region routing); the fetcher
-// below follows redirects.
 const JOBS_ENDPOINT = 'https://career-ascent.io/api/jobs-data';
-
-// Maximum redirect hops to follow before giving up.
+const SEED_PATH = path.join(__dirname, '..', 'skills', 'seed-skills.json');
 const MAX_REDIRECTS = 5;
+const PROGRESS_BYTES = 5 * 1024 * 1024;
 
-// Progress reporting threshold (bytes) -- log a dot to stderr every Nth byte.
-const PROGRESS_BYTES = 5 * 1024 * 1024; // 5 MB
-
-// Tokens that appear in qualification phrases but are NOT skills. These get
-// stripped during tokenization. The list is intentionally conservative --
-// over-pruning hides real signal.
-const STOPWORDS = new Set([
-  'a', 'an', 'and', 'or', 'the', 'of', 'in', 'on', 'with', 'to', 'for',
-  'at', 'by', 'as', 'is', 'are', 'be', 'been', 'being', 'have', 'has', 'had',
+const JD_STOPWORDS = new Set([
+  'a', 'an', 'the', 'i', 'you', 'your', 'youre', 'youll', 'we', 'us', 'our',
+  'they', 'them', 'their', 'this', 'that', 'these', 'those', 'who', 'whom',
+  'what', 'when', 'where', 'why', 'how', 'which', 'whose',
+  'and', 'or', 'but', 'if', 'then', 'so', 'because', 'while', 'though',
+  'although', 'as', 'than', 'like', 'unless', 'until',
+  'of', 'in', 'on', 'at', 'by', 'for', 'to', 'with', 'about', 'across',
+  'after', 'against', 'among', 'around', 'before', 'behind', 'between',
+  'beyond', 'during', 'from', 'into', 'over', 'through', 'throughout',
+  'under', 'within', 'without', 'upon', 'toward', 'towards',
+  'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had',
   'do', 'does', 'did', 'will', 'would', 'should', 'could', 'may', 'might',
-  'must', 'can', 'experience', 'years', 'year', 'strong', 'solid', 'proven',
-  'demonstrated', 'working', 'knowledge', 'understanding', 'expertise',
-  'familiarity', 'proficiency', 'proficient', 'skilled', 'ability', 'able',
-  'plus', 'preferred', 'required', 'minimum', 'least', 'including', 'such',
-  'etc', 'similar', 'related', 'equivalent', 'background', 'degree',
+  'must', 'can', 'shall', 'am',
+  'work', 'works', 'working', 'worked',
+  'build', 'builds', 'building', 'built',
+  'develop', 'develops', 'developing', 'developed',
+  'deliver', 'delivers', 'delivering', 'delivered',
+  'drive', 'drives', 'driving', 'driven',
+  'lead', 'leads', 'leading', 'led',
+  'manage', 'manages', 'managing', 'managed',
+  'ensure', 'ensures', 'ensuring', 'ensured',
+  'maintain', 'maintains', 'maintaining', 'maintained',
+  'identify', 'identifies', 'identifying', 'identified',
+  'help', 'helps', 'helping', 'helped',
+  'create', 'creates', 'creating', 'created',
+  'define', 'defines', 'defining', 'defined',
+  'provide', 'provides', 'providing', 'provided',
+  'focus', 'focuses', 'focusing', 'focused',
+  'learn', 'learns', 'learning', 'learned',
+  'make', 'makes', 'making', 'made',
+  'meet', 'meets', 'meeting', 'met',
+  'use', 'uses', 'using', 'used',
+  'understand', 'understands', 'understanding', 'understood',
+  'apply', 'applies', 'applying', 'applied',
+  'collaborate', 'collaborates', 'collaborating', 'collaborated',
+  'translate', 'translates', 'translating', 'translated',
+  'support', 'supports', 'supporting', 'supported',
+  'improve', 'improves', 'improving', 'improved',
+  'own', 'owns', 'owning', 'owned',
+  'design', 'designs', 'designing', 'designed',
+  'team', 'teams', 'role', 'roles', 'business', 'company',
+  'level', 'stage', 'way', 'ways', 'time', 'times', 'type', 'types',
+  'scale', 'range', 'impact', 'value', 'values', 'success', 'process',
+  'processes', 'system', 'product', 'products', 'project',
+  'projects', 'plan', 'plans', 'goal', 'goals', 'people',
+  'environment', 'environments', 'organization', 'organizations',
+  'department', 'group', 'groups', 'partner', 'partners', 'partnership',
+  'partnerships', 'opportunity', 'opportunities',
+  'requirement', 'requirements', 'responsibility',
+  'responsibilities', 'qualification', 'qualifications',
+  'expertise', 'familiarity', 'proficiency',
+  'background', 'mindset', 'attitude', 'approach', 'perspective',
+  'capability', 'capabilities', 'strength', 'strengths',
+  'strong', 'solid', 'proven', 'demonstrated', 'excellent', 'great',
+  'good', 'best', 'better', 'high', 'low', 'fast', 'quick', 'rapid',
+  'deep', 'broad', 'wide', 'large', 'small', 'big', 'long', 'short',
+  'new', 'old', 'modern', 'current', 'recent', 'latest',
+  'multiple', 'several', 'many', 'few', 'some', 'any', 'all',
+  'other', 'others', 'another', 'one', 'two', 'three',
+  'similar', 'related', 'equivalent', 'relevant', 'specific', 'general',
+  'professional', 'personal', 'effective', 'efficient', 'successful',
+  'comfortable', 'capable', 'able', 'ready', 'willing', 'eager',
+  'experienced', 'skilled', 'proficient', 'qualified',
+  'cross-functional', 'hands-on', 'fast-paced', 'end-to-end',
+  'self-starter', 'self-directed',
+  'years', 'year', 'plus', 'preferred', 'required', 'minimum', 'least',
+  'including', 'such', 'etc', 'eg', 'ie', 'haves',
+  'degree', 'bachelors', 'masters', 'phd', 'doctorate',
+  'over', 'under', 'up', 'down',
+  'highly', 'very', 'really', 'quite', 'just', 'only', 'even',
+  'not', 'no', 'yes', 'both', 'either', 'neither',
+  'more', 'most', 'less',
+  'now', 'today', 'currently', 'often', 'always', 'never', 'sometimes',
+  'here', 'there', 'everywhere', 'anywhere',
+  'above', 'below',
+  'key', 'core', 'critical', 'important', 'essential', 'vital',
+  'effectively', 'efficiently', 'successfully', 'closely', 'directly',
+  'clearly', 'quickly', 'rapidly',
+  'written', 'verbal', 'oral',
+  'global', 'local', 'national', 'international',
+  'senior', 'junior', 'mid', 'staff', 'principal',
+  'various', 'diverse',
+  'communication', 'communications', 'leadership',
+  'collaboration', 'collaborative',
+  'execution', 'ownership', 'accountability',
+  'feedback', 'mentorship', 'mentoring', 'coaching',
+  'delivery', 'planning',
+  'experience', 'experiences', 'knowledge', 'understanding',
+  'skill', 'skills',
 ]);
 
-const PHRASE_MIN_LEN = 1;
-const PHRASE_MAX_LEN = 4;
+function loadSeed() {
+  if (!fs.existsSync(SEED_PATH)) {
+    process.stderr.write(`!! Seed file not found at ${SEED_PATH}\n`);
+    process.stderr.write('!! Run from C:\\ascent so the relative path resolves; or check that skills/seed-skills.json exists.\n');
+    process.exit(1);
+  }
+  let raw;
+  try {
+    raw = JSON.parse(fs.readFileSync(SEED_PATH, 'utf8'));
+  } catch (e) {
+    process.stderr.write(`!! Seed file is not valid JSON: ${e.message}\n`);
+    process.exit(1);
+  }
+  if (!Array.isArray(raw.skills)) {
+    process.stderr.write('!! Seed file missing "skills" array.\n');
+    process.exit(1);
+  }
+  const canonicalSeen = new Set();
+  const aliasSeen = new Map();
+  for (const s of raw.skills) {
+    if (!s.canonical || !Array.isArray(s.aliases) || s.aliases.length === 0) {
+      process.stderr.write(`!! Bad seed entry (missing canonical or aliases): ${JSON.stringify(s)}\n`);
+      process.exit(1);
+    }
+    if (canonicalSeen.has(s.canonical)) {
+      process.stderr.write(`!! Duplicate canonical in seed: ${s.canonical}\n`);
+      process.exit(1);
+    }
+    canonicalSeen.add(s.canonical);
+    for (const a of s.aliases) {
+      const aLow = a.toLowerCase();
+      if (aliasSeen.has(aLow)) {
+        process.stderr.write(`!! Alias "${a}" appears under both "${aliasSeen.get(aLow)}" and "${s.canonical}" -- ambiguous.\n`);
+        process.exit(1);
+      }
+      aliasSeen.set(aLow, s.canonical);
+    }
+  }
+  return raw;
+}
 
-/**
- * Fetch a URL, following redirects up to MAX_REDIRECTS hops. Refuses any
- * non-HTTPS redirect target. Reports progress to stderr.
- */
+function buildMatchers(seed) {
+  const matchers = [];
+  for (const s of seed.skills) {
+    for (const a of s.aliases) {
+      const escaped = a.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern = new RegExp(`(?:^|[^a-z0-9+#./-])${escaped}s?(?=$|[^a-z0-9+#./-])`, 'gi');
+      matchers.push({ alias: a, canonical: s.canonical, pattern });
+    }
+  }
+  return matchers;
+}
+
+function classifyLine(text, matchers) {
+  const lower = text.toLowerCase();
+  const matchCounts = new Map();
+  let residual = lower;
+  for (const m of matchers) {
+    const matches = lower.match(m.pattern);
+    if (matches && matches.length > 0) {
+      const aliasMap = matchCounts.get(m.canonical) || new Map();
+      aliasMap.set(m.alias, (aliasMap.get(m.alias) || 0) + matches.length);
+      matchCounts.set(m.canonical, aliasMap);
+      residual = residual.replace(m.pattern, ' ');
+    }
+  }
+  return { matchCounts, residual };
+}
+
+function normalizeToken(tok) {
+  return tok.toLowerCase().replace(/[^a-z0-9+\-#./]/g, '').trim();
+}
+
+function extractLongTailPhrases(residual) {
+  const sentences = residual.split(/[.;,()/\[\]\n]+/);
+  const phrases = [];
+  for (const s of sentences) {
+    const tokens = s.split(/\s+/).map(normalizeToken)
+      .filter(t => t.length > 1 && !JD_STOPWORDS.has(t));
+    for (let len = 2; len <= 3; len++) {
+      for (let i = 0; i + len <= tokens.length; i++) {
+        const phrase = tokens.slice(i, i + len).join(' ');
+        if (phrase.length >= 3) phrases.push(phrase);
+      }
+    }
+    for (const t of tokens) {
+      if (/[0-9+#./-]/.test(t) && t.length >= 2) phrases.push(t);
+    }
+  }
+  return phrases;
+}
+
 function fetchJson(urlStr, hopsRemaining = MAX_REDIRECTS, history = []) {
   return new Promise((resolve, reject) => {
     if (hopsRemaining <= 0) {
@@ -82,44 +226,27 @@ function fetchJson(urlStr, hopsRemaining = MAX_REDIRECTS, history = []) {
       return;
     }
     let parsedUrl;
-    try {
-      parsedUrl = new URL(urlStr);
-    } catch (e) {
-      reject(new Error(`Invalid URL: ${urlStr}`));
-      return;
-    }
+    try { parsedUrl = new URL(urlStr); } catch (e) { reject(new Error(`Invalid URL: ${urlStr}`)); return; }
     if (parsedUrl.protocol !== 'https:') {
       reject(new Error(`Refusing non-HTTPS URL: ${urlStr}`));
       return;
     }
-
     history.push(urlStr);
-
     const req = https.get(urlStr, (res) => {
       const status = res.statusCode;
-
-      // Redirect handling.
       if (status >= 300 && status < 400 && res.headers.location) {
-        // Resolve relative redirects against the current URL.
         const nextUrl = new URL(res.headers.location, urlStr).toString();
         process.stderr.write(`  redirect ${status} -> ${nextUrl}\n`);
-        // Drain the redirect response body so the socket can be reused.
         res.resume();
         fetchJson(nextUrl, hopsRemaining - 1, history).then(resolve, reject);
         return;
       }
-
-      if (status !== 200) {
-        reject(new Error(`HTTP ${status} from ${urlStr}`));
-        return;
-      }
-
+      if (status !== 200) { reject(new Error(`HTTP ${status} from ${urlStr}`)); return; }
       const lastModified = res.headers['last-modified'] || 'unknown';
       const contentLength = parseInt(res.headers['content-length'] || '0', 10);
       let received = 0;
       let nextProgressMark = PROGRESS_BYTES;
       const chunks = [];
-
       res.on('data', (chunk) => {
         chunks.push(chunk);
         received += chunk.length;
@@ -130,87 +257,29 @@ function fetchJson(urlStr, hopsRemaining = MAX_REDIRECTS, history = []) {
           nextProgressMark += PROGRESS_BYTES;
         }
       });
-
       res.on('end', () => {
         const data = Buffer.concat(chunks).toString('utf8');
         process.stderr.write(`  done: ${(received / (1024 * 1024)).toFixed(1)} MB received\n`);
         try {
           const parsed = JSON.parse(data);
-          resolve({
-            data: parsed,
-            lastModified,
-            bytes: received,
-            finalUrl: urlStr,
-            hops: history.length,
-          });
+          resolve({ data: parsed, lastModified, bytes: received, finalUrl: urlStr, hops: history.length });
         } catch (e) {
           const preview = data.slice(0, 200).replace(/\s+/g, ' ');
           reject(new Error(`JSON parse failed: ${e.message}\nFirst 200 chars: ${preview}`));
         }
       });
-
       res.on('error', reject);
     });
-
     req.on('error', reject);
-    req.setTimeout(60000, () => {
-      req.destroy(new Error(`Request timeout after 60s: ${urlStr}`));
-    });
+    req.setTimeout(60000, () => req.destroy(new Error(`Request timeout after 60s: ${urlStr}`)));
   });
 }
 
-function normalizeToken(tok) {
-  return tok
-    .toLowerCase()
-    .replace(/[^a-z0-9+\-#./]/g, '')
-    .trim();
-}
-
-function extractPhrases(text) {
-  const sentences = text.split(/[.;,()/\[\]\n]+/);
-  const phrases = [];
-  for (const s of sentences) {
-    const tokens = s
-      .split(/\s+/)
-      .map(normalizeToken)
-      .filter((t) => t.length > 0 && !STOPWORDS.has(t));
-    for (let len = PHRASE_MIN_LEN; len <= PHRASE_MAX_LEN; len++) {
-      for (let i = 0; i + len <= tokens.length; i++) {
-        const phrase = tokens.slice(i, i + len).join(' ');
-        if (phrase.length >= 2) phrases.push(phrase);
-      }
-    }
-  }
-  return phrases;
-}
-
-function summarize(jobs) {
-  const total = jobs.length;
-  const withMust = jobs.filter((j) => Array.isArray(j._must) && j._must.length > 0);
-  const mustCount = withMust.length;
-  const allMustText = [];
-  const phraseFreq = new Map();
-
-  for (const j of withMust) {
-    for (const m of j._must) {
-      if (typeof m !== 'string') continue;
-      allMustText.push(m);
-      const phrases = extractPhrases(m);
-      for (const p of phrases) {
-        phraseFreq.set(p, (phraseFreq.get(p) || 0) + 1);
-      }
-    }
-  }
-
-  return { total, mustCount, mustCoverage: total ? mustCount / total : 0, allMustText, phraseFreq };
-}
-
-function printReport(summary, fetchInfo, endpointMeta) {
-  const { total, mustCount, mustCoverage, allMustText, phraseFreq } = summary;
-  const { lastModified, bytes, finalUrl, hops } = fetchInfo;
+function printReport(result, jobs, endpointMeta, seed, seedAggregate, longTailFreq, jobsWithMust, mustLineCount) {
+  const { lastModified, bytes, finalUrl, hops } = result;
   const meta = endpointMeta || {};
 
-  console.log('=== ASCENT _must CORPUS REPORT ===');
+  console.log('=== ASCENT _must SEED-CLASSIFIED CORPUS REPORT ===');
   console.log(`Source: ${JOBS_ENDPOINT}`);
   console.log(`Final URL after redirects: ${finalUrl} (${hops} hop(s))`);
   if (meta.refreshedAt) console.log(`Endpoint refreshed_at: ${meta.refreshedAt}`);
@@ -220,83 +289,139 @@ function printReport(summary, fetchInfo, endpointMeta) {
   }
   console.log(`HTTP last-modified: ${lastModified}`);
   console.log(`Payload size: ${bytes.toLocaleString()} bytes`);
+  console.log(`Seed lastReviewed: ${seed.lastReviewed}`);
+  console.log(`Seed skill count: ${seed.skills.length}`);
   console.log('');
   console.log('=== COVERAGE ===');
-  console.log(`Total jobs: ${total}`);
-  console.log(`Jobs with parsed _must: ${mustCount} (${(mustCoverage * 100).toFixed(1)}%)`);
-  console.log(`Total _must lines extracted: ${allMustText.length}`);
+  console.log(`Total jobs: ${jobs.length}`);
+  console.log(`Jobs with parsed _must: ${jobsWithMust} (${(jobsWithMust / jobs.length * 100).toFixed(1)}%)`);
+  console.log(`Total _must lines analyzed: ${mustLineCount}`);
   console.log('');
 
-  if (mustCoverage < 0.30) {
-    console.log('!! WARNING: _must coverage is below 30%.');
-    console.log('!! Taxonomy seeded from this corpus will be biased toward the parser\'s current blind spots.');
-    console.log('!! Recommend hitting D2 (>=60% coverage) before final taxonomy curation.');
-    console.log('');
+  console.log('=== SECTION 1: SEED MATCHES ===');
+  console.log('# Format: <total-count>  <canonical>  [<alias-breakdown>]');
+  console.log('# Use this to (a) prune seed entries with zero/near-zero count,');
+  console.log('# (b) confirm aliases are firing as expected,');
+  console.log('# (c) decide which seed entries graduate to skills/taxonomy.json.');
+  console.log('');
+  const seedSorted = [...seedAggregate.entries()]
+    .map(([canonical, aliasMap]) => {
+      const total = [...aliasMap.values()].reduce((a, b) => a + b, 0);
+      return { canonical, total, aliasMap };
+    })
+    .sort((a, b) => b.total - a.total);
+
+  for (const entry of seedSorted) {
+    const aliasBreakdown = [...entry.aliasMap.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([alias, count]) => `${alias}=${count}`)
+      .join(', ');
+    console.log(`${String(entry.total).padStart(7)}  ${entry.canonical.padEnd(30)} [${aliasBreakdown}]`);
   }
 
-  console.log('=== TOP CANDIDATE SKILLS (frequency-sorted) ===');
-  console.log('# Format: <count> <phrase>');
-  console.log('# These are RAW phrases. Curate before committing to taxonomy.json:');
-  console.log('#  - Merge variants (pytorch/PyTorch/torch -> pytorch + aliases)');
-  console.log('#  - Drop non-skills (years, degree, team)');
-  console.log('#  - Decide canonical multi-word phrases (vector database vs vector-db)');
+  const matchedCanonicals = new Set([...seedAggregate.keys()]);
+  const unmatched = seed.skills.filter(s => !matchedCanonicals.has(s.canonical));
   console.log('');
-
-  const sorted = [...phraseFreq.entries()]
-    .filter(([, count]) => count >= 3)
-    .sort((a, b) => b[1] - a[1]);
-
-  for (const [phrase, count] of sorted) {
-    console.log(`${String(count).padStart(5)} ${phrase}`);
+  console.log('=== SECTION 2: SEED ENTRIES WITH ZERO MATCHES ===');
+  console.log('# These canonicals appeared zero times in the corpus.');
+  console.log('# Either drop them from the seed or check the aliases (case sensitivity, alternate spellings).');
+  console.log('');
+  if (unmatched.length === 0) {
+    console.log('  (none -- every seed entry matched at least once)');
+  } else {
+    for (const s of unmatched) {
+      console.log(`  ${s.canonical.padEnd(30)} aliases: [${s.aliases.join(', ')}]`);
+    }
   }
 
   console.log('');
-  console.log('=== SUMMARY ===');
-  console.log(`Unique candidate phrases (count >= 3): ${sorted.length}`);
-  console.log(`Unique candidate phrases (all): ${phraseFreq.size}`);
+  console.log('=== SECTION 3: UNRECOGNIZED LONG TAIL (top 200, count >= 50) ===');
+  console.log('# Phrases that did NOT match any seed entry, after stopword filtering.');
+  console.log('# Review for entries that should be PROMOTED into seed-skills.json.');
+  console.log('# Format: <count>  <phrase>');
   console.log('');
-  console.log('Next step: curate the count-sorted list above into skills/taxonomy.json.');
-  console.log('See V2_SPECS.md (Spec for skill taxonomy) for the schema.');
+  const longTailSorted = [...longTailFreq.entries()]
+    .filter(([, c]) => c >= 50)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 200);
+  for (const [phrase, count] of longTailSorted) {
+    console.log(`${String(count).padStart(7)}  ${phrase}`);
+  }
+  console.log('');
+  console.log(`(Long-tail phrases >=50 count: ${longTailSorted.length} shown of ${[...longTailFreq.values()].filter(c => c >= 50).length} total)`);
+  console.log(`(Long-tail phrases >=10 count: ${[...longTailFreq.values()].filter(c => c >= 10).length})`);
+  console.log('');
+  console.log('=== NEXT STEP ===');
+  console.log('1. Review Section 1: prune low-count seed entries; confirm aliases.');
+  console.log('2. Review Section 2: drop entries that are not real for this corpus.');
+  console.log('3. Review Section 3: promote real skills into seed-skills.json.');
+  console.log('4. Re-run this script. Iterate until Section 3 looks like noise.');
+  console.log('5. Then commit the curated seed-skills.json AS skills/taxonomy.json (with schema fields filled in).');
 }
 
 async function main() {
+  process.stderr.write('Loading seed...\n');
+  const seed = loadSeed();
+  const aliasCount = seed.skills.reduce((n, s) => n + s.aliases.length, 0);
+  process.stderr.write(`  loaded ${seed.skills.length} canonicals, ${aliasCount} aliases\n`);
+
+  process.stderr.write('Building matchers...\n');
+  const matchers = buildMatchers(seed);
+  process.stderr.write(`  ${matchers.length} regex matchers ready\n`);
+
   process.stderr.write(`Fetching ${JOBS_ENDPOINT} ...\n`);
   let result;
   try {
     result = await fetchJson(JOBS_ENDPOINT);
   } catch (e) {
     process.stderr.write(`!! Fetch failed: ${e.message}\n`);
-    process.stderr.write('!! Check network, then retry. If the Blob endpoint moved, update JOBS_ENDPOINT in this script.\n');
     process.exit(1);
   }
 
-  // Defensive: response may be array, {jobs: [...]}, or {data: [...]}
-  const jobs = Array.isArray(result.data)
-    ? result.data
-    : Array.isArray(result.data.jobs)
-      ? result.data.jobs
-      : Array.isArray(result.data.data)
-        ? result.data.data
-        : null;
-
+  const jobs = Array.isArray(result.data) ? result.data
+    : Array.isArray(result.data.jobs) ? result.data.jobs
+    : Array.isArray(result.data.data) ? result.data.data
+    : null;
   if (!jobs) {
     process.stderr.write(`!! Unexpected response shape. Top-level keys: ${Object.keys(result.data || {}).join(', ')}\n`);
     process.exit(1);
   }
 
-  // Capture endpoint metadata if present (better signal than HTTP last-modified).
   const endpointMeta = {
     refreshedAt: result.data && result.data.refreshed_at ? result.data.refreshed_at : null,
     totalJobsReported: result.data && typeof result.data.total_jobs === 'number' ? result.data.total_jobs : null,
     status: result.data && result.data.status ? result.data.status : null,
   };
 
-  if (endpointMeta.totalJobsReported !== null && endpointMeta.totalJobsReported !== jobs.length) {
-    process.stderr.write(`!! WARNING: total_jobs reports ${endpointMeta.totalJobsReported} but data array has ${jobs.length} entries. Using actual array length.\n`);
-  }
+  process.stderr.write(`Classifying ${jobs.length} jobs...\n`);
+  const seedAggregate = new Map();
+  const longTailFreq = new Map();
+  let jobsWithMust = 0;
+  let mustLineCount = 0;
 
-  const summary = summarize(jobs);
-  printReport(summary, result, endpointMeta);
+  for (const j of jobs) {
+    if (!Array.isArray(j._must) || j._must.length === 0) continue;
+    jobsWithMust++;
+    for (const line of j._must) {
+      if (typeof line !== 'string') continue;
+      mustLineCount++;
+      const { matchCounts, residual } = classifyLine(line, matchers);
+      for (const [canonical, aliasMap] of matchCounts) {
+        const existing = seedAggregate.get(canonical) || new Map();
+        for (const [alias, count] of aliasMap) {
+          existing.set(alias, (existing.get(alias) || 0) + count);
+        }
+        seedAggregate.set(canonical, existing);
+      }
+      const longTail = extractLongTailPhrases(residual);
+      for (const p of longTail) {
+        longTailFreq.set(p, (longTailFreq.get(p) || 0) + 1);
+      }
+    }
+  }
+  process.stderr.write(`  ${seedAggregate.size}/${seed.skills.length} seed canonicals matched, ${longTailFreq.size} long-tail phrases collected\n`);
+
+  printReport(result, jobs, endpointMeta, seed, seedAggregate, longTailFreq, jobsWithMust, mustLineCount);
 }
 
 main().catch((e) => {
