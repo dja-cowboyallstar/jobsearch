@@ -205,14 +205,20 @@ function summarize(jobs) {
   return { total, mustCount, mustCoverage: total ? mustCount / total : 0, allMustText, phraseFreq };
 }
 
-function printReport(summary, fetchInfo) {
+function printReport(summary, fetchInfo, endpointMeta) {
   const { total, mustCount, mustCoverage, allMustText, phraseFreq } = summary;
   const { lastModified, bytes, finalUrl, hops } = fetchInfo;
+  const meta = endpointMeta || {};
 
   console.log('=== ASCENT _must CORPUS REPORT ===');
   console.log(`Source: ${JOBS_ENDPOINT}`);
   console.log(`Final URL after redirects: ${finalUrl} (${hops} hop(s))`);
-  console.log(`Blob last-modified: ${lastModified}`);
+  if (meta.refreshedAt) console.log(`Endpoint refreshed_at: ${meta.refreshedAt}`);
+  if (meta.status) console.log(`Endpoint status: ${meta.status}`);
+  if (meta.totalJobsReported !== null && meta.totalJobsReported !== undefined) {
+    console.log(`Endpoint total_jobs: ${meta.totalJobsReported}`);
+  }
+  console.log(`HTTP last-modified: ${lastModified}`);
   console.log(`Payload size: ${bytes.toLocaleString()} bytes`);
   console.log('');
   console.log('=== COVERAGE ===');
@@ -264,20 +270,33 @@ async function main() {
     process.exit(1);
   }
 
-  // Defensive: response may be array or {jobs: [...]}
+  // Defensive: response may be array, {jobs: [...]}, or {data: [...]}
   const jobs = Array.isArray(result.data)
     ? result.data
     : Array.isArray(result.data.jobs)
       ? result.data.jobs
-      : null;
+      : Array.isArray(result.data.data)
+        ? result.data.data
+        : null;
 
   if (!jobs) {
     process.stderr.write(`!! Unexpected response shape. Top-level keys: ${Object.keys(result.data || {}).join(', ')}\n`);
     process.exit(1);
   }
 
+  // Capture endpoint metadata if present (better signal than HTTP last-modified).
+  const endpointMeta = {
+    refreshedAt: result.data && result.data.refreshed_at ? result.data.refreshed_at : null,
+    totalJobsReported: result.data && typeof result.data.total_jobs === 'number' ? result.data.total_jobs : null,
+    status: result.data && result.data.status ? result.data.status : null,
+  };
+
+  if (endpointMeta.totalJobsReported !== null && endpointMeta.totalJobsReported !== jobs.length) {
+    process.stderr.write(`!! WARNING: total_jobs reports ${endpointMeta.totalJobsReported} but data array has ${jobs.length} entries. Using actual array length.\n`);
+  }
+
   const summary = summarize(jobs);
-  printReport(summary, result);
+  printReport(summary, result, endpointMeta);
 }
 
 main().catch((e) => {
