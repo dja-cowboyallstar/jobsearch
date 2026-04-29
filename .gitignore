@@ -46,3 +46,7 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+
+# Generated outputs - never commit
+corpus-report.txt
+

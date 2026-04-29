@@ -1,0 +1,53 @@
+# .gitattributes - line ending normalization for the Ascent repo
+#
+# Goal: keep all text files using LF in the repo, regardless of which OS
+# committed them. Prevents the "LF will be replaced by CRLF" warning Dom saw
+# when committing the v2 wk1 files from Windows.
+#
+# How this works:
+#   * "text=auto eol=lf" means: Git treats matching files as text and forces
+#     LF line endings in the repo. On checkout, working-copy line endings
+#     follow the user's core.autocrlf setting (Windows defaults to CRLF in
+#     working copy, which is fine -- Git converts back to LF on commit).
+#   * Binary patterns get "binary" so Git doesn't try to diff or normalize.
+#
+# Scoped narrowly to the file types we actually use. Add new patterns as the
+# repo grows; do NOT add a blanket "* text=auto" without considering the
+# impact on existing files.
+
+# Source code -- always LF in repo
+*.js          text eol=lf
+*.mjs         text eol=lf
+*.ts          text eol=lf
+*.jsx         text eol=lf
+*.tsx         text eol=lf
+*.html        text eol=lf
+*.css         text eol=lf
+*.json        text eol=lf
+*.md          text eol=lf
+*.yml         text eol=lf
+*.yaml        text eol=lf
+
+# Shell + Node tooling
+*.sh          text eol=lf
+.gitignore    text eol=lf
+.gitattributes text eol=lf
+
+# PowerShell scripts -- Windows-native, but LF works fine in PowerShell 5.1+
+*.ps1         text eol=lf
+
+# Documentation source
+*.txt         text eol=lf
+
+# Binary content -- never line-end normalized
+*.pdf         binary
+*.docx        binary
+*.png         binary
+*.jpg         binary
+*.jpeg        binary
+*.gif         binary
+*.webp        binary
+*.ico         binary
+*.zip         binary
+*.gz          binary
+*.tar         binary
