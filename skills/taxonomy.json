@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "lastReviewed": "2026-04-28",
+  "corpusSource": {
+    "extractedAt": "2026-04-28T00:00:00Z",
+    "blobLastModified": "PENDING — populate from extract-must-corpus.js output",
+    "totalJobs": 0,
+    "mustCoverage": 0
+  },
+  "skills": [
+    {
+      "canonical": "python",
+      "display": "Python",
+      "category": "language",
+      "aliases": ["python3", "py"],
+      "introducedAt": "2026-04-28",
+      "notes": "Starter entry. Confirm against corpus before further taxonomy work; this entry exists so the schema can be exercised end-to-end before real curation."
+    },
+    {
+      "canonical": "pytorch",
+      "display": "PyTorch",
+      "category": "framework",
+      "aliases": ["torch", "py torch", "pytorch lightning", "pytorch-lightning"],
+      "introducedAt": "2026-04-28",
+      "notes": "Starter entry. 'pytorch lightning' folds in here for v2.0; if it earns enough corpus signal to differentiate, split into a separate canonical with a 'deprecates' migration."
+    },
+    {
+      "canonical": "rag",
+      "display": "RAG (Retrieval-Augmented Generation)",
+      "category": "concept",
+      "aliases": ["retrieval augmented generation", "retrieval-augmented generation"],
+      "introducedAt": "2026-04-28",
+      "notes": "Starter entry. RAG is a concept, not a library; the libraries that implement it (langchain, llamaindex, haystack) are separate canonicals."
+    }
+  ]
+}

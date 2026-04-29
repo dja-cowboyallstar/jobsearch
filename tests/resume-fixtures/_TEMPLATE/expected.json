@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "_doc": "Replace this fixture's assertions to match the actual redacted resume. Field semantics are documented in V2_SPECS.md Spec 5. Remove any '_doc' fields and '_example' suffixes before committing the fixture.",
+
+  "minRecallSkills_doc": "These MUST be in the parser output. Missing any fails the fixture. Use sparingly; reserve for skills the parser must not miss.",
+  "minRecallSkills": [
+    "python",
+    "pytorch",
+    "rag",
+    "vector-db"
+  ],
+
+  "exactSkills_doc": "Exact-match list using canonical taxonomy names. Stricter than minRecallSkills.",
+  "exactSkills": [
+    "pytorch",
+    "rag"
+  ],
+
+  "forbiddenSkills_doc": "Must NOT appear in parser output. Catches over-extraction (e.g., parser pulling 'javascript' from a 'tech stack' line about something else).",
+  "forbiddenSkills": [
+    "javascript",
+    "html"
+  ],
+
+  "experienceCount_doc": "Bounded count, not exact. Real resumes have ambiguous boundaries.",
+  "experienceCount": {
+    "min": 3,
+    "max": 5
+  },
+
+  "education_doc": "Substring match against canonical strings. Use [UNIVERSITY] / [UNIVERSITY-2] placeholders consistent with redaction.",
+  "education": [
+    {
+      "degreeContains": "MS",
+      "fieldContains": "Computer Science"
+    }
+  ],
+
+  "links_doc": "Boolean presence per link type, not URL exact-match (URLs change with redaction).",
+  "links": {
+    "github": { "presence": true },
+    "portfolio": { "presence": false },
+    "linkedin": { "presence": true }
+  },
+
+  "tolerances_doc": "Per-fixture overrides for global recall/precision targets. Some fixtures (intentionally noisy) have lower bars by design.",
+  "tolerances": {
+    "skillRecall": 0.85,
+    "skillPrecision": 0.80
+  }
+}

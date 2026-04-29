@@ -1,0 +1,16 @@
+{
+  "fixtureId": "_TEMPLATE",
+  "role": "ml-engineer",
+  "seniority": "mid",
+  "format": "pdf",
+  "stresses": [
+    "skills-in-prose-not-bullets",
+    "github-link-in-header",
+    "intern-vs-fulltime-boundary"
+  ],
+  "redactionLevel": "names-emails-companies-universities",
+  "createdBy": "dom",
+  "createdAt": "2026-04-28",
+  "_stressVocabulary": "Tag the structural challenges this fixture exercises. Use any of: skills-in-prose-not-bullets, skills-only-in-bullets, github-link-in-header, github-link-in-body-only, no-portfolio-link, multi-page, single-page, latex-source, word-source, ats-stripped, notion-export, intern-vs-fulltime-boundary, contract-roles, gap-years, career-pivot, dual-degree, no-degree, certs-without-degree, dense-prose, sparse-bullets, non-english-name, accented-characters, unicode-symbols, two-column-layout, sidebar-skills-section, scattered-skills, skills-with-versions, skills-with-years (e.g. 'Python (5 years)'), publications-section, patents-section. Add new stresses as new fixture types reveal them — do not silently fold a new stress into an existing one.",
+  "_redactionLevels": "Use the strictest level that preserves the fixture's stresses. Levels: 'names-only' (keep companies/schools, redact only personal info), 'names-emails-companies' (also redact employers), 'names-emails-companies-universities' (default; full structural redaction), 'paranoid' (additionally generalize dates and locations)."
+}

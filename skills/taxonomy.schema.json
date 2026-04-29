@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://career-ascent.io/schemas/taxonomy.schema.json",
+  "title": "Ascent Skill Taxonomy",
+  "description": "Controlled vocabulary of skills referenced by parsed _must/_nice/_bene fields and resume parser output. See V2_SPECS.md (skill taxonomy spec) for governance.",
+  "type": "object",
+  "required": ["schemaVersion", "lastReviewed", "skills"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1,
+      "description": "Bumped on incompatible structural changes."
+    },
+    "lastReviewed": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date of the most recent curation pass."
+    },
+    "corpusSource": {
+      "type": "object",
+      "description": "Provenance of the corpus that seeded this taxonomy.",
+      "required": ["extractedAt", "blobLastModified", "totalJobs", "mustCoverage"],
+      "additionalProperties": false,
+      "properties": {
+        "extractedAt": { "type": "string", "format": "date-time" },
+        "blobLastModified": { "type": "string" },
+        "totalJobs": { "type": "integer", "minimum": 0 },
+        "mustCoverage": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "description": "Canonical skill list. Ordered alphabetically by canonical name to keep diffs readable.",
+      "items": {
+        "type": "object",
+        "required": ["canonical", "category"],
+        "additionalProperties": false,
+        "properties": {
+          "canonical": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "description": "Lowercase, alphanumeric, hyphens only. Examples: pytorch, vector-db, rag, distributed-training. Mirrors V2_SPECS guidance."
+          },
+          "display": {
+            "type": "string",
+            "description": "Human-facing label. Defaults to a title-cased version of canonical if omitted."
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "language",
+              "framework",
+              "library",
+              "infra",
+              "data",
+              "model",
+              "concept",
+              "tool",
+              "domain",
+              "soft"
+            ],
+            "description": "Coarse grouping. 'soft' is for non-technical skills (communication, leadership) only when they appear materially in _must."
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9+#./ -]+$"
+            },
+            "description": "Variants the parser must recognize and map to canonical. Examples for pytorch: ['torch', 'py torch', 'pytorch lightning']. Lowercase strings; spaces, +, #, dots, slashes allowed (matches normalized parser tokens)."
+          },
+          "deprecates": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Prior canonical names this entry replaces. Migrations read this to rewrite stored UserProfile docs."
+          },
+          "introducedAt": {
+            "type": "string",
+            "format": "date",
+            "description": "When this canonical was added. Helps audit taxonomy growth over time."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Curation notes — why a tricky decision was made (e.g., 'transformers' is a library; the architecture is 'transformer-architecture')."
+          }
+        }
+      }
+    }
+  }
+}
